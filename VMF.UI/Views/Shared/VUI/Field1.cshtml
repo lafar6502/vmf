@@ -17,7 +17,7 @@
         template: `
             <div class="form-group">
                 <label>{{context.Label}}</label>
-                <vmf-field v-bind:context="fieldCtx" v-bind:value="value" v-on:input="$emit('input', $event)"></vmf-field>
+                <vmf-field class="form-control" v-bind:context="fieldCtx" v-bind:value="value" v-on:input="$emit('input', $event)"></vmf-field>
             </div>`,
         tm0: `<vmf-field v-bind:context="fieldCtx" v-bind:value="value" v-on:input="$emit('input', $event)"></vmf-field>`
     });
@@ -43,18 +43,18 @@
             }
         },
         template: `
-            <component v-bind:is="fieldComponentName" v-bind:value="value" v-bind:context="fieldCtx" v-on:input="$emit('input', $event)" />
+            <component v-bind="$attrs" v-bind:is="fieldComponentName" v-bind:value="value" v-bind:context="fieldCtx" v-on:input="$emit('input', $event)" />
         `
         
     });
 
 
     Vue.component('VmfTextfield', {
-
-        template: `<input type="text" v-on:input="$emit('input', $event.target.value)" />`
+        props: ['context', 'value'],
+        template: `<input v-bind="$attrs" v-bind:value="value" v-bind:required="context.Access == 'Required'" v-on:input="$emit('input', $event.target.value)" />`
     });
 
     Vue.component('vmf-numberfield', {
-
+        template: `<input type="number" class="form-control" v-on:input="$emit('input', $event.target.value)" />`
     });
 </script>

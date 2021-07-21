@@ -8,7 +8,7 @@
 
 
 <div class="vfm_form" id="@id">
-    <h2>{{Values.FirstName}} {{Values.LastName}}</h2>
+    <h2>{{Values.FirstName}} {{Values.LastName}} of age {{Values.Age}}</h2>
 
     <div class="row">
         <div class="col-md-4">
@@ -22,6 +22,9 @@
         <div class="col-md-3">
             <vmf-field-lbl v-bind:context="Context.LastName" v-model="Values.LastName"></vmf-field-lbl>
         </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Age" v-model="Values.Age"></vmf-field-lbl>
+        </div>
     </div>
 </div>
 
@@ -30,7 +33,8 @@
     var formData = {
         Values: {
             FirstName: 'Rafal',
-            LastName: 'Kowalski'
+            LastName: 'Kowalski',
+            Age: 77
         },
         Context: {
             FirstNameFld: {
@@ -42,6 +46,11 @@
                 Label: 'Nazwisko',
                 FieldType: 'textfield',
                 Access: 'Required'
+            },
+            Age: {
+                Label: 'Wiek',
+                FieldType: 'numberfield',
+                Access: 'ReadWrite'
             }
         }
     }
