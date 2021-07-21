@@ -15,12 +15,6 @@
             isEditable: function () {
                 return this.context && (this.context.Access == 'Required' || this.context.Access == 'ReadWrite');
             }
-        },
-        methods: {
-            logEv: function (evt, e) {
-                console.log('event!', evt, e);
-                this.$emit(evt, e);
-            }
         }
     }
 
@@ -42,9 +36,9 @@
         template: `
             <div class="form-group">
                 <label>{{context.Label}}</label>
-                <vmf-field class="form-control" v-bind:context="fieldCtx" v-bind:value="value" v-on:change="$emit('change', $event)" v-on:input="$emit('input', $event)"></vmf-field>
+                <vmf-field class="form-control" v-bind:context="fieldCtx" v-bind:value="value" v-on:input="$emit('input', $event)"></vmf-field>
             </div>`,
-        tm0: `<vmf-field v-bind:context="fieldCtx" v-bind:value="value" v-on:change="$emit('change', $event)"></vmf-field>`
+        tm0: `<vmf-field v-bind:context="fieldCtx" v-bind:value="value" v-on:input="$emit('input', $event)"></vmf-field>`
     });
 
     Vue.component('vmf-field', {
@@ -69,7 +63,7 @@
             }
         },
         template: `
-            <component  v-bind:is="fieldComponentName" v-bind:value="value" v-bind:context="fieldCtx" v-on:change="$emit('change', $event)" v-on:input="$emit('input', $event)" />
+            <component  v-bind:is="fieldComponentName" v-bind:value="value" v-bind:context="fieldCtx" v-on:input="$emit('input', $event)" />
         `
         
     });
@@ -81,13 +75,13 @@
         computed: {
             
         },
-        template: `<input class="vmf_input"  v-bind:value="value" v-bind:required="isRequired" v-on:change="logEv('change', $event.target.value)" v-on:input="$emit('input', $event.target.value)"/>`
+        template: `<input class="vmf_input"  v-bind:value="value" v-bind:required="isRequired" v-on:input="$emit('input', $event.target.value)" />`
     });
 
     Vue.component('vmf-numberfield', {
         mixins: [fieldMixin],
         props: ['context'],
-        template: `<input type="number" class="form-control" v-bind:required="isRequired"  v-on:change="$emit('change', $event.target.value)" />`
+        template: `<input type="number" class="form-control" v-bind:required="isRequired"  v-on:input="$emit('input', $event.target.value)" />`
     });
 
     Vue.component('vmf-selectfield', {
@@ -121,7 +115,7 @@
             }
         },
         template: `
-        <select class="form-control" v-bind:required="isRequired" v-bind:value="value" v-on:change="logEv('change', $event.target.value)" >
+        <select class="form-control" v-bind:required="isRequired" v-bind:value="value" v-on:change="$emit('input', $event.target.value)" >
             <option v-for="opt in optionsAdjusted" v-bind:value="opt.Id">
                 {{ opt.Label }}
             </option>
@@ -132,7 +126,7 @@
     Vue.component('vmf-datefield', {
         mixins: [fieldMixin],
         props: ['context'],
-        template: `<input type="date" class="form-control" v-bind:required="isRequired"  v-on:change="logEv('change', $event.target.value)" />`
+        template: `<input type="date" class="form-control" v-bind:required="isRequired"  v-on:input="$emit('input', $event.target.value)" />`
     });
 
 </script>
