@@ -9,7 +9,7 @@
 
 <div class="vfm_form" id="@id">
     <h2>{{Values.FirstName}} {{Values.LastName}} of age {{Values.Age}}</h2>
-    <h3>Pleci: {{Values.Sex}}</h3>
+    <h3>Pleci: {{Values.Sex}} and DOB {{Values.DateOfBirth}}</h3>
 
     <div class="row">
         <div class="col-md-4">
@@ -18,7 +18,7 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <vmf-field-lbl v-bind:context="Context.FirstNameFld" v-model="Values.FirstName"></vmf-field-lbl>
+            <vmf-field-lbl v-bind:context="Context.FirstNameFld" v-model.lazy="Values.FirstName"></vmf-field-lbl>
         </div>
         <div class="col-md-3">
             <vmf-field-lbl v-bind:context="Context.LastName" v-model="Values.LastName"></vmf-field-lbl>
@@ -26,6 +26,10 @@
         <div class="col-md-3">
             <vmf-field-lbl v-bind:context="Context.Age" v-model="Values.Age"></vmf-field-lbl>
         </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.DateOfBirth" v-model="Values.DateOfBirth"></vmf-field-lbl>
+        </div>
+
     </div>
     <div class="row">
         <div class="col-md-3">
@@ -39,6 +43,9 @@
         </div>
 
     </div>
+    <div class="row">
+
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -48,7 +55,8 @@
             FirstName: 'Rafal',
             LastName: 'Kowalski',
             Age: 77,
-            Sex: 'F'
+            Sex: 'F',
+            DateOfBirth: undefined
         },
         Context: {
             FirstNameFld: {
@@ -82,6 +90,11 @@
                 Options: [
                     "textfield", "selectfield"
                 ]
+            },
+            DateOfBirth: {
+                Label: 'Data ur.',
+                FieldType: 'datefield',
+                Access: 'Required'
             }
         }
     }
