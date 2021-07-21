@@ -34,6 +34,9 @@
         <div class="col-md-3">
             <vmf-field-lbl v-bind:context="Context.Sex" v-model="Values.Sex"></vmf-field-lbl>
         </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Smutator" v-model="Context.Sex.FieldType"></vmf-field-lbl>
+        </div>
 
     </div>
 </div>
@@ -70,6 +73,14 @@
                 Options: [
                     { Id: 'M', Label: 'Mezczyna' },
                     { Id: 'F', Label: 'Dziewczyna' }
+                ]
+            },
+            Smutator: {
+                Label: 'S-mutator',
+                FieldType: 'selectfield',
+                Access: 'ReadWrite',
+                Options: [
+                    "textfield", "selectfield"
                 ]
             }
         }
