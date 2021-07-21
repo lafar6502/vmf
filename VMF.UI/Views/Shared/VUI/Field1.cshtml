@@ -6,6 +6,18 @@
 </style>
 
 <script type="text/javascript">
+
+    var fieldMixin = {
+        computed: {
+            isRequired: function () {
+                return this.context && this.context.Access == 'Required';
+            },
+            isEditable: function () {
+                return this.context && (this.context.Access == 'Required' || this.context.Access == 'ReadWrite');
+            }
+        }
+    }
+
     //field with label
     Vue.component('vmf-field-lbl', {
         props: ['context', 'value'],
@@ -31,6 +43,7 @@
 
     Vue.component('vmf-field', {
         props: ['context', 'value'],
+        mixins: [fieldMixin],
         data: function () {
             console.log('my2 ctx', this.context);
             return {
@@ -58,15 +71,55 @@
 
     Vue.component('VmfTextfield', {
         props: ['context', 'value'],
+        mixins: [fieldMixin],
         computed: {
-            required: function () {
-                return this.context.Access == 'Required';
-            }
+            
         },
-        template: `<input class="vmf_input"  v-bind:value="value" v-bind:required="required" v-on:input="$emit('input', $event.target.value)" />`
+        template: `<input class="vmf_input"  v-bind:value="value" v-bind:required="isRequired" v-on:input="$emit('input', $event.target.value)" />`
     });
 
     Vue.component('vmf-numberfield', {
-        template: `<input type="number" class="form-control" v-on:input="$emit('input', $event.target.value)" />`
+        mixins: [fieldMixin],
+        props: ['context'],
+        template: `<input type="number" class="form-control" v-bind:required="isRequired"  v-on:input="$emit('input', $event.target.value)" />`
+    });
+
+    Vue.component('vmf-selectfield', {
+        mixins: [fieldMixin],
+        props: ['context', 'value'],
+        data: function () {
+            return {
+                val: this.value
+            }
+        },
+        computed: {
+            optionsAdjusted: function () {
+                var cx = this.context;
+                console.log('the select context', cx);
+                if (!cx.Options) return [];
+                var r = [];
+                for (var i = 0; i < cx.Options.length; i++) {
+                    var v = cx.Options[i];
+                    if (v == null) {
+                        r.push({ Id: "", Label: "" });
+                    }
+                    else if (Array.isArray(v)) {
+                        r.push({ Id: v[0], Label: v.length <= 1 || !v[1] ? v[0] : v[1] });
+                    }
+                    else if (VMF.isObject(v)) {
+                        r.push(v);
+                    }
+                    else r.push({ Id: v, Label: v });
+                }
+                return r;
+            }
+        },
+        template: `
+        <select class="form-control" v-bind:required="isRequired" v-bind:value="value" v-on:change="$emit('input', $event.target.value)" >
+            <option v-for="opt in optionsAdjusted" v-bind:value="opt.Id">
+                {{ opt.Label }}
+            </option>
+        </select>
+        `
     });
 </script>

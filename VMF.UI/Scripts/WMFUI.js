@@ -21,5 +21,8 @@ var VMF = {
         if (!vu) return null;
         return vu;
     },
-    
+    isObject: function(val) {
+        if (val === null) { return false; }
+        return ((typeof val === 'function') || (typeof val === 'object'));
+    }
 };

@@ -9,6 +9,7 @@
 
 <div class="vfm_form" id="@id">
     <h2>{{Values.FirstName}} {{Values.LastName}} of age {{Values.Age}}</h2>
+    <h3>Pleci: {{Values.Sex}}</h3>
 
     <div class="row">
         <div class="col-md-4">
@@ -26,6 +27,15 @@
             <vmf-field-lbl v-bind:context="Context.Age" v-model="Values.Age"></vmf-field-lbl>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Sex" v-model="Values.Sex"></vmf-field-lbl>
+        </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Sex" v-model="Values.Sex"></vmf-field-lbl>
+        </div>
+
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -34,7 +44,8 @@
         Values: {
             FirstName: 'Rafal',
             LastName: 'Kowalski',
-            Age: 77
+            Age: 77,
+            Sex: 'F'
         },
         Context: {
             FirstNameFld: {
@@ -51,6 +62,15 @@
                 Label: 'Wiek',
                 FieldType: 'numberfield',
                 Access: 'ReadWrite'
+            },
+            Sex: {
+                Label: 'Plec',
+                FieldType: 'selectfield',
+                Access: 'ReadWrite',
+                Options: [
+                    { Id: 'M', Label: 'Mezczyna' },
+                    { Id: 'F', Label: 'Dziewczyna' }
+                ]
             }
         }
     }
