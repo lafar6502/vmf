@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMF.UI", "VMF.UI\VMF.UI.csproj", "{CEAE0171-15BF-4052-A9B7-870514E02B79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMF.UI.Lib", "VMF.UI.Lib\VMF.UI.Lib.csproj", "{9C64EB5B-6549-4FBC-924A-7B67103521CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CEAE0171-15BF-4052-A9B7-870514E02B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEAE0171-15BF-4052-A9B7-870514E02B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEAE0171-15BF-4052-A9B7-870514E02B79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C64EB5B-6549-4FBC-924A-7B67103521CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C64EB5B-6549-4FBC-924A-7B67103521CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C64EB5B-6549-4FBC-924A-7B67103521CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C64EB5B-6549-4FBC-924A-7B67103521CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,60 @@
+﻿
+<script type="text/javascript">
+    //field with label
+    Vue.component('vmf-field-lbl', {
+        props: ['context', 'value'],
+        data: function () {
+            console.log('my ctx', this.context);
+            return {
+                fieldCtx: this.context
+            };
+        },
+        methods: {
+            handleInput: function (e) {
+                console.log('Zinput', e);
+            }
+        },
+        template: `
+            <div class="form-group">
+                <label>{{context.Label}}</label>
+                <vmf-field v-bind:context="fieldCtx" v-bind:value="value" v-on:input="$emit('input', $event)"></vmf-field>
+            </div>`,
+        tm0: `<vmf-field v-bind:context="fieldCtx" v-bind:value="value" v-on:input="$emit('input', $event)"></vmf-field>`
+    });
+
+    Vue.component('vmf-field', {
+        props: ['context', 'value'],
+        data: function () {
+            console.log('my2 ctx', this.context);
+            return {
+                fieldCtx: this.context
+            };
+        },
+        computed: {
+            fieldComponentName: function () {
+                console.log('context: ', this.fieldCtx);
+                var cx = this.fieldCtx;
+                if (cx) {
+                    if (cx.FieldType) {
+                        return 'vmf-' + cx.FieldType;
+                    }
+                }
+                return 'vmf-textfield'
+            }
+        },
+        template: `
+            <component v-bind:is="fieldComponentName" v-bind:value="value" v-bind:context="fieldCtx" v-on:input="$emit('input', $event)" />
+        `
+        
+    });
+
+
+    Vue.component('VmfTextfield', {
+
+        template: `<input type="text" v-on:input="$emit('input', $event.target.value)" />`
+    });
+
+    Vue.component('vmf-numberfield', {
+
+    });
+</script>

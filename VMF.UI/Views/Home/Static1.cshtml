@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    var id = Guid.NewGuid().ToString("N");
+}
+
+<h2>Index</h2>
+
+
+<div class="vfm_form" id="@id">
+    <h2>{{Values.FirstName}} {{Values.LastName}}</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <vmf-field v-bind:context="Context.LastName" v-model="Values.LastName"></vmf-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.FirstNameFld" v-model="Values.FirstName"></vmf-field-lbl>
+        </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.LastName" v-model="Values.LastName"></vmf-field-lbl>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var formData = {
+        Values: {
+            FirstName: 'Rafal',
+            LastName: 'Kowalski'
+        },
+        Context: {
+            FirstNameFld: {
+                Label: 'Imię',
+                FieldType: 'textfield',
+                Access: 'Required'
+            }, 
+            LastName: {
+                Label: 'Nazwisko',
+                FieldType: 'textfield',
+                Access: 'Required'
+            }
+        }
+    }
+
+    var vm = new Vue({
+        data: formData,
+        el: document.getElementById('@id')
+    });
+
+    
+</script>

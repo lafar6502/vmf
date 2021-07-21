@@ -13,5 +13,10 @@ namespace VMF.UI.Controllers
         {
             return View();
         }
+
+        public ActionResult Static1()
+        {
+            return View();
+        }
     }
 }
