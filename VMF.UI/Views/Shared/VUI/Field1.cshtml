@@ -1,10 +1,17 @@
 ﻿
+<style>
+    .vmf_input:required {
+        border: solid 1px #ff6a00;
+    }
+</style>
+
 <script type="text/javascript">
     //field with label
     Vue.component('vmf-field-lbl', {
         props: ['context', 'value'],
         data: function () {
             console.log('my ctx', this.context);
+            console.log('my attrs', this.$attrs);
             return {
                 fieldCtx: this.context
             };
@@ -43,7 +50,7 @@
             }
         },
         template: `
-            <component v-bind="$attrs" v-bind:is="fieldComponentName" v-bind:value="value" v-bind:context="fieldCtx" v-on:input="$emit('input', $event)" />
+            <component  v-bind:is="fieldComponentName" v-bind:value="value" v-bind:context="fieldCtx" v-on:input="$emit('input', $event)" />
         `
         
     });
@@ -51,7 +58,12 @@
 
     Vue.component('VmfTextfield', {
         props: ['context', 'value'],
-        template: `<input v-bind="$attrs" v-bind:value="value" v-bind:required="context.Access == 'Required'" v-on:input="$emit('input', $event.target.value)" />`
+        computed: {
+            required: function () {
+                return this.context.Access == 'Required';
+            }
+        },
+        template: `<input class="vmf_input"  v-bind:value="value" v-bind:required="required" v-on:input="$emit('input', $event.target.value)" />`
     });
 
     Vue.component('vmf-numberfield', {
