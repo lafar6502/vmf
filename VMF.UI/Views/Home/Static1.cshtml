@@ -44,7 +44,9 @@
 
     </div>
     <div class="row">
-
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.ActualAge" v-bind:value="actualAge" ></vmf-field-lbl>
+        </div>
     </div>
 </div>
 
@@ -74,6 +76,11 @@
                 FieldType: 'numberfield',
                 Access: 'ReadWrite'
             },
+            ActualAge: {
+                Label: 'Wiek z daty',
+                FieldType: 'textfield',
+                Access: 'ReadOnly'
+            },
             Sex: {
                 Label: 'Plec',
                 FieldType: 'selectfield',
@@ -101,6 +108,13 @@
 
     var vm = new Vue({
         data: formData,
+        computed: {
+            actualAge: function () {
+                if (!this.Values.DateOfBirth) return 0;
+                var d0 = new Date(this.Values.DateOfBirth);
+                return new Date().getYear() - d0.getYear();
+            }
+        },
         el: document.getElementById('@id')
     });
 
