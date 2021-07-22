@@ -75,13 +75,13 @@
         computed: {
             
         },
-        template: `<input class="vmf_input"  v-bind:value="value" v-bind:required="isRequired" v-on:input="$emit('input', $event.target.value)" />`
+        template: `<input class="vmf_input"  v-bind:value="value" v-bind:required="isRequired" v-on:change="$emit('input', $event.target.value)" />`
     });
 
     Vue.component('vmf-numberfield', {
         mixins: [fieldMixin],
         props: ['context'],
-        template: `<input type="number" class="form-control" v-bind:required="isRequired"  v-on:input="$emit('input', $event.target.value)" />`
+        template: `<input type="number" class="form-control" v-bind:required="isRequired"  v-on:change="$emit('input', $event.target.value)" />`
     });
 
     Vue.component('vmf-selectfield', {
@@ -126,7 +126,7 @@
     Vue.component('vmf-datefield', {
         mixins: [fieldMixin],
         props: ['context'],
-        template: `<input type="date" class="form-control" v-bind:required="isRequired"  v-on:input="$emit('input', $event.target.value)" />`
+        template: `<input type="date" class="form-control" v-bind:required="isRequired"  v-on:change="$emit('input', $event.target.value)" />`
     });
 
 </script>
