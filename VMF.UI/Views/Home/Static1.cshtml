@@ -9,7 +9,8 @@
 
 <div class="vfm_form" id="@id">
     <h2>{{Values.FirstName}} {{Values.LastName}} of age {{Values.Age}}</h2>
-    <h3>Pleci: {{Values.Sex}} and DOB {{Values.DateOfBirth}}</h3>
+    <h3>Pleci: {{Values.Sex}} and DOB {{Values.DateOfBirth}}</h3><br/>
+    <h3>Groups: {{Values.Groups}}</h3>
 
     <div class="row">
         <div class="col-md-4">
@@ -44,7 +45,9 @@
 
     </div>
     <div class="row">
-
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Groups" v-model="Values.Groups"></vmf-field-lbl>
+        </div>
     </div>
 </div>
 
@@ -56,7 +59,8 @@
             LastName: 'Kowalski',
             Age: 77,
             Sex: 'F',
-            DateOfBirth: undefined
+            DateOfBirth: undefined,
+            Groups: [1, 5]
         },
         Context: {
             FirstNameFld: {
@@ -95,7 +99,22 @@
                 Label: 'Data ur.',
                 FieldType: 'datefield',
                 Access: 'Required'
-            }
+            },
+            Groups: {
+                Label: 'Groups',
+                FieldType: 'multiselectfield',
+                Access: 'ReadWrite',
+                Options: [
+                    { Id: 1, Label: 'Users' },
+                    { Id: 2, Label: 'Product owners' },
+                    { Id: 3, Label: 'Administrators' },
+                    { Id: 4, Label: 'Sellers' },
+                    { Id: 5, Label: 'Production' },
+                    { Id: 6, Label: 'Claims' },
+                    { Id: 7, Label: 'Hotline' },
+
+                ]
+            },
         }
     }
 
