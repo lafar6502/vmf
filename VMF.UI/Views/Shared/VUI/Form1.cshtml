@@ -14,6 +14,11 @@
                 return this.context && (this.context.Access == 'Required' || this.context.Access == 'ReadWrite');
             }
         },
+        data: {
+            ViewUrl: '@Url.Action("Index", "Home")',
+            PostbackUrl: '@Url.Action("Postback", "Home")',
+            Tid: 'dummy'
+        },
         created: function () {
             console.log('me created', this.$data);
             this.originalValues = Object.assign({}, this.$data.Values);
@@ -32,6 +37,25 @@
                     if (t0[p] != t1[p]) ret.push(p);
                 }
                 return ret;
+            },
+            reloadView: function (url) {
+                if (!url) url = this.ViewUrl;
+                var me = this;
+                var dt = {
+                    _tid: this.Tid
+                };
+                $.get(url, dt, function (dt, status, xhr) {
+                    console.log('received', dt, 'xhr', xhr);
+                    if (_.isObject(dt)) {
+                        console.log('got json');
+                        Object.assign(me.$data, dt);
+                    } else if (_.isString(dt)) {
+                        console.log('my elem is ', me.$el);
+                        $(me.$el).replaceWith(dt);
+                        
+                    }
+                });
+
             }
         },
     }

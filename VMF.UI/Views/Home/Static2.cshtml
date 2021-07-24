@@ -4,7 +4,7 @@
     var id = Guid.NewGuid().ToString("N");
 }
 
-<h2>Index</h2>
+
 
 
 <div class="vfm_form" id="@id">
@@ -56,12 +56,18 @@
         <div class="col-md-3">
             <button v-on:click="saveClick">Save click</button>
         </div>
+        <div class="col-md-3">
+            <button v-on:click="reloadView('@Url.Action("Static2_Part")')">Reload html</button>
+            <button v-on:click="reloadView('@Url.Action("Static2_Json")')">Reload json</button>
+
+        </div>
     </div>
 </div>
 
 <script type="text/javascript">
 
     var formData = {
+        Tid: 'actual tid',
         Values: {
             FirstName: 'Rafal',
             LastName: 'Kowalski',

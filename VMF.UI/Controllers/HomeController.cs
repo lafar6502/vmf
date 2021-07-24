@@ -23,5 +23,27 @@ namespace VMF.UI.Controllers
         {
             return View();
         }
+
+        public ActionResult Static2_Part()
+        {
+            return PartialView("Static2");
+        }
+
+
+        public ActionResult Static2_Json()
+        {
+            return Json(new
+            {
+                Values = new
+                {
+                    FirstName = "Olo",
+                    LastName = "Zienkiewicz",
+                    Age = 33,
+                    Sex = 'M',
+                    DateOfBirth = new DateTime(),
+                    Groups = new int[] { 2, 3 }
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
