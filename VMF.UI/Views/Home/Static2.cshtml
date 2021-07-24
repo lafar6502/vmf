@@ -52,6 +52,11 @@
             <vmf-field-lbl v-bind:context="Context.ActualAge" v-bind:value="actualAge"></vmf-field-lbl>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-3">
+            <button v-on:click="saveClick">Save click</button>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -128,6 +133,7 @@
 
     var vm = new Vue({
         data: formData,
+        mixins: [formMixin],
         computed: {
             actualAge: function () {
                 if (!this.Values.DateOfBirth) return 0;

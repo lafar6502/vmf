@@ -133,6 +133,7 @@
     <Content Include="Views\Home\Static1.cshtml" />
     <Content Include="Views\Shared\VUI\VUIAll.cshtml" />
     <Content Include="Views\Shared\VUI\Field1.cshtml" />
+    <Content Include="Views\Home\Static2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

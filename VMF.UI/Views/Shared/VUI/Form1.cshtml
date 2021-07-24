@@ -1,0 +1,40 @@
+﻿
+<style>
+
+</style>
+
+<script type="text/javascript">
+
+    var formMixin = {
+        computed: {
+            isRequired: function () {
+                return this.context && this.context.Access == 'Required';
+            },
+            isEditable: function () {
+                return this.context && (this.context.Access == 'Required' || this.context.Access == 'ReadWrite');
+            }
+        },
+        created: function () {
+            console.log('me created', this.$data);
+            this.originalValues = Object.assign({}, this.$data.Values);
+        },
+        methods: {
+            saveClick: function () {
+                console.log('me are', this, 'original', this.originalValues);
+                var t2 = this.getModifiedValues();
+                console.log('modifications', t2);
+            },
+            getModifiedValues: function () {
+                var t0 = this.originalValues;
+                var t1 = this.$data.Values;
+                var ret = [];
+                for (p in t1) {
+                    if (t0[p] != t1[p]) ret.push(p);
+                }
+                return ret;
+            }
+        },
+    }
+
+
+</script>
