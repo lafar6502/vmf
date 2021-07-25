@@ -45,5 +45,10 @@ namespace VMF.UI.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Static3()
+        {
+            return View();
+        }
     }
 }

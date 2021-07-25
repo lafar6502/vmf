@@ -1,0 +1,148 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    ViewBag.Title = "Index";
+    var id = Guid.NewGuid().ToString("N");
+}
+
+<h2>Index</h2>
+
+
+<div class="vfm_form" id="@id">
+    <h2>{{Values.FirstName}} {{Values.LastName}} of age {{Values.Age}}</h2>
+    <h3>Pleci: {{Values.Sex}} and DOB {{Values.DateOfBirth}}</h3><br/>
+    <h3>Groups: {{Values.Groups}}</h3>
+
+    <div class="row">
+        <div class="col-md-4">
+            <vmf-field v-bind:context="Context.LastName" v-model="Values.LastName"></vmf-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.FirstNameFld" v-model.lazy="Values.FirstName"></vmf-field-lbl>
+        </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.LastName" v-model="Values.LastName"></vmf-field-lbl>
+        </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Age" v-model="Values.Age"></vmf-field-lbl>
+        </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.DateOfBirth" v-model="Values.DateOfBirth"></vmf-field-lbl>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Sex" v-model="Values.Sex"></vmf-field-lbl>
+        </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Sex" v-model="Values.Sex"></vmf-field-lbl>
+        </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Smutator" v-model="Context.Sex.FieldType"></vmf-field-lbl>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Groups" v-model="Values.Groups"></vmf-field-lbl>
+        </div>
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.ActualAge" v-bind:value="actualAge"></vmf-field-lbl>
+        </div>
+        <div class="col-md-3">
+            <v-select :items="Context.Groups.Options"
+                      label="Grupaz"></v-select>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var formData = {
+        Values: {
+            FirstName: 'Rafal',
+            LastName: 'Kowalski',
+            Age: 77,
+            Sex: 'F',
+            DateOfBirth: undefined,
+            Groups: [1, 5]
+        },
+        Context: {
+            FirstNameFld: {
+                Label: 'Imię',
+                FieldType: 'textfield',
+                Access: 'Required'
+            }, 
+            LastName: {
+                Label: 'Nazwisko',
+                FieldType: 'textfield',
+                Access: 'Required'
+            },
+            Age: {
+                Label: 'Wiek',
+                FieldType: 'numberfield',
+                Access: 'ReadWrite'
+            },
+            ActualAge: {
+                Label: 'Wiek z daty',
+                FieldType: 'textfield',
+                Access: 'ReadOnly'
+            },
+            Sex: {
+                Label: 'Plec',
+                FieldType: 'selectfield',
+                Access: 'ReadWrite',
+                Options: [
+                    { Id: 'M', Label: 'Mezczyna' },
+                    { Id: 'F', Label: 'Dziewczyna' }
+                ]
+            },
+            Smutator: {
+                Label: 'S-mutator',
+                FieldType: 'selectfield',
+                Access: 'ReadWrite',
+                Options: [
+                    "textfield", "selectfield"
+                ]
+            },
+            DateOfBirth: {
+                Label: 'Data ur.',
+                FieldType: 'datefield',
+                Access: 'Required'
+            },
+            Groups: {
+                Label: 'Groups',
+                FieldType: 'multiselectfield',
+                Access: 'ReadWrite',
+                Options: [
+                    { Id: 1, Label: 'Users' },
+                    { Id: 2, Label: 'Product owners' },
+                    { Id: 3, Label: 'Administrators' },
+                    { Id: 4, Label: 'Sellers' },
+                    { Id: 5, Label: 'Production' },
+                    { Id: 6, Label: 'Claims' },
+                    { Id: 7, Label: 'Hotline' },
+
+                ]
+            },
+        }
+    }
+
+    var vm = new Vue({
+        data: formData,
+        vuetify: VMF.vuetify,
+        computed: {
+            actualAge: function () {
+                if (!this.Values.DateOfBirth) return 0;
+                var d0 = new Date(this.Values.DateOfBirth);
+                return new Date().getYear() - d0.getYear();
+            }
+        },
+        el: document.getElementById('@id')
+    });
+
+    
+</script>

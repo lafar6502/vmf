@@ -136,6 +136,8 @@
     <Content Include="Views\Shared\VUI\Field1.cshtml" />
     <Content Include="Views\Home\Static2.cshtml" />
     <Content Include="Views\Shared\VUI\Form1.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\Home\Static3.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
