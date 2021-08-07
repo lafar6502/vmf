@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    var id = Guid.NewGuid().ToString("N");
+}
+
+
+
+<div class="row">
+    <div class="col-md-2">
+        <a id="btn_1" class="btn btn-warning" href="@Url.Action("Modal1_V", "Home")">Open MODAL</a>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $('#btn_1').click(function (e) {
+        var modal = $('<div class="modal"><div class="modal-dialog"><div class="modal-content"></div></div></div>');
+
+        var modalBody = modal.find('.modal-content').first();
+
+        modal
+            .on('show.bs.modal', function () {
+                modalBody.load(e.currentTarget.href)
+            })
+            .modal();
+        e.preventDefault();
+    });
+
+    function openModal1() {
+        event.preventDefault();
+        this.blur(); // Manually remove focus from clicked link.
+        $.get(this.href, function (html) {
+            $(html).appendTo('body').modal();
+        });
+    }
+</script>

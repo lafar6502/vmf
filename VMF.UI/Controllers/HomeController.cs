@@ -50,5 +50,15 @@ namespace VMF.UI.Controllers
         {
             return View();
         }
+
+        public ActionResult Modal1()
+        {
+            return View();
+        }
+
+        public ActionResult Modal1_V()
+        {
+            return PartialView("Static2");
+        }
     }
 }

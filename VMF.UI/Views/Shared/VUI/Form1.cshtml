@@ -50,8 +50,9 @@
                         console.log('got json');
                         Object.assign(me.$data, dt);
                     } else if (_.isString(dt)) {
-                        console.log('my elem is ', me.$el);
-                        $(me.$el).replaceWith(dt);
+                        console.log('my elem is ', me.$el, 'parent is', me.$el.parentElement);
+                        $(me.$el.parentElement).html(dt);
+                        
                         
                     }
                 });
