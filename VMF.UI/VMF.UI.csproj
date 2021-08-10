@@ -158,6 +158,8 @@
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Home\Static3.cshtml" />
     <Content Include="Views\Home\Modal1.cshtml" />
+    <Content Include="Views\Home\Modal2.cshtml" />
+    <Content Include="Views\Home\Modal2_V.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

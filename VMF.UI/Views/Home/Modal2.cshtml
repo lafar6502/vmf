@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    ViewBag.Title = "Index";
+    var id = Guid.NewGuid().ToString("N");
+
+}
+
+
+
+<div class="row">
+    <div class="col-md-2">
+        <a id="btn_1" class="btn btn-warning" href="@Url.Action("Modal2_V", "Home")">Open MODAL</a>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $('#btn_1').click(function (e) {
+        var modal = $('<div class="dialog"></div>');
+        modal.dialog({
+            modal: false,
+            open: function () {
+                $(this).load(e.currentTarget.href);
+            },
+            close: function () {
+                modal.remove();
+            },
+            height: 400,
+            width: 600,
+            title: 'Ajax Page'
+        });
+
+        e.preventDefault();
+    });
+
+</script>

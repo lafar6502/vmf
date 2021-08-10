@@ -22,6 +22,9 @@
             .on('show.bs.modal', function () {
                 modalBody.load(e.currentTarget.href)
             })
+            .on('hidden.bs.modal', function () {
+                modal.remove();
+            })
             .modal();
         e.preventDefault();
     });
