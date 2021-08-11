@@ -4,11 +4,24 @@
     var id = Guid.NewGuid().ToString("N");
 }
 
+<style>
+    img.figure-img-zoom {
+        
+    }
 
+    img.figure-img-full {
+        border: solid 1px black;
+    }
+</style>
 
 <div class="row">
     <div class="col-md-2">
         <a id="btn_1" class="btn btn-warning" href="@Url.Action("Modal1_V", "Home")">Open MODAL</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <img src="~/Images/pic1.png" class="figure-img-zoom" style="width:250px" />
     </div>
 </div>
 <script type="text/javascript">
@@ -21,6 +34,22 @@
         modal
             .on('show.bs.modal', function () {
                 modalBody.load(e.currentTarget.href)
+            })
+            .on('hidden.bs.modal', function () {
+                modal.remove();
+            })
+            .modal();
+        e.preventDefault();
+    });
+
+    $('img.figure-img-zoom').click(function (e) {
+        var modal = $('<div class="modal"><div class="modal-dialog"></div></div>');
+        var modalBody = modal.find('.modal-dialog').first();
+        var img2 = $('<img class="figure-img-full" />');
+        img2.attr('src', $(this).attr('src'));
+        modal
+            .on('show.bs.modal', function () {
+                modalBody.append(img2);
             })
             .on('hidden.bs.modal', function () {
                 modal.remove();
