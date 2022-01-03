@@ -57,19 +57,35 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.13\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="Sooda, Version=0.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg_dev.2.19.1\lib\net40\Sooda.dll</HintPath>
+    <Reference Include="Sooda, Version=2.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.dll</HintPath>
     </Reference>
-    <Reference Include="Sooda.CodeGen, Version=2.2.7577.38395, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg_dev.2.19.1\lib\net40\Sooda.CodeGen.dll</HintPath>
+    <Reference Include="Sooda.CodeGen, Version=2.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.CodeGen.dll</HintPath>
     </Reference>
-    <Reference Include="Sooda.Logging.NLog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg_dev.2.19.1\lib\net40\Sooda.Logging.NLog.dll</HintPath>
+    <Reference Include="Sooda.Logging.NLog47, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.Logging.NLog47.dll</HintPath>
+    </Reference>
+    <Reference Include="Sooda.Oracle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Sooda.SqlServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Sooda.TransactionStrategy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.TransactionStrategy.dll</HintPath>
+    </Reference>
+    <Reference Include="Sooda.TransactionStrategy.ThreadBound, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.TransactionStrategy.ThreadBound.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -148,6 +164,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\ApplicationPreInit.cs" />
+    <Compile Include="App_Start\ContainerConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -191,6 +209,20 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VMF.Core\VMF.Core.csproj">
+      <Project>{a8d0ecb6-5065-4f46-ac73-e95616bc3e78}</Project>
+      <Name>VMF.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VMF.Services\VMF.Services.csproj">
+      <Project>{fd3bcbea-02a6-4a8a-ad3e-0d5b25ee0f28}</Project>
+      <Name>VMF.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VMF.UI.Lib\VMF.UI.Lib.csproj">
+      <Project>{9c64eb5b-6549-4fbc-924a-7b67103521cb}</Project>
+      <Name>VMF.UI.Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

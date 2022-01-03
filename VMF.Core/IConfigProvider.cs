@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VMF.Core
 {
-    public interface IConfiguration
+    public interface IConfigProvider
     {
         T Get<T>(string name, T defaultValue);
         T Get<T>(string name);

@@ -10,7 +10,7 @@ namespace VMF.Core
     public class AppGlobal
     {
         public static string AppProfile { get; set; }
-        public static IConfiguration Config { get; set; }
+        public static IConfigProvider Config { get; set; }
         public static IWindsorContainer Container { get; set; }
 
 

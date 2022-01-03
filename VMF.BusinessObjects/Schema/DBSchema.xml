@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"  ?>
+<?xml-stylesheet type="text/xsl" href="DBSchema-tool.xsl" ?>
+<schema
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"     
+  xmlns="http://www.sooda.org/schemas/SoodaSchema.xsd">
+
+    <datasource name="default" type="Sooda.Sql.SqlDataSourceDT"/>
+    <defaultPrecommitValues>null</defaultPrecommitValues>
+
+
+
+  <class name="ObjectClass">
+	  <table name="ObjectClass">
+		  <field name="Id" type="Integer" nullable="false" primaryKey="true" />
+		  <field name="Name" type="String" nullable="false" />
+	  </table>
+   
+  </class>
+
+  <class name="KeyGen" cardinality="Small" label="KeyName">
+    <table name="KeyGen">
+      <field name="KeyName" dbcolumn="key_name" type="String" size="64" primaryKey="true" nullable="false" />
+      <field name="KeyValue" dbcolumn="key_value" type="Integer" nullable="false" />
+    </table>
+  </class>
+  
+
+</schema>

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMF.Core", "VMF.Core\VMF.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMFTest", "VMFTest\VMFTest.csproj", "{4BB7B93D-33B2-4A71-938A-A7067353B52D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMF.BusinessObjects", "VMF.BusinessObjects\VMF.BusinessObjects.csproj", "{62B74101-9250-4AB4-81E3-F88D695B5BC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4BB7B93D-33B2-4A71-938A-A7067353B52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BB7B93D-33B2-4A71-938A-A7067353B52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BB7B93D-33B2-4A71-938A-A7067353B52D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62B74101-9250-4AB4-81E3-F88D695B5BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62B74101-9250-4AB4-81E3-F88D695B5BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62B74101-9250-4AB4-81E3-F88D695B5BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62B74101-9250-4AB4-81E3-F88D695B5BC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
