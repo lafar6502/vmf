@@ -33,7 +33,7 @@ namespace VMF.Core
         /// <returns></returns>
         public static string Get(IEnumerable<string> ids, string defaultText)
         {
-
+            throw new NotImplementedException();
         }
 
         /// <summary>

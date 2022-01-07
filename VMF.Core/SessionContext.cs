@@ -31,7 +31,7 @@ namespace VMF.Core
 
         public SessionContext()
         {
-            TransactionDisposition = Core.TransactionDisposition.Discard;
+            CurrentTransactionMode = Core.TransactionMode.Discard;
             Language = AppGlobal.Config.Get("DefaultLanguage", "en");
             User = AppUser.Current;
             if (User != null)
@@ -43,7 +43,7 @@ namespace VMF.Core
         public AppUser User { get; set; }
         public string Language { get; set; }
         public IVMFTransaction Transaction { get; set; }
-        public TransactionDisposition TransactionDisposition { get; set; }
+        public TransactionMode CurrentTransactionMode { get; set; }
         public string RequestId { get; set; }
         /// <summary>
         /// access token you got from the link
@@ -225,49 +225,6 @@ namespace VMF.Core
             set { SetData("_fa_dbcn", value); }
         }
 
-        public static void InTransaction(IVMFTransFactory f, Action<bool> act)
-        {
-            if (SessionContext.Current != null)
-            {
-                act(false);
-            }
-            else
-            {
-                var sc = new SessionContext();
-                SessionContext.Current = sc;
-                
-                try
-                {
-                    sc.Transaction = f.CreateTransaction();
-                    string uid = AppUser.SystemUserId;
-                    if (SessionContext.Current.User == null) SessionContext.Current.User = AppUser.Current;
-                    if (SessionContext.Current.User == null && !string.IsNullOrEmpty(uid))
-                    {
-                        IUserRepository repo = AppGlobal.ResolveService<IUserRepository>();
-                        AppUser.Current = repo.GetUserByUserId(uid);
-                        SessionContext.Current.User = AppUser.Current;
-                        if (AppUser.Current == null)
-                        {
-                            log.Warn("Default user not found: {0}", uid);
-                        }
-                    }
-                    if (AppUser.Current == null)
-                    {
-                        log.Warn("No current user");
-                    }
-
-                    act(true);
-                    if (SessionContext.Current.TransactionDisposition == TransactionDisposition.Commit)
-                    {
-                        SessionContext.Current.Transaction.Commit();
-                    }
-                }
-                finally
-                {
-                    if (SessionContext.Current.Transaction != null) SessionContext.Current.Transaction.Dispose();
-                    SessionContext.Current = null;
-                }
-            }
-        }
+        
     }
 }

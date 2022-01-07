@@ -9,7 +9,7 @@ namespace VMF.Core
     /// <summary>
     /// what to do at the end of transaction?
     /// </summary>
-    public enum TransactionDisposition
+    public enum TransactionMode
     {
         Discard,
         SaveState,
