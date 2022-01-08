@@ -57,7 +57,7 @@ namespace VMF.Core
 
         public string Get(IEnumerable<string> ids, string defaultText, string lang)
         {
-
+            throw new NotImplementedException();
         }
 
         /// <summary>
