@@ -15,6 +15,8 @@ namespace VMF.Core
     /// </summary>
     public class I18N
     {
+        public static I18N Instance { get; set; }
+
         public static string Get(string id, string defaultText)
         {
             return id;
