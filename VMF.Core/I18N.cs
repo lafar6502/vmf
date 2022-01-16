@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace VMF.Core
 {
@@ -17,12 +18,31 @@ namespace VMF.Core
     {
         public static I18N Instance { get; set; }
 
+        private ITextTranslation[] _sources;
+
+        public I18N()
+        {
+            var bd = AppDomain.CurrentDomain.BaseDirectory;
+            var pth = Path.Combine(bd, "i18n.json");
+            var d0 = new Util.JsonTranslationFile(pth);
+            var pth2 = Path.Combine(bd, "i18n." + AppGlobal.AppProfile + ".json");
+            var d1 = new Util.JsonTranslationFile(pth2);
+            _sources = new ITextTranslation[] { d1, d0 };
+        }
         public static string Get(string id, string defaultText)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        public string Get(string id, string defaultText, string lang)
         {
             return id;
         }
 
-        public static string Get(string id)
+
+        public string Get(string id)
         {
             return Get(id, null);
         }
@@ -33,7 +53,12 @@ namespace VMF.Core
         /// <param name="ids"></param>
         /// <param name="defaultText"></param>
         /// <returns></returns>
-        public static string Get(IEnumerable<string> ids, string defaultText)
+        public  string Get(IEnumerable<string> ids, string defaultText)
+        {
+            return Get(ids, defaultText, SessionContext.Current.Language);
+        }
+
+        public string Get(IEnumerable<string> ids, string defaultText, string lang)
         {
             throw new NotImplementedException();
         }
@@ -44,19 +69,24 @@ namespace VMF.Core
         /// <param name="ids"></param>
         /// <param name="defaultText"></param>
         /// <returns></returns>
-        public static string TryGet(IEnumerable<string> ids, string defaultText = null)
+        public string TryGet(IEnumerable<string> ids, string defaultText, string lang)
         {
             return null;
         }
 
-        public static string TryGet(string id, string defaultText = null)
+        public string TryGet(IEnumerable<string> ids, string defaultText)
+        {
+            return TryGet(ids, defaultText, SessionContext.Current.Language);
+        }
+
+        public  string TryGet(string id, string defaultText = null)
         {
             return null;
         }
 
         public static string FormatString(string id, params object[] args)
         {
-            var s = TryGet(id);
+            var s = Instance.TryGet(id);
             if (s == null) return null;
             return string.Format(s, args);
         }
