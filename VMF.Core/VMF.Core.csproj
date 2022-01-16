@@ -97,7 +97,13 @@
     <Compile Include="ObjectAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionContext.cs" />
+    <Compile Include="Util\CollectionExtensions.cs" />
+    <Compile Include="Util\JsonConfigProvider.cs" />
     <Compile Include="Util\JsonTranslationFile.cs" />
+    <Compile Include="Util\RingBuffer.cs" />
+    <Compile Include="Util\StringExpressionHelper.cs" />
+    <Compile Include="Util\TopoSort.cs" />
+    <Compile Include="Util\TypeUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
