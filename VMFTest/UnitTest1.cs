@@ -14,5 +14,16 @@ namespace VMFTest
             VMF.Core.Util.JsonTranslationFile jf = new VMF.Core.Util.JsonTranslationFile(Path.Combine(dm, "lang1.json"));
             var a = jf.Get("Test1.Id1", "pl");
         }
+
+        [TestMethod]
+        public void TestConfigLoads()
+        {
+            var dd = AppDomain.CurrentDomain.BaseDirectory;
+
+            var c = new JsonConfigProvider("test");
+            var s0 = c.Get("TestString", "");
+            Assert.AreEqual(s0, "2");
+
+        }
     }
 }

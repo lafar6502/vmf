@@ -6,34 +6,50 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NLog;
 
 namespace VMF.Core.Util
 {
     public class JsonConfigProvider : IConfigProvider
     {
         private JObject _data;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="directory"></param>
-        public JsonConfigProvider(string directory)
+        private static Logger log = LogManager.GetCurrentClassLogger();
+
+        public JsonConfigProvider() : this(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory))
         {
 
         }
+
+        public JsonConfigProvider(string profile) : this(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config"), Environment.MachineName, profile)
+        {
+
+        }
+        
 
         public JsonConfigProvider(string directory, string machineName, string profile)
         {
-
+            //config.json
+            //config.machineName.json
+            var filz = new string[]
+            {
+                "config.json",
+                String.Format("{0}.json", machineName),
+                String.Format("{0}.{1}.json", profile, machineName)
+            };
+            LoadData(directory, filz);
         }
 
-        private void LoadData(IEnumerable<string> files)
+        private void LoadData(string baseDir, IEnumerable<string> files)
         {
             _data = new JObject();
+            _data["basedir"] = baseDir;
             foreach(var f in files)
             {
-                if (File.Exists(f))
+                var f2 = Path.Combine(baseDir, f);
+                if (File.Exists(f2))
                 {
-                    var j = LoadFile(f);
+                    log.Info("Loading config file {0}", f2);
+                    var j = LoadFile(f2);
                     _data.Merge(j, new JsonMergeSettings
                     {
                         MergeArrayHandling = MergeArrayHandling.Replace
