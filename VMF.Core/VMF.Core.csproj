@@ -80,7 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppGlobal.cs" />
+    <Compile Include="VMFGlobal.cs" />
     <Compile Include="AppUser.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="I18N.cs" />
@@ -101,7 +101,7 @@
     <Compile Include="Util\JsonConfigProvider.cs" />
     <Compile Include="Util\JsonTranslationFile.cs" />
     <Compile Include="Util\RingBuffer.cs" />
-    <Compile Include="Util\StringExpressionHelper.cs" />
+    <Compile Include="Util\StringInterpolator.cs" />
     <Compile Include="Util\TopoSort.cs" />
     <Compile Include="Util\TypeUtils.cs" />
   </ItemGroup>

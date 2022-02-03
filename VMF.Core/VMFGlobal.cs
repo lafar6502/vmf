@@ -7,7 +7,7 @@ using Castle.Windsor;
 
 namespace VMF.Core
 {
-    public class AppGlobal
+    public class VMFGlobal
     {
         public static string AppProfile { get; set; }
         public static IConfigProvider Config { get; set; }
@@ -18,10 +18,6 @@ namespace VMF.Core
         {
             return Container.Resolve<T>();
         }
-        //lang for the ui/html
-        public static string UILang
-        {
-            get { return Config.Get("DefaultUILang", "en"); }
-        }
+
     }
 }

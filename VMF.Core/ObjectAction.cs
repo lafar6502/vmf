@@ -42,7 +42,7 @@ namespace VMF.Core
         {
             get
             {
-                IEntityResolver r = AppGlobal.ResolveService<IEntityResolver>();
+                IEntityResolver r = VMFGlobal.ResolveService<IEntityResolver>();
                 return AllTargets == null ? new string[0] : AllTargets.Select(x => r.GetObjectRef(x).ToString());
             }
             set
@@ -52,7 +52,7 @@ namespace VMF.Core
                     AllTargets = new object[0];
                     return;
                 }
-                IEntityResolver r = AppGlobal.ResolveService<IEntityResolver>();
+                IEntityResolver r = VMFGlobal.ResolveService<IEntityResolver>();
                 AllTargets = value.Select(x => r.Get(x));
             }
         }
@@ -120,7 +120,7 @@ namespace VMF.Core
             {
                 var v = TargetMethod.Invoke(TargetObject, new object[] { this });
                 if (v is ExecuteActionResult) return (ExecuteActionResult)v;
-                var er = AppGlobal.ResolveService<IEntityResolver>();
+                var er = VMFGlobal.ResolveService<IEntityResolver>();
                 return new ExecuteActionResult
                 {
                     ReturnValue = v,
@@ -140,7 +140,7 @@ namespace VMF.Core
             var v = Execute();
             if (AllTargets != null)
             {
-                var er = AppGlobal.ResolveService<IEntityResolver>();
+                var er = VMFGlobal.ResolveService<IEntityResolver>();
                 foreach (var obj in AllTargets)
                 {
                     if (obj == tg || obj == null) continue;

@@ -25,7 +25,7 @@ namespace VMF.Core
             var bd = AppDomain.CurrentDomain.BaseDirectory;
             var pth = Path.Combine(bd, "i18n.json");
             var d0 = new Util.JsonTranslationFile(pth);
-            var pth2 = Path.Combine(bd, "i18n." + AppGlobal.AppProfile + ".json");
+            var pth2 = Path.Combine(bd, "i18n." + VMFGlobal.AppProfile + ".json");
             var d1 = new Util.JsonTranslationFile(pth2);
             _sources = new ITextTranslation[] { d1, d0 };
         }

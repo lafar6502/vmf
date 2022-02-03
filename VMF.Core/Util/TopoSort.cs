@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Facile.Core.Util
+namespace VMF.Core.Util
 {
     public class TopoSort
     {
