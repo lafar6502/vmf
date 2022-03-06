@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Transactions\RQContext.cs" />
     <Compile Include="VMFGlobal.cs" />
     <Compile Include="AppUser.cs" />
     <Compile Include="Class1.cs" />
@@ -109,5 +110,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

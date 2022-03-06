@@ -167,6 +167,7 @@
     <Compile Include="App_Start\ApplicationPreInit.cs" />
     <Compile Include="App_Start\ContainerConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseTestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -199,9 +200,12 @@
     <Content Include="Views\Home\Modal1.cshtml" />
     <Content Include="Views\Home\Modal2.cshtml" />
     <Content Include="Views\Home\Modal2_V.cshtml" />
+    <Content Include="Views\Home\Test1.cshtml" />
+    <Content Include="Views\Home\Test2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Web.nlog" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
