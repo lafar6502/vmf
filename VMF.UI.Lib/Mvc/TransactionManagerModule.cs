@@ -10,6 +10,7 @@ using System.Transactions;
 using System.Runtime.Remoting.Messaging;
 using VMF.Core.Transactions;
 using VMF.Core;
+using VMF.Services.Transactions;
 
 namespace VMF.UI.Lib.Mvc
 {
@@ -44,23 +45,7 @@ namespace VMF.UI.Lib.Mvc
 
         }
 
-        private void InitTransaction()
-        {
-            var to = new TransactionOptions
-            {
-                IsolationLevel = IsolationLevel.ReadCommitted,
-                Timeout = TimeSpan.FromMinutes(10)
-            };
-            var t0 = new CommittableTransaction(to);
-            t0.TransactionCompleted += T0_TransactionCompleted;
-            Transaction.Current = t0;
-        }
-
-        private void T0_TransactionCompleted(object sender, TransactionEventArgs e)
-        {
-            
-        }
-
+        
         private void Context_BeginRequest(object sender, EventArgs e)
         {
             var hta = (HttpApplication)sender; 
@@ -78,6 +63,8 @@ namespace VMF.UI.Lib.Mvc
             {
                 log.Error("Request {0}, has context left from {1}", id, cc.Id);
             }
+            TransUtil.SetUpAmbientTransaction();
+
             var ctx = new RQContext
             {
                 Id = id
@@ -91,6 +78,7 @@ namespace VMF.UI.Lib.Mvc
         {
             var hta = (HttpApplication)sender;
             log.Warn("PostRequest {0}", RQContext.Current.Id);
+            TransUtil.CleanupAmbientTransaction(); //no automatic commit
         }
     }
 }
