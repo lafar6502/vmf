@@ -27,7 +27,7 @@ namespace VMF.Services.Transactions
             SetUpAmbientTransaction();
             c0 = Transaction.Current as CommittableTransaction;
             if (c0 == null) throw new Exception("No ambient transaction #2");
-            ct.ReEnlist();
+            if (ct != null) ct.ReEnlist();
         }
 
         public static void SetUpAmbientTransaction()
