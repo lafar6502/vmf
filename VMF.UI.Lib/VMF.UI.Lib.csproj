@@ -98,5 +98,15 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VMF.Core\VMF.Core.csproj">
+      <Project>{a8d0ecb6-5065-4f46-ac73-e95616bc3e78}</Project>
+      <Name>VMF.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VMF.Services\VMF.Services.csproj">
+      <Project>{fd3bcbea-02a6-4a8a-ad3e-0d5b25ee0f28}</Project>
+      <Name>VMF.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

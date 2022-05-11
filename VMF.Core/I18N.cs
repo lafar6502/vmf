@@ -27,19 +27,19 @@ namespace VMF.Core
             var d1 = new Util.JsonTranslationFile(pth2);
             _sources = new ITextTranslation[] { d1, d0 };
         }
-        public string Get(string id, string defaultText)
+        public static string Get(string id, string defaultText)
         {
-            return id;
+            return DefaultInstance.TryGet(id, defaultText);
         }
 
 
-        public string Get(string id, string defaultText, string lang)
+        public static string Get(string id, string defaultText, string lang)
         {
-            return id;
+            return DefaultInstance.TryGet(new string[] { id }, defaultText, lang);
         }
 
 
-        public string Get(string id)
+        public static string Get(string id)
         {
             return Get(id, null);
         }
@@ -50,14 +50,14 @@ namespace VMF.Core
         /// <param name="ids"></param>
         /// <param name="defaultText"></param>
         /// <returns></returns>
-        public  string Get(IEnumerable<string> ids, string defaultText)
+        public static string Get(IEnumerable<string> ids, string defaultText)
         {
             return Get(ids, defaultText, SessionContext.Current.Language);
         }
 
-        public string Get(IEnumerable<string> ids, string defaultText, string lang)
+        public static string Get(IEnumerable<string> ids, string defaultText, string lang)
         {
-            throw new NotImplementedException();
+            return DefaultInstance.TryGet(ids, defaultText, lang);
         }
 
         /// <summary>
@@ -68,7 +68,15 @@ namespace VMF.Core
         /// <returns></returns>
         public string TryGet(IEnumerable<string> ids, string defaultText, string lang)
         {
-            return null;
+            foreach(var id in ids)
+            {
+                foreach(var st in _sources)
+                {
+                    var s = st.Get(id, lang);
+                    if (s != null) return s;
+                }
+            }
+            return defaultText;
         }
 
         public string TryGet(IEnumerable<string> ids, string defaultText)
@@ -78,14 +86,19 @@ namespace VMF.Core
 
         public  string TryGet(string id, string defaultText = null)
         {
-            return null;
+            return TryGet(new String[] { id }, defaultText);
         }
 
-        public static string FormatString(string id, params object[] args)
+        public string FormatString(string id, params object[] args)
         {
-            var s = TryGet(id);
+            var s = TryGet(new String[] { id }, null);
             if (s == null) return null;
             return string.Format(s, args);
         }
+
+
+        public static I18N DefaultInstance { get; set; }
+
+        
     }
 }
