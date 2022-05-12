@@ -148,7 +148,7 @@ namespace VMF.Core
             return Get(new string[] { id }, lang);
         }
 
-        private static bool DebugTranslation => AppGlobal.Config.Get("UI.DebugTranslation", false);
+        private static bool DebugTranslation => VMFGlobal.Config.Get("UI.DebugTranslation", false);
         
 
         public string Get(IEnumerable<string> ids, string lang = null)
@@ -157,7 +157,7 @@ namespace VMF.Core
             //for the first one we cut off the prefix and replace it with common: common.Bbbbb.Ccccc and common.Cccccc
             var id0 = ids.FirstOrDefault();
             //we can try to skip thigs like Label, Name or List (configured)
-            IEnumerable<string> skip = AppGlobal.Config != null ? AppGlobal.Config.Get<IEnumerable<string>>("UI.TranslateSkip") : null;
+            IEnumerable<string> skip = VMFGlobal.Config != null ? VMFGlobal.Config.Get<IEnumerable<string>>("UI.TranslateSkip") : null;
             if (skip != null)
             {
                 foreach (var sk in skip)
@@ -167,7 +167,7 @@ namespace VMF.Core
             }
 
             var ix0 = id0.IndexOf('.');
-            var auto = AppGlobal.Config.Get("UI.AutoTranslate", true);
+            var auto = VMFGlobal.Config.Get("UI.AutoTranslate", true);
             var dt = !auto
                    ? $"[{id0}]" 
                    : (ix0 > 0 && ix0 < id0.Length - 1 ? id0.Substring(ix0 + 1) : id0);
@@ -225,7 +225,7 @@ namespace VMF.Core
             {
                 string[] ent;
                 
-                if (AppGlobal.Config != null && AppGlobal.Config.Get("UI.EnableI18NOverrideService", false))
+                if (VMFGlobal.Config != null && VMFGlobal.Config.Get("UI.EnableI18NOverrideService", false))
                 {
                     /*var ovr = AppGlobal.ResolveService<I18NOverride>();
                     ent = ovr.GetTranslations(sid);
@@ -352,10 +352,10 @@ namespace VMF.Core
                 }
             }
 
-            if (!string.IsNullOrEmpty(AppGlobal.AppProfile))
+            if (!string.IsNullOrEmpty(VMFGlobal.AppProfile))
             {
                 var fn = Path.GetFileNameWithoutExtension(path);
-                var nfn = fn + "." + AppGlobal.AppProfile + ".json";
+                var nfn = fn + "." + VMFGlobal.AppProfile + ".json";
                 nfn = Path.Combine(Path.GetDirectoryName(path), nfn);
                 if (File.Exists(nfn))
                 {

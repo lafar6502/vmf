@@ -1,0 +1,14 @@
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" throwExceptions="false">
+  <extensions>
+
+  </extensions>
+  <variable name="logDir" value="${basedir}/App_Data/logs"/>
+  
+    <targets async="false">
+        <target name="all" xsi:type="File" fileName="${logDir}/web.${shortdate}.log"  layout="${time}|${level}|T${threadid}|${logger}|${message}"/>
+    </targets>
+    <rules>
+        <logger name="*"  minlevel="Debug" appendto="all" />
+    </rules>
+</nlog>

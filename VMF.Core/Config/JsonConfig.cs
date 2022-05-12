@@ -272,7 +272,7 @@ namespace VMF.Core.Config
         {
             var oo = Get<JObject>(configValue);
             if (oo == null) return;
-            if (AppGlobal.Container == null || AppGlobal.Config == null)
+            if (VMFGlobal.Container == null || VMFGlobal.Config == null)
             {
                 
                 oo.AssignTo(target);

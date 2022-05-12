@@ -7,15 +7,19 @@ using System.Threading.Tasks;
 using System.Web;
 using NLog;
 using VMF.Core;
+using System.Transactions;
+using System.Runtime.Remoting.Messaging;
+using VMF.Core.Transactions;
+using VMF.Services.Transactions;
 
 namespace VMF.UI.Lib.Mvc
 {
     public class TransactionManagerModule : IHttpModule
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
+
         private static int _rqId = 0;
 
-        
         public void Dispose()
         {
             
@@ -26,8 +30,50 @@ namespace VMF.UI.Lib.Mvc
             context.BeginRequest += Context_BeginRequest;
             context.PreRequestHandlerExecute += Context_PreRequestHandlerExecute;
             context.PostRequestHandlerExecute += Context_PostRequestHandlerExecute;
-            log.Info("A");
+            context.EndRequest += Context_EndRequest;
         }
+
+        private void Context_EndRequest(object sender, EventArgs e)
+        {
+            //var cc = RQContext.Current;
+            //RQContext.Current = null;
+            //log.Warn("Cleared context {0}", cc.Id);
+        }
+
+        private void CleanupContext()
+        {
+
+        }
+
+        
+        private void Context_BeginRequest(object sender, EventArgs e)
+        {
+            var hta = (HttpApplication)sender; 
+
+            int id = Interlocked.Increment(ref _rqId);
+            CurrentRequestId = id;
+            log.Warn("Begin rq  {0}", id);
+            var t0 = Transaction.Current;
+            if (t0 != null)
+            {
+                log.Error("Request {0} has transaction left {1}", id, t0.TransactionInformation.LocalIdentifier);
+            }
+            var cc = RQContext.Current;
+            if (cc != null)
+            {
+                log.Error("Request {0}, has context left from {1}", id, cc.Id);
+            }
+            TransUtil.SetUpAmbientTransaction();
+
+            var ctx = new RQContext
+            {
+                Id = id
+            };
+            RQContext.Current = ctx;
+        }
+
+        
+
 
         private void Context_PostRequestHandlerExecute(object sender, EventArgs e)
         {
@@ -45,6 +91,7 @@ namespace VMF.UI.Lib.Mvc
                 }
             }
             SessionContext.Current = null;
+            TransUtil.CleanupAmbientTransaction();
         }
 
         private void Context_PreRequestHandlerExecute(object sender, EventArgs e)
@@ -61,12 +108,7 @@ namespace VMF.UI.Lib.Mvc
             //will make transaction here
         }
 
-        private void Context_BeginRequest(object sender, EventArgs e)
-        {
-            var id = Interlocked.Increment(ref _rqId);
-            CurrentRequestId = id;
-            log.Info("New request {0} {1} {2}", id, HttpContext.Current.Request.Url, HttpContext.Current.User == null || HttpContext.Current.User.Identity == null ? "-no user-" : HttpContext.Current.User.Identity.Name);
-        }
+        
 
         public static readonly string _ky = "__vmfrqid";
 

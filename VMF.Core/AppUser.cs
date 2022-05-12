@@ -16,7 +16,7 @@ namespace VMF.Core
         {
             get
             {
-                return AppGlobal.Config.Get("SystemUserId", AnonymousUserId);
+                return VMFGlobal.Config.Get("SystemUserId", AnonymousUserId);
             }
         }
         

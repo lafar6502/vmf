@@ -32,7 +32,7 @@ namespace VMF.Core
         public SessionContext()
         {
             CurrentTransactionMode = Core.TransactionMode.Discard;
-            Language = AppGlobal.Config.Get("DefaultLanguage", "en");
+            Language = VMFGlobal.Config.Get("DefaultLanguage", "en");
             User = AppUser.Current;
             if (User != null)
             {
