@@ -22,11 +22,11 @@ namespace VMF.Services.Transactions
             _st = new SoodaTransaction();
             if (cn != null)
             {
-                var ds = _st.OpenDataSource();
+                var ds = _st.OpenDataSource("default", cn);
             }
             else
             {
-                ds 
+                
             }
             
         }
@@ -78,6 +78,7 @@ namespace VMF.Services.Transactions
 
         public void SetData(string key, object value)
         {
+            
             throw new NotImplementedException();
         }
     }
