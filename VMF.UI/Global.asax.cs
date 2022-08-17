@@ -13,6 +13,8 @@ namespace VMF.UI
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            var wc = new Castle.Windsor.WindsorContainer();
+            App_Start.ContainerConfig.Configure(wc);
         }
     }
 }

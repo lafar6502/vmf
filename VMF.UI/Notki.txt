@@ -1,0 +1,11 @@
+﻿jak będziemy sięgać do pól w obiektach
+
+
+binding do formatki: 
+labelka - z nazwy (Klasa.Pole)
+access -> z FieldAccess_Pole
+wartość -> po prostu value
+opcje -> Klasa.Options_Pole
+
+
+binding z powrotem..

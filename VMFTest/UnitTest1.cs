@@ -25,5 +25,25 @@ namespace VMFTest
             Assert.AreEqual(s0, "2");
 
         }
+
+        public class TestObj
+        {
+            public string Name { get; set; }
+            public int Num { get; set; }
+        }
+
+        [TestMethod]
+        public void TestConfig2()
+        {
+            var dd = AppDomain.CurrentDomain.BaseDirectory;
+
+            var c = new JsonConfigProvider("test");
+            var s0 = c.Get("TestString", "");
+            Assert.AreEqual(s0, "2");
+            var p = new TestObj();
+            c.SetProperties("TestObj", p);
+            //Assert.AreEqual(p.Num, 2);
+            var i1 = c.Get<int>("TestObj.Num", -1);
+        }
     }
 }
