@@ -26,7 +26,7 @@ namespace VMF.Services.Transactions
             }
             else
             {
-                
+                var ds = _st.OpenDataSource("default");
             }
             
         }

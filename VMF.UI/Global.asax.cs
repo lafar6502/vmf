@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using VMF.Core;
+using Castle.Windsor;
+using Castle.MicroKernel;
 
 namespace VMF.UI
 {
@@ -13,6 +16,10 @@ namespace VMF.UI
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            VMF.Core.VMFGlobal.Container = new WindsorContainer();
+            
+            App_Start.ContainerConfig.Configure(VMFGlobal.Container);
+            
         }
     }
 }

@@ -9,9 +9,6 @@ namespace VMF.Core
 {
     public interface IVMFTransactionFactory
     {
-        public IVMFTransaction CreateTransaction(IDbConnection cn = null)
-        {
-
-        }
+        IVMFTransaction CreateTransaction(IDbConnection cn = null);
     }
 }
