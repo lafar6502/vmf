@@ -76,10 +76,16 @@ namespace VMF.Core.Util
 
         public void SetProperties(string configValue, object target)
         {
-            throw new NotImplementedException();
+            JToken jt;
+            if (_data.TryGetValue(configValue, out jt))
+            {
+                JObject jo = jt as JObject;
+                jo.AssignTo(target);
+            }
+            else throw new Exception("Missing " + configValue);
         }
 
-        protected T GetInternal<T>(string name, T defaultValue)
+        protected T GetInternal<T>(string name, T defaultValue = default(T))
         {
             //if (_lastCheck.AddSeconds(30) < DateTime.Now)
             //{
@@ -90,12 +96,8 @@ namespace VMF.Core.Util
             {
                 v = GetJsonValue(_data, name);
             }
-            if (defaultValue != null && v != null)
-            {
-                return (T)v.ToObject(defaultValue.GetType());
-            }
-            return v == null ? defaultValue : v.ToObject<T>();
-
+            if (v == null) return defaultValue;
+            return v.ToObject<T>();
         }
 
         private static JToken GetJsonValue(JToken root, string path)

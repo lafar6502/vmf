@@ -1,3 +1,4 @@
 ﻿{
-  "TestString": "2"
+  "TestString": "2",
+  "TestObj.Num": 3
 }

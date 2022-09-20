@@ -1,0 +1,8 @@
+﻿{
+  "TestString": "2",
+  //"TestObj.Num": 3,
+  "TestObj": {
+    "Name": "COGITPC 1",
+    "Num": 5
+  }
+}

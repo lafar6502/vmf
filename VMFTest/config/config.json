@@ -1,3 +1,7 @@
 ﻿{
-  "TestString": "1"
+  "TestString": "1",
+  "TestObj": {
+    "Name": "MAIN 1",
+    "Num": 1
+  }
 }

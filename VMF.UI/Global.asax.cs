@@ -17,9 +17,7 @@ namespace VMF.UI
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             VMF.Core.VMFGlobal.Container = new WindsorContainer();
-            
             App_Start.ContainerConfig.Configure(VMFGlobal.Container);
-            
         }
     }
 }

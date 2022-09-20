@@ -68,6 +68,9 @@
     <None Include="config\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="config\test.cogitpc.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="config\test.wypas6.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
