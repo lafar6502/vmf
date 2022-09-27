@@ -97,6 +97,7 @@
     <Compile Include="Transactions\TransUtil.cs" />
     <Compile Include="Transactions\VMFTransaction.cs" />
     <Compile Include="Util\SqliteTranslationRepo.cs" />
+    <Compile Include="Util\SqliteUtil.cs" />
     <Compile Include="Util\TextFileTranslationRepo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -26,6 +26,10 @@ namespace VMF.Services.Util
     {
         public string DbFile { get; set; }
 
+        const string dbinit = @"create table Translation(Id nvarchar(200), lang nchar(2), Txt TEXT, PRIMARY KEY(Id, Lang));
+create table TranslationP(Id nvarchar(200), lang nchar(2), Txt TEXT, PRIMARY KEY(Id, Lang));
+create table TranslationU(Id nvarchar(200), lang nchar(2), Txt TEXT, PRIMARY KEY(Id, Lang));";
+
         public IEnumerable<string> Languages => throw new NotImplementedException();
 
         public event Action<ITextTranslation> TranslationsChanged;
@@ -43,6 +47,14 @@ namespace VMF.Services.Util
         public void Set(string id, string text, string language)
         {
             throw new NotImplementedException();
+        }
+
+        protected SQLiteConnection OpenDb(bool readOnly = false)
+        {
+            lock(this)
+            {
+                return SqliteUtil.OpenDb(this.DbFile, dbinit, readOnly);
+            }
         }
     }
 }
