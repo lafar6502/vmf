@@ -2,6 +2,8 @@
 using System;
 using VMF.Core.Util;
 using System.IO;
+using VMF.Services.Util;
+
 namespace VMFTest
 {
     [TestClass]
@@ -44,6 +46,22 @@ namespace VMFTest
             c.SetProperties("TestObj", p);
             //Assert.AreEqual(p.Num, 2);
             var i1 = c.Get<int>("TestObj.Num", -1);
+        }
+
+        [TestMethod]
+        public void TestTranslationRepo1()
+        {
+            var repo = new SqliteTranslationRepo()
+            {
+                DbFile = "testrepo.db"
+            };
+
+            var tr1 = repo.Get("test.Program1", "en");
+            repo.Set("test.Program1", "SOMETHING HUGE", "en");
+            var tr2 = repo.Get("test.Program1", "en");
+
+            var tr3 = repo.Get("test.Program1", "fr");
+
         }
     }
 }

@@ -28,6 +28,7 @@ namespace VMF.Services.Util
                     log.Info("Initializing database  {0}", connstr1);
                     using (var c2 = new SQLiteConnection(connstr1))
                     {
+                        log.Info("run init script on {0}", c2.FileName);
                         c2.Execute(ddl);
                     }
                 }

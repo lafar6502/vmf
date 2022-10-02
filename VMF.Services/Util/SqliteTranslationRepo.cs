@@ -114,7 +114,7 @@ namespace VMF.Services.Util
             {
                 var p = new { text = text, id = id, lang = language, level = 3 };
                 int n = cn.Execute("update Translation set Txt=@text where Id=@id and Lang=@lang and Level=@level", p);
-                if (n == 0) cn.Execute("insert into Translation(Id, Lang, Level, Txt) values(@id, @lang, @level, @text)");
+                if (n == 0) cn.Execute("insert into Translation(Id, Lang, Level, Txt) values(@id, @lang, @level, @text)", p);
                 lock (this)
                 {
                     var k = Key(id, language);
