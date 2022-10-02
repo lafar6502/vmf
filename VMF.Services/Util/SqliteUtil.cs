@@ -34,7 +34,8 @@ namespace VMF.Services.Util
                 catch (Exception ex)
                 {
                     log.Error("Error initializing new database {0}: {1}", fileName, ex.ToString());
-                    //File.Delete(fileName);
+                    File.Delete(fileName);
+                    throw;
                 }
             }
             
