@@ -14,7 +14,7 @@ namespace VMF.Services.Transactions
         {
             var c0 = Transaction.Current as CommittableTransaction;
             if (c0 == null) throw new Exception("There is no ambient transaction");
-            Transaction.Current = null;
+            
             try
             {
                 c0.Commit();
@@ -22,6 +22,7 @@ namespace VMF.Services.Transactions
             finally
             {
                 c0.Dispose();
+                Transaction.Current = null;
             }
 
             SetUpAmbientTransaction();
@@ -47,18 +48,22 @@ namespace VMF.Services.Transactions
             
         }
 
-        public static void CleanupAmbientTransaction()
+        public static void CleanupAmbientTransaction(bool commit)
         {
             var c0 = Transaction.Current as CommittableTransaction;
             if (c0 == null) return;
-            Transaction.Current = null;
+            
             try
             {
-                c0.Commit();
+                if (commit)
+                {
+                    c0.Commit();
+                }
             }
             finally
             {
                 c0.Dispose();
+                Transaction.Current = null;
             }
         }
     }

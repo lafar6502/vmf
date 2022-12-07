@@ -30,11 +30,18 @@ namespace VMF.UI.Lib.Mvc
             context.BeginRequest += Context_BeginRequest;
             context.PreRequestHandlerExecute += Context_PreRequestHandlerExecute;
             context.PostRequestHandlerExecute += Context_PostRequestHandlerExecute;
+            context.PostAuthenticateRequest += Context_PostAuthenticateRequest;
             context.EndRequest += Context_EndRequest;
+        }
+
+        private void Context_PostAuthenticateRequest(object sender, EventArgs e)
+        {
+            AuthenticateBasic();
         }
 
         private void Context_EndRequest(object sender, EventArgs e)
         {
+            log.Warn("END request {0}", CurrentRequestId);
             //var cc = RQContext.Current;
             //RQContext.Current = null;
             //log.Warn("Cleared context {0}", cc.Id);
@@ -52,7 +59,7 @@ namespace VMF.UI.Lib.Mvc
 
             int id = Interlocked.Increment(ref _rqId);
             CurrentRequestId = id;
-            log.Warn("Begin rq  {0}", id);
+            log.Warn("Begin rq  {0}: {1}", id, HttpContext.Current.Request.Url);
             var t0 = Transaction.Current;
             if (t0 != null)
             {
@@ -72,16 +79,68 @@ namespace VMF.UI.Lib.Mvc
             RQContext.Current = ctx;
         }
 
-        
 
+        private void AuthenticateBasic()
+        {
+            var rq = HttpContext.Current.Request;
+            var auth = rq.Headers["Authorization"];
+            if (!String.IsNullOrEmpty(auth))
+            {
+                if (!auth.StartsWith("Basic "))
+                {
+                    log.Warn("Invalid auth hdr: " + auth);
+                    return;
+                }
+                var cred = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(auth.Substring(6))).Split(':');
+                if (cred.Length != 2)
+                {
+                    log.Warn("Basic auth invalid {0}", auth);
+                    return;
+                }
+                log.Warn("Basic auth {0}:{1}", cred[0], cred[1]);
+                if (!string.IsNullOrEmpty(cred[0]))
+                {
+                    AppUser.Current = new AppUser
+                    {
+                        Login = cred[0],
+                        Name = cred[0]
+                    };
+                    HttpContext.Current.User = AppUser.Current;
+                }
+                /*var repo = AppGlobal.Container.Resolve<IUserRepository>();
+                if (repo != null)
+                {
+                    if (cred.Length < 2)
+                    {
+                        log.Warn("Basic auth invalid creds: {0}", auth);
+                    }
+
+                    //var user = new { Name = cred[0], Pass = cred[1] };
+                    var authed = repo.PasswordAuthenticate(cred[0], cred[1]);
+                    log.Info("Basic auth for user {0}: {1}", cred[0], authed);
+                    if (authed)
+                    {
+                        var au = repo.GetUserByUserId(cred[0]);
+                        if (au != null)
+                        {
+                            log.Info("User set by basic auth: {0}", au.Id, au.Identity.Name);
+                            AppUser.Current = au;
+                            HttpContext.Current.User = au;
+                        }
+                        else log.Warn("User not found: {0}", cred[0]);
+                    }
+                }*/
+            }
+        }
 
         private void Context_PostRequestHandlerExecute(object sender, EventArgs e)
         {
             log.Info("POST request {0}", CurrentRequestId);
             var sc = SessionContext.Current;
+            var doCommit = false;
             if (sc == null)
             {
-                log.Warn("No session context {0}", CurrentRequestId);
+                log.Error("No session context {0}", CurrentRequestId);
             }
             else
             {
@@ -89,9 +148,10 @@ namespace VMF.UI.Lib.Mvc
                 {
                     log.Error("post request - Session context in rq {0} - from {1}", CurrentRequestId, sc.RequestId);
                 }
+                doCommit = sc.CurrentTransactionMode == TransactionMode.Commit;
             }
+            TransUtil.CleanupAmbientTransaction(doCommit);
             SessionContext.Current = null;
-            TransUtil.CleanupAmbientTransaction();
         }
 
         private void Context_PreRequestHandlerExecute(object sender, EventArgs e)
@@ -100,7 +160,7 @@ namespace VMF.UI.Lib.Mvc
             var sc = SessionContext.Current;
             if (sc != null)
             {
-                log.Error("Session context in rq {0} - from {1}", CurrentRequestId, sc.RequestId);
+                log.Error("Session context  in rq {0} - from {1}", CurrentRequestId, sc.RequestId);
             }
             sc = new SessionContext();
             sc.RequestId = CurrentRequestId.ToString();

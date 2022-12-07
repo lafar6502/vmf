@@ -7,6 +7,7 @@ using System.Data.SQLite;
 using System.Data;
 using Dapper;
 using VMF.Core;
+using System.IO;
 
 namespace VMF.Services.Util
 {
@@ -133,5 +134,38 @@ namespace VMF.Services.Util
             return SqliteUtil.OpenDb(this.DbFile, dbinit, readOnly);
             
         }
+
+        /// <summary>
+        /// levels: 1 - main file, 2 - profile, 3 - user overrides
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="level"></param>
+        public void LoadTextFile(string filePath, int level)
+        {
+
+        }
+
+        public void SaveTextFile(string filePath, int level)
+        {
+
+        }
+
+        public void SaveTo(TextWriter output, int level)
+        {
+            using (var cn = OpenDb(true))
+            {
+                cn.Query<Entry>("select Id, Lang, Txt, Level from Translation where Level=@level order by Id, Lang", new { level = level });
+            }
+        }
+
+        protected void Save(IEnumerable<Entry> ents, TextWriter output)
+        {
+            foreach(var e in ents)
+            {
+                output.Write(e.Id);
+                
+            }
+        }
+
     }
 }

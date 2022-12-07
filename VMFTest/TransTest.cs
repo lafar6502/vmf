@@ -31,7 +31,7 @@ namespace VMFTest
         {
             TransUtil.SetUpAmbientTransaction();
             TransUtil.CommitAndReEnlist(null);
-            TransUtil.CleanupAmbientTransaction();
+            TransUtil.CleanupAmbientTransaction(false);
         }
     }
 }

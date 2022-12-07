@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using VMF.Core;
 
 namespace VMF.UI
 {
@@ -12,6 +13,9 @@ namespace VMF.UI
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+
+            routes.Add(new Route("servicecall/{*pathInfo}", VMFGlobal.Container.Resolve<VMF.UI.Lib.Web.ServiceCallRouteHandler>()));
 
             routes.MapRoute(
                 name: "Default",
