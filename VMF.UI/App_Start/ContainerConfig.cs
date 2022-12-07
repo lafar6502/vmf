@@ -12,6 +12,7 @@ using VMF.Core.Util;
 using VMF.Services;
 using VMF.Services.Transactions;
 using VMF.UI.Lib.Web;
+using System.Reflection;
 
 namespace VMF.UI.App_Start
 {
@@ -26,9 +27,24 @@ namespace VMF.UI.App_Start
             wc.Register(Component.For<IVMFTransactionFactory>().ImplementedBy<TransactionFactory>().LifeStyle.Singleton);
 
             wc.Register(Component.For<ServiceCallRouteHandler>().ImplementedBy<ServiceCallRouteHandler>());
+            RegisterControllersFromAssembly(typeof(Controllers.BaseTestController).Assembly, wc);
             VMFGlobal.Config = cfg;
+        }
 
+        public static void RegisterServicesFromAssembly<T, I>(Assembly asm, IWindsorContainer wc)
+        {
+            foreach (var t in asm.GetTypes().Where(t => typeof(T).IsAssignableFrom(t) && !t.IsAbstract && !t.IsGenericType))
+            {
+                wc.Register(Component.For(t).ImplementedBy(t).LifeStyle.Transient);
+            }
+        }
 
+        public static void RegisterControllersFromAssembly(Assembly asm, IWindsorContainer wc)
+        {
+            foreach (var t in asm.GetTypes().Where(t => typeof(System.Web.Mvc.Controller).IsAssignableFrom(t) && !t.IsAbstract && !t.IsGenericType))
+            {
+                wc.Register(Component.For(t).ImplementedBy(t).LifeStyle.Transient);
+            }
         }
     }
 }

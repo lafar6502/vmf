@@ -16,7 +16,8 @@ namespace VMF.UI.Controllers
         {
             var er = new EntityRef(entity, id);
             var ent = EntityResolver.Get(er);
-
+            var sc = SessionContext.Current;
+            if (sc == null) throw new Exception();
             return View(ent);
         }
 

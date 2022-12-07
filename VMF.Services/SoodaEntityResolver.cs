@@ -18,7 +18,15 @@ namespace VMF.Services
 
         public object Get(EntityRef entity)
         {
-            throw new NotImplementedException();
+            var st = SoodaTransaction.ActiveTransaction;
+            var sf = st.GetFactory(entity.Entity);
+            if (sf == null) throw new Exception("Not found:" + entity.Entity);
+            var ft = sf.GetPrimaryKeyFieldHandler().GetFieldType();
+            var flds = sf.GetClassInfo().GetPrimaryKeyFields();
+            if (flds.Length != 1) throw new Exception("Keys..");
+            var kv = Convert.ChangeType(entity.Id, flds[0].Type);
+            var v = sf.GetRef(st, kv);
+            return v;
         }
 
         public IEnumerable<object> GetMany(IEnumerable<EntityRef> refs)

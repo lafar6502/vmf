@@ -19,7 +19,7 @@ namespace VMF.UI.Lib.Mvc
         private static Logger log = LogManager.GetCurrentClassLogger();
 
         private static int _rqId = 0;
-
+        private IVMFTransactionFactory TransactionFactory { get; set; }
         public void Dispose()
         {
             
@@ -32,6 +32,14 @@ namespace VMF.UI.Lib.Mvc
             context.PostRequestHandlerExecute += Context_PostRequestHandlerExecute;
             context.PostAuthenticateRequest += Context_PostAuthenticateRequest;
             context.EndRequest += Context_EndRequest;
+            context.Error += Context_Error;
+            
+        }
+
+        private void Context_Error(object sender, EventArgs e)
+        {
+            throw new Exception("Error on error");
+            log.Warn("Error ..");
         }
 
         private void Context_PostAuthenticateRequest(object sender, EventArgs e)
@@ -45,6 +53,17 @@ namespace VMF.UI.Lib.Mvc
             //var cc = RQContext.Current;
             //RQContext.Current = null;
             //log.Warn("Cleared context {0}", cc.Id);
+
+            TransUtil.CleanupAmbientTransaction(false);
+            if (Transaction.Current != null)
+            {
+                log.Error("Transaction cleanup! {0}", RQContext.Current.Id);
+            }
+            if (SessionContext.Current != null)
+            {
+                log.Error("SC cleanup! {0}", RQContext.Current.Id);
+            }
+            RQContext.Current = null;
         }
 
         private void CleanupContext()
@@ -164,7 +183,14 @@ namespace VMF.UI.Lib.Mvc
             }
             sc = new SessionContext();
             sc.RequestId = CurrentRequestId.ToString();
+
+
+            var tf = VMFGlobal.ResolveService<IVMFTransactionFactory>();
+            var tran = tf.CreateTransaction(null);
+            sc.Transaction = tran;
+
             SessionContext.Current = sc;
+            
             //will make transaction here
         }
 
