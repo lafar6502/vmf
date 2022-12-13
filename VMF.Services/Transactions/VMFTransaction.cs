@@ -7,12 +7,17 @@ using VMF.Core;
 using Sooda;
 using System.Data;
 using NLog;
+using System.Data.Common;
+using System.Transactions;
+using NGinnBPM.MessageBus;
+using Newtonsoft.Json;
+
 namespace VMF.Services.Transactions
 {
     public class VMFTransaction : IVMFTransaction
     {
 
-        protected VMFTransaction(IDbConnection cn)
+        public VMFTransaction(IDbConnection cn)
         {
             if (SoodaTransaction.ActiveTransaction != null)
             {
@@ -31,6 +36,8 @@ namespace VMF.Services.Transactions
             
         }
         private SoodaTransaction _st;
+
+        private IDbConnection _defaultCn = null;
         public string Tid { get; set; }
 
         public bool HasModifications
@@ -41,45 +48,95 @@ namespace VMF.Services.Transactions
             }
         }
 
+        /// <summary>
+        /// current transactions database connection
+        /// </summary>
+        public IDbConnection DefaultConnection
+        {
+            get
+            {
+                if (_defaultCn == null)
+                {
+                    var ds = _st.OpenDataSource("default");
+                    _defaultCn = ds.Connection;
+                }
+                return _defaultCn;
+            }
+        }
+
         public void Commit()
         {
             _st.Commit();
         }
 
+        internal class VMFTranState
+        {
+            public string SoodaState { get; set; }
+            public string MBState { get; set; }
+            public Dictionary<string, object> Data { get; set; }
+        }
         public void DeserializeState(string state)
         {
-            throw new NotImplementedException();
+            var ss = JsonConvert.DeserializeObject<VMFTranState>(state);
+            if (!string.IsNullOrEmpty(ss.MBState)) MessageBusContext.SetCurrentTransactionState(ss.MBState);
+            _data = ss.Data ?? new Dictionary<string, object>();
+            _st.Deserialize(ss.SoodaState);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            if (_st != null)
+            {
+                _st.Dispose();
+                _st = null;
+            }
         }
 
+        private Dictionary<string, object> _data = new Dictionary<string, object>();
         public T GetData<T>(string key, T defaultValue)
         {
-            throw new NotImplementedException();
+            return _data.GetValueOrDefault(key, defaultValue);
         }
 
         public bool HasData(string key)
         {
-            throw new NotImplementedException();
+            return _data.ContainsKey(key);
         }
 
         public void ReEnlist()
         {
-            throw new NotImplementedException();
+            ReEnlistSooda();
+        }
+
+        private void ReEnlistSooda()
+        {
+            if (Transaction.Current == null) return;
+            foreach (var ds in _st.Schema.DataSources)
+            {
+                var dss = _st.OpenDataSource(ds);
+                if (!dss.IsOpen) continue;
+                var cn = dss.Connection as DbConnection;
+                if (cn == null || cn.State == ConnectionState.Closed || cn.State == ConnectionState.Broken) continue;
+                //if (Debug) log.Info("Re-enlisting connection '{0}'", ds.Name);
+                cn.EnlistTransaction(Transaction.Current);
+            }
+
         }
 
         public string SerializeState()
         {
-            throw new NotImplementedException();
+            var ss = new VMFTranState
+            {
+                SoodaState = _st.Serialize(),
+                Data = _data,
+                MBState = MessageBusContext.GetSerializedCurrentTransactionState()
+            };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(ss);
         }
 
         public void SetData(string key, object value)
         {
-            
-            throw new NotImplementedException();
+            _data[key] = value;
         }
     }
 }

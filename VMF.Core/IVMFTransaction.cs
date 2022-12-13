@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,5 +41,7 @@ namespace VMF.Core
         T GetData<T>(string key, T defaultValue);
 
         bool HasData(string key);
+
+        IDbConnection DefaultConnection { get; }
     }
 }

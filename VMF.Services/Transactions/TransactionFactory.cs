@@ -12,7 +12,7 @@ namespace VMF.Services.Transactions
     {
         public IVMFTransaction CreateTransaction(IDbConnection cn = null)
         {
-            throw new NotImplementedException();
+            return new VMFTransaction(cn);
         }
     }
 }
