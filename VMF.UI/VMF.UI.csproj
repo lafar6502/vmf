@@ -60,26 +60,14 @@
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.7.13\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="Sooda, Version=2.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.dll</HintPath>
+    <Reference Include="Sooda, Version=0.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg_dev.2.19.1\lib\net40\Sooda.dll</HintPath>
     </Reference>
-    <Reference Include="Sooda.CodeGen, Version=2.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.CodeGen.dll</HintPath>
+    <Reference Include="Sooda.CodeGen, Version=2.2.7577.38395, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg_dev.2.19.1\lib\net40\Sooda.CodeGen.dll</HintPath>
     </Reference>
-    <Reference Include="Sooda.Logging.NLog47, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.Logging.NLog47.dll</HintPath>
-    </Reference>
-    <Reference Include="Sooda.Oracle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.Oracle.dll</HintPath>
-    </Reference>
-    <Reference Include="Sooda.SqlServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Sooda.TransactionStrategy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.TransactionStrategy.dll</HintPath>
-    </Reference>
-    <Reference Include="Sooda.TransactionStrategy.ThreadBound, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.TransactionStrategy.ThreadBound.dll</HintPath>
+    <Reference Include="Sooda.Logging.NLog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg_dev.2.19.1\lib\net40\Sooda.Logging.NLog.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.IO.Compression" />
@@ -155,6 +143,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\jquery-ui-1.12.1\package.json" />
+    <Content Include="config\config.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -218,6 +207,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VMF.BusinessObjects\VMF.BusinessObjects.csproj">
+      <Project>{62b74101-9250-4ab4-81e3-f88d695b5bc7}</Project>
+      <Name>VMF.BusinessObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VMF.Core\VMF.Core.csproj">
       <Project>{a8d0ecb6-5065-4f46-ac73-e95616bc3e78}</Project>
       <Name>VMF.Core</Name>

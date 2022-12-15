@@ -16,12 +16,13 @@ namespace VMF.Services.Transactions
 {
     public class VMFTransaction : IVMFTransaction
     {
-
+        private static Logger log = LogManager.GetCurrentClassLogger();
         public VMFTransaction(IDbConnection cn)
         {
-            if (SoodaTransaction.ActiveTransaction != null)
+            if (SoodaTransaction.HasActiveTransaction)
             {
-
+                log.Error("There is active transaction");
+                throw new Exception();
             }
 
             _st = new SoodaTransaction();

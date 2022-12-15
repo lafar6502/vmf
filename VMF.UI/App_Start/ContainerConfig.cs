@@ -13,6 +13,8 @@ using VMF.Services;
 using VMF.Services.Transactions;
 using VMF.UI.Lib.Web;
 using System.Reflection;
+using Sooda;
+using VMF.Services.Config;
 
 namespace VMF.UI.App_Start
 {
@@ -28,6 +30,13 @@ namespace VMF.UI.App_Start
 
             wc.Register(Component.For<ServiceCallRouteHandler>().ImplementedBy<ServiceCallRouteHandler>());
             RegisterControllersFromAssembly(typeof(Controllers.BaseTestController).Assembly, wc);
+            SoodaConfig.SetConfigProvider(new VMFSoodaConfigProvider(cfg));
+            //Sooda.TransactionStrategyMenager.SetTransactionStrategy(new Sooda.TransactionStrategy.SoodaThreadBoundTransactionStrategy());
+            var st = SoodaTransaction.DefaultTransactionStrategy;
+            SoodaTransaction.DefaultObjectsAssembly = typeof(VMF.BusinessObjects.ObjectClass).Assembly;
+            
+            //Sooda.Sql.SqlBuilderMenager.SetDefaultBuilder(new Sooda.SqlServer.SqlServerBuilder());
+
             VMFGlobal.Config = cfg;
         }
 

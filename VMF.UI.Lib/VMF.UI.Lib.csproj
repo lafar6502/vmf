@@ -53,26 +53,17 @@
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.7.13\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="Sooda, Version=2.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.dll</HintPath>
+    <Reference Include="Sooda, Version=0.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg_dev.2.19.1\lib\net40\Sooda.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Sooda.CodeGen, Version=2.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.CodeGen.dll</HintPath>
+    <Reference Include="Sooda.CodeGen, Version=2.2.7577.38395, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg_dev.2.19.1\lib\net40\Sooda.CodeGen.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Sooda.Logging.NLog47, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.Logging.NLog47.dll</HintPath>
-    </Reference>
-    <Reference Include="Sooda.Oracle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.Oracle.dll</HintPath>
-    </Reference>
-    <Reference Include="Sooda.SqlServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Sooda.TransactionStrategy, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.TransactionStrategy.dll</HintPath>
-    </Reference>
-    <Reference Include="Sooda.TransactionStrategy.ThreadBound, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sooda.rg2_dev.2.2.1010\lib\net48\Sooda.TransactionStrategy.ThreadBound.dll</HintPath>
+    <Reference Include="Sooda.Logging.NLog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=102bbd392415062a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sooda.rg_dev.2.19.1\lib\net40\Sooda.Logging.NLog.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

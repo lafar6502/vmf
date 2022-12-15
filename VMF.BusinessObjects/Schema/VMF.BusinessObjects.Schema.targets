@@ -12,11 +12,11 @@
     </ItemGroup>
     
     <Target Name="GenerateSchema" BeforeTargets="PreBuildEvent" Inputs="@(SchemaFiles)" Outputs="_DBSchema.bin;Schema\ChangeLog\InitiateDatabase.sql" >
-        <XmlPeek XmlInputPath="packages.config" Query="/packages/package[@id='Sooda.rg2_dev']/@version">
+        <XmlPeek XmlInputPath="packages.config" Query="/packages/package[@id='Sooda.rg_dev']/@version">
             <Output TaskParameter="Result" PropertyName="SoodaVersion" />
         </XmlPeek>
-        <Exec Command="..\packages\Sooda.rg2_dev.$(SoodaVersion)\tools\net48\SoodaStubGen.exe --lang csharp --schema $(MainSchemaFile) --namespace $(OutputNamespace) --base-class $(BaseClass) --output $(OutputDirectory) --schema-embed-bin --nullable-as $(NullableAsType) --no-typed-queries" />
-        <Exec Command="..\packages\Sooda.rg2_dev.$(SoodaVersion)\tools\net48\SoodaSchemaTool.exe genddl $(MainSchemaFile) &gt; $(InitializeDBScript)" />
+        <Exec Command="..\packages\Sooda.rg_dev.$(SoodaVersion)\tools\net40\SoodaStubGen.exe --lang csharp --schema $(MainSchemaFile) --namespace $(OutputNamespace) --base-class $(BaseClass) --output $(OutputDirectory) --schema-embed-bin --nullable-as $(NullableAsType) --no-typed-queries" />
+        <Exec Command="..\packages\Sooda.rg_dev.$(SoodaVersion)\tools\net40\SoodaSchemaTool.exe genddl $(MainSchemaFile) &gt; $(InitializeDBScript)" />
     </Target>
 
 </Project>
