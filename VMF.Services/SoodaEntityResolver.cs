@@ -36,27 +36,38 @@ namespace VMF.Services
             {
                 
             }
-            throw new NotImplementedException();
+            foreach(var e in refs)
+            {
+                yield return Get(e);
+            }
         }
 
         public string GetObjectLabel(object obj)
         {
-            throw new NotImplementedException();
+            var so = obj as SoodaObject;
+            return so.GetLabel(false);
         }
 
         public EntityRef GetObjectRef(object obj)
         {
-            throw new NotImplementedException();
+            if (obj == null) return null;
+            var so = obj as SoodaObject;
+            if (so == null) throw new Exception();
+            var kv = so.GetPrimaryKeyValue();
+            return new EntityRef(obj.GetType().Name, kv.ToString());
         }
 
         public bool KnowsEntityType(Type t)
         {
-            throw new NotImplementedException();
+            if (!typeof(SoodaObject).IsAssignableFrom(t)) return false;
+            return true;
         }
 
         public Type KnowsEntityType(string entName)
         {
-            throw new NotImplementedException();
+            var tf = SoodaTransaction.ActiveTransaction.GetFactory(entName);
+            if (tf == null) return null;
+            return tf.TheType;
         }
     }
 }

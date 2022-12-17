@@ -1,4 +1,7 @@
 ﻿{
+  "sooda.logging": "nlog",
+  "sooda.cachingPolicy": "all",
+  "default.connectionString": "Data Source=127.0.0.1;Initial Catalog=AliplastConfigurator_copy;User Id=configurator;Password=PASS;Enlist=true;",
   "TestString": "1",
   "TestObj": {
     "Name": "MAIN 1",

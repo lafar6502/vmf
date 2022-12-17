@@ -24,7 +24,16 @@
       <field name="KeyValue" dbcolumn="key_value" type="Integer" nullable="false" />
     </table>
   </class>
-  
-  
+
+  <class name="SysUser">
+    <table name="SysUser">
+      <field name="Id" type="Integer" nullable="false" primaryKey="true" />
+      <field name="Login" type="String" nullable="false" size="50" />
+      <field name="Password" type="String" nullable="true" />
+      <field name="Active" type="Boolean" nullable="false" />
+      <field name="Name" type="String" size="200" nullable="false" />
+      <field name="Email" type="String" size="100" nullable="true" />
+    </table>
+  </class>
 
 </schema>

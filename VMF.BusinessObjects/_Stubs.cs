@@ -98,6 +98,46 @@ namespace VMF.BusinessObjects {
       return new KeyGenList(base.GetSnapshot2());
     }
   }
+  public class SysUserList : Sooda.ObjectMapper.SoodaObjectCollectionWrapperGeneric<SysUser> {
+    public SysUserList() {
+    }
+    public SysUserList(ISoodaObjectList list) : 
+        base(list) {
+    }
+    public SysUserList Sort(IComparer comparer) {
+      return new SysUserList(base.Sort2(comparer));
+    }
+    public SysUserList Sort(string sortOrder) {
+      return new SysUserList(base.Sort2(sortOrder));
+    }
+    public SysUserList Sort(Sooda.QL.SoqlExpression sortExpression) {
+      return new SysUserList(base.Sort2(sortExpression));
+    }
+    public SysUserList Sort(Sooda.QL.SoqlExpression sortExpression, Sooda.SortOrder sortOrder) {
+      return new SysUserList(base.Sort2(sortExpression, sortOrder));
+    }
+    public SysUserList SelectFirst(int count) {
+      return new SysUserList(base.SelectFirst2(count));
+    }
+    public SysUserList SelectLast(int count) {
+      return new SysUserList(base.SelectLast2(count));
+    }
+    public SysUserList SelectRange(int _from, int _to) {
+      return new SysUserList(base.SelectRange2(_from, _to));
+    }
+    public SysUserList Filter(SoodaObjectFilter f) {
+      return new SysUserList(base.Filter2(f));
+    }
+    public SysUserList Filter(Sooda.QL.SoqlBooleanExpression sortExpression) {
+      return new SysUserList(base.Filter2(sortExpression));
+    }
+    public SysUserList Filter(SoodaWhereClause whereClause) {
+      return new SysUserList(base.Filter2(whereClause));
+    }
+    public SysUserList GetSnapshot() {
+      return new SysUserList(base.GetSnapshot2());
+    }
+  }
 }
 namespace VMF.BusinessObjects.Stubs {
   using System;
@@ -652,6 +692,344 @@ namespace VMF.BusinessObjects.Stubs {
       this.AfterFieldUpdate("KeyValue", oldValue, newValue);
     }
   }
+  public class SysUser_Values : Sooda.SoodaObjectReflectionCachingFieldValues {
+    public int Id;
+    public string Login;
+    public string Password;
+    public bool Active;
+    public string Name;
+    public string Email;
+    public SysUser_Values(Sooda.SoodaObjectReflectionCachingFieldValues other) : 
+        base(other) {
+    }
+    public SysUser_Values(string[] fieldNames) : 
+        base(fieldNames) {
+    }
+    public override Sooda.SoodaObjectFieldValues Clone() {
+      return new SysUser_Values(this);
+    }
+  }
+  public abstract class SysUser_Stub : VMF.BusinessObjects.Common.BaseObject {
+    private static IPrimaryKeyGenerator keyGenerator = new Sooda.ObjectMapper.KeyGenerators.TableBasedGenerator("SysUser", VMFBusinessObjects._DatabaseSchema.GetSchema().GetDataSourceInfo("default"));
+    public SysUser_Stub(SoodaTransaction tran) : 
+        base(tran) {
+      this.InitNewObject();
+    }
+    public SysUser_Stub(SoodaConstructor c) : 
+        base(c) {
+    }
+    public static System.Linq.IQueryable<SysUser> AllQuery {
+      get {
+        return Linq(SoodaSnapshotOptions.NoWriteObjects);
+      }
+    }
+    public int Id {
+      get {
+        return ((int)(this.GetPrimaryKeyValue()));
+      }
+      set {
+        this.SetPrimaryKeyValue(value);
+      }
+    }
+    [Sooda.SoodaFieldSizeAttribute(50)]
+    public string Login {
+      get {
+        return this.GetSysUserFieldValuesForRead(0).Login;
+      }
+      set {
+        Sooda.ObjectMapper.SoodaObjectImpl.SetPlainFieldValue(this, 0, "Login", 1, Sooda.SoodaNullable.Box(value), new Sooda.SoodaFieldUpdateDelegate(this.BeforeFieldUpdate_Login), new Sooda.SoodaFieldUpdateDelegate(this.AfterFieldUpdate_Login));
+      }
+    }
+    public string Password {
+      get {
+        return this.GetSysUserFieldValuesForRead(0).Password;
+      }
+      set {
+        Sooda.ObjectMapper.SoodaObjectImpl.SetPlainFieldValue(this, 0, "Password", 2, Sooda.SoodaNullable.Box(value), new Sooda.SoodaFieldUpdateDelegate(this.BeforeFieldUpdate_Password), new Sooda.SoodaFieldUpdateDelegate(this.AfterFieldUpdate_Password));
+      }
+    }
+    public bool Active {
+      get {
+        return this.GetSysUserFieldValuesForRead(0).Active;
+      }
+      set {
+        Sooda.ObjectMapper.SoodaObjectImpl.SetPlainFieldValue(this, 0, "Active", 3, Sooda.SoodaNullable.Box(value), new Sooda.SoodaFieldUpdateDelegate(this.BeforeFieldUpdate_Active), new Sooda.SoodaFieldUpdateDelegate(this.AfterFieldUpdate_Active));
+      }
+    }
+    [Sooda.SoodaFieldSizeAttribute(200)]
+    public string Name {
+      get {
+        return this.GetSysUserFieldValuesForRead(0).Name;
+      }
+      set {
+        Sooda.ObjectMapper.SoodaObjectImpl.SetPlainFieldValue(this, 0, "Name", 4, Sooda.SoodaNullable.Box(value), new Sooda.SoodaFieldUpdateDelegate(this.BeforeFieldUpdate_Name), new Sooda.SoodaFieldUpdateDelegate(this.AfterFieldUpdate_Name));
+      }
+    }
+    [Sooda.SoodaFieldSizeAttribute(100)]
+    public string Email {
+      get {
+        return this.GetSysUserFieldValuesForRead(0).Email;
+      }
+      set {
+        Sooda.ObjectMapper.SoodaObjectImpl.SetPlainFieldValue(this, 0, "Email", 5, Sooda.SoodaNullable.Box(value), new Sooda.SoodaFieldUpdateDelegate(this.BeforeFieldUpdate_Email), new Sooda.SoodaFieldUpdateDelegate(this.AfterFieldUpdate_Email));
+      }
+    }
+    private SysUser_Values GetSysUserFieldValuesForRead(int requiredTable) {
+      return ((SysUser_Values)(Sooda.ObjectMapper.SoodaObjectImpl.GetFieldValuesForRead(this, requiredTable)));
+    }
+    protected override SoodaObjectFieldValues InitFieldValues(int fieldCount, string[] fieldNames) {
+      return new SysUser_Values(fieldNames);
+    }
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public override Sooda.Schema.ClassInfo GetClassInfo() {
+      return SysUser_Factory.TheClassInfo;
+    }
+    protected override Sooda.ObjectMapper.SoodaFieldHandler GetFieldHandler(int ordinal) {
+      return SysUser_Factory.InternalGetFieldHandler(ordinal);
+    }
+    public static IPrimaryKeyGenerator GetKeyGenerator() {
+      return keyGenerator;
+    }
+    protected override void InitNewObject() {
+      if (GetTransaction().IsKeyGeneratorDisabled("SysUser")) {
+        return;
+      }
+      this.SetPrimaryKeyValue(GetKeyGenerator().GetNextKeyValue());
+    }
+    private static SysUserList DoGetList(SoodaTransaction tran, SoodaWhereClause whereClause, SoodaOrderBy orderByClause, int startIdx, int pageCount, SoodaSnapshotOptions options) {
+      return new SysUserList(new Sooda.ObjectMapper.SoodaObjectListSnapshot(tran, whereClause, orderByClause, startIdx, pageCount, options, SysUser_Factory.TheClassInfo));
+    }
+    public static SysUser LoadSingleObject(Sooda.QL.SoqlBooleanExpression filterExpression) {
+      return ((SysUser)(Sooda.ObjectMapper.SoodaObjectImpl.SelectSingleObjectBE(filterExpression, DoGetList(SoodaTransaction.ActiveTransaction, new Sooda.SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, 0, 2, SoodaSnapshotOptions.Default))));
+    }
+    public static SysUser LoadSingleObject(Sooda.SoodaWhereClause where) {
+      return ((SysUser)(Sooda.ObjectMapper.SoodaObjectImpl.SelectSingleObjectWC(where, DoGetList(SoodaTransaction.ActiveTransaction, where, SoodaOrderBy.Unsorted, 0, 2, SoodaSnapshotOptions.Default))));
+    }
+    public static SysUser LoadSingleObject(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression) {
+      return ((SysUser)(Sooda.ObjectMapper.SoodaObjectImpl.SelectSingleObjectBE(filterExpression, DoGetList(tran, new Sooda.SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, 0, 2, SoodaSnapshotOptions.Default))));
+    }
+    public static SysUser LoadSingleObject(SoodaTransaction tran, Sooda.SoodaWhereClause where) {
+      return ((SysUser)(Sooda.ObjectMapper.SoodaObjectImpl.SelectSingleObjectWC(where, DoGetList(tran, where, SoodaOrderBy.Unsorted, 0, 2, SoodaSnapshotOptions.Default))));
+    }
+    public static SysUserList GetAllObjects() {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause("1=1"), SoodaOrderBy.Unsorted, 0, -1, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetAllObjects(SoodaTransaction transaction) {
+      return DoGetList(transaction, null, SoodaOrderBy.Unsorted, 0, -1, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaWhereClause where) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, SoodaOrderBy.Unsorted, 0, -1, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, SoodaOrderBy.Unsorted, 0, -1, options);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, SoodaOrderBy orderBy) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, orderBy, 0, -1, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, SoodaOrderBy orderBy, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, orderBy, 0, -1, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where) {
+      return DoGetList(tran, where, SoodaOrderBy.Unsorted, 0, -1, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, SoodaSnapshotOptions options) {
+      return DoGetList(tran, where, SoodaOrderBy.Unsorted, 0, -1, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, SoodaOrderBy orderBy) {
+      return DoGetList(tran, where, orderBy, 0, -1, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, SoodaOrderBy orderBy, SoodaSnapshotOptions options) {
+      return DoGetList(tran, where, orderBy, 0, -1, options);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, int topCount) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, SoodaOrderBy.Unsorted, 0, topCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, int topCount, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, SoodaOrderBy.Unsorted, 0, topCount, options);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, SoodaOrderBy orderBy, int topCount) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, orderBy, 0, topCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, SoodaOrderBy orderBy, int topCount, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, orderBy, 0, topCount, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, int topCount) {
+      return DoGetList(tran, where, SoodaOrderBy.Unsorted, 0, topCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, int topCount, SoodaSnapshotOptions options) {
+      return DoGetList(tran, where, SoodaOrderBy.Unsorted, 0, topCount, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, SoodaOrderBy orderBy, int topCount) {
+      return DoGetList(tran, where, orderBy, 0, topCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, SoodaOrderBy orderBy, int topCount, SoodaSnapshotOptions options) {
+      return DoGetList(tran, where, orderBy, 0, topCount, options);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, int startIdx, int pageCount) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, SoodaOrderBy.Unsorted, startIdx, pageCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, int startIdx, int pageCount, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, SoodaOrderBy.Unsorted, startIdx, pageCount, options);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, SoodaOrderBy orderBy, int startIdx, int pageCount) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, orderBy, startIdx, pageCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaWhereClause where, SoodaOrderBy orderBy, int startIdx, int pageCount, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, where, orderBy, startIdx, pageCount, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, int startIdx, int pageCount) {
+      return DoGetList(tran, where, SoodaOrderBy.Unsorted, startIdx, pageCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, int startIdx, int pageCount, SoodaSnapshotOptions options) {
+      return DoGetList(tran, where, SoodaOrderBy.Unsorted, startIdx, pageCount, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, SoodaOrderBy orderBy, int startIdx, int pageCount) {
+      return DoGetList(tran, where, orderBy, startIdx, pageCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, SoodaWhereClause where, SoodaOrderBy orderBy, int startIdx, int pageCount, SoodaSnapshotOptions options) {
+      return DoGetList(tran, where, orderBy, startIdx, pageCount, options);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, 0, -1, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, 0, -1, options);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), orderBy, 0, -1, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), orderBy, 0, -1, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, 0, -1, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, SoodaSnapshotOptions options) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, 0, -1, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), orderBy, 0, -1, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy, SoodaSnapshotOptions options) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), orderBy, 0, -1, options);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, int topCount) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, 0, topCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, int topCount, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, 0, topCount, options);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy, int topCount) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), orderBy, 0, topCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy, int topCount, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), orderBy, 0, topCount, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, int topCount) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, 0, topCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, int topCount, SoodaSnapshotOptions options) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, 0, topCount, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy, int topCount) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), orderBy, 0, topCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy, int topCount, SoodaSnapshotOptions options) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), orderBy, 0, topCount, options);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, int startIdx, int pageCount) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, startIdx, pageCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, int startIdx, int pageCount, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, startIdx, pageCount, options);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy, int startIdx, int pageCount) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), orderBy, startIdx, pageCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy, int startIdx, int pageCount, SoodaSnapshotOptions options) {
+      return DoGetList(SoodaTransaction.ActiveTransaction, new SoodaWhereClause(filterExpression), orderBy, startIdx, pageCount, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, int startIdx, int pageCount) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, startIdx, pageCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, int startIdx, int pageCount, SoodaSnapshotOptions options) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), SoodaOrderBy.Unsorted, startIdx, pageCount, options);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy, int startIdx, int pageCount) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), orderBy, startIdx, pageCount, SoodaSnapshotOptions.Default);
+    }
+    public static SysUserList GetList(SoodaTransaction tran, Sooda.QL.SoqlBooleanExpression filterExpression, SoodaOrderBy orderBy, int startIdx, int pageCount, SoodaSnapshotOptions options) {
+      return DoGetList(tran, new SoodaWhereClause(filterExpression), orderBy, startIdx, pageCount, options);
+    }
+    public static SysUser Load(int id) {
+      return Load(SoodaTransaction.ActiveTransaction, id);
+    }
+    public static SysUser Load(SoodaTransaction tran, int id) {
+      SysUser retVal = SysUser_Stub.GetRef(tran, id);
+      Sooda.ObjectMapper.SoodaObjectImpl.LoadAllData(retVal);
+      return retVal;
+    }
+    public static SysUser GetRef(int id) {
+      return GetRef(SoodaTransaction.ActiveTransaction, id);
+    }
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public static SysUser TryGet(int id) {
+      return TryGet(SoodaTransaction.ActiveTransaction, id);
+    }
+    public static SysUser GetRef(SoodaTransaction tran, int id) {
+      return ((SysUser)(Sooda.SoodaObject.GetRefHelper(tran, SysUser_Factory.TheFactory, id)));
+    }
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public static SysUser TryGet(SoodaTransaction tran, int id) {
+      return ((SysUser)(tran.FindObjectWithKey("SysUser", id, typeof(SysUser))));
+    }
+    public static SysUser GetRef(SoodaTransaction tran, SoodaTuple tuple) {
+      return ((SysUser)(Sooda.SoodaObject.GetRefHelper(tran, SysUser_Factory.TheFactory, tuple)));
+    }
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    public static SysUser TryGet(SoodaTransaction tran, SoodaTuple tuple) {
+      return ((SysUser)(tran.FindObjectWithKey("SysUser", tuple, typeof(SysUser))));
+    }
+    public static System.Linq.IQueryable<SysUser> Linq() {
+      return Linq(SoodaTransaction.ActiveTransaction, SoodaSnapshotOptions.Default);
+    }
+    public static System.Linq.IQueryable<SysUser> Linq(SoodaSnapshotOptions options) {
+      return Linq(SoodaTransaction.ActiveTransaction, options);
+    }
+    public static System.Linq.IQueryable<SysUser> Linq(SoodaTransaction tran, SoodaSnapshotOptions options) {
+      return new Sooda.Linq.SoodaQuerySource<SysUser>(tran, SysUser_Factory.TheClassInfo, options);
+    }
+    protected virtual void BeforeFieldUpdate_Login(object oldValue, object newValue) {
+      this.BeforeFieldUpdate("Login", oldValue, newValue);
+    }
+    protected virtual void AfterFieldUpdate_Login(object oldValue, object newValue) {
+      this.AfterFieldUpdate("Login", oldValue, newValue);
+    }
+    protected virtual void BeforeFieldUpdate_Password(object oldValue, object newValue) {
+      this.BeforeFieldUpdate("Password", oldValue, newValue);
+    }
+    protected virtual void AfterFieldUpdate_Password(object oldValue, object newValue) {
+      this.AfterFieldUpdate("Password", oldValue, newValue);
+    }
+    protected virtual void BeforeFieldUpdate_Active(object oldValue, object newValue) {
+      this.BeforeFieldUpdate("Active", oldValue, newValue);
+    }
+    protected virtual void AfterFieldUpdate_Active(object oldValue, object newValue) {
+      this.AfterFieldUpdate("Active", oldValue, newValue);
+    }
+    protected virtual void BeforeFieldUpdate_Name(object oldValue, object newValue) {
+      this.BeforeFieldUpdate("Name", oldValue, newValue);
+    }
+    protected virtual void AfterFieldUpdate_Name(object oldValue, object newValue) {
+      this.AfterFieldUpdate("Name", oldValue, newValue);
+    }
+    protected virtual void BeforeFieldUpdate_Email(object oldValue, object newValue) {
+      this.BeforeFieldUpdate("Email", oldValue, newValue);
+    }
+    protected virtual void AfterFieldUpdate_Email(object oldValue, object newValue) {
+      this.AfterFieldUpdate("Email", oldValue, newValue);
+    }
+  }
   [SoodaObjectFactoryAttribute("ObjectClass", typeof(ObjectClass))]
   public class ObjectClass_Factory : object, ISoodaObjectFactory {
     private static SoodaFieldHandler _primaryKeyFieldHandler = new Sooda.ObjectMapper.FieldHandlers.Int32FieldHandler(false);
@@ -758,6 +1136,59 @@ namespace VMF.BusinessObjects.Stubs {
       return retVal;
     }
   }
+  [SoodaObjectFactoryAttribute("SysUser", typeof(SysUser))]
+  public class SysUser_Factory : object, ISoodaObjectFactory {
+    private static SoodaFieldHandler _primaryKeyFieldHandler = new Sooda.ObjectMapper.FieldHandlers.Int32FieldHandler(false);
+    private static SysUser_Factory _theFactory = new SysUser_Factory();
+    private static Sooda.Schema.ClassInfo _theClassInfo = VMF.BusinessObjects._DatabaseSchema.GetSchema().FindClassByName("SysUser");
+    private static Type _theType = typeof(SysUser);
+    private SysUser_Factory() {
+    }
+    public static SysUser_Factory TheFactory {
+      get {
+        return _theFactory;
+      }
+    }
+    public virtual Type TheType {
+      get {
+        return _theType;
+      }
+    }
+    public static Sooda.Schema.ClassInfo TheClassInfo {
+      get {
+        return _theClassInfo;
+      }
+    }
+    public virtual SoodaObject GetRef(SoodaTransaction tran, object keyValue) {
+      return SysUser_Stub.GetRef(tran, ((int)(keyValue)));
+    }
+    public virtual SoodaObject TryGet(SoodaTransaction tran, object keyValue) {
+      return SysUser_Stub.TryGet(tran, ((int)(keyValue)));
+    }
+    public virtual System.Collections.IList GetList(SoodaTransaction tran, SoodaWhereClause whereClause, SoodaOrderBy orderBy, SoodaSnapshotOptions options) {
+      return new Sooda.ObjectMapper.SoodaObjectListSnapshot(tran, whereClause, orderBy, 0, -1, options, TheClassInfo);
+    }
+    public virtual Sooda.Schema.ClassInfo GetClassInfo() {
+      return TheClassInfo;
+    }
+    public virtual Sooda.ObjectMapper.SoodaFieldHandler GetPrimaryKeyFieldHandler() {
+      return _primaryKeyFieldHandler;
+    }
+    public virtual Sooda.ObjectMapper.SoodaFieldHandler GetFieldHandler(int ordinal) {
+      return InternalGetFieldHandler(ordinal);
+    }
+    internal static Sooda.ObjectMapper.SoodaFieldHandler InternalGetFieldHandler(int ordinal) {
+      return _theClassInfo.UnifiedFields[ordinal].GetFieldHandler();
+    }
+    public virtual SoodaObject CreateNew(SoodaTransaction tran) {
+      return new SysUser(tran);
+    }
+    public virtual SoodaObject GetRawObject(SoodaTransaction tran) {
+      SysUser retVal = new SysUser(SoodaConstructor.Constructor);
+      retVal.InitRawObject(tran);
+      return retVal;
+    }
+  }
 }
 namespace VMF.BusinessObjects {
   using System;
@@ -777,7 +1208,8 @@ namespace VMF.BusinessObjects {
     public _DatabaseSchema() {
       this._factories = new ISoodaObjectFactory[] {
           VMF.BusinessObjects.Stubs.ObjectClass_Factory.TheFactory,
-          VMF.BusinessObjects.Stubs.KeyGen_Factory.TheFactory};
+          VMF.BusinessObjects.Stubs.KeyGen_Factory.TheFactory,
+          VMF.BusinessObjects.Stubs.SysUser_Factory.TheFactory};
       this._proxies = new IInterfaceProxyFactory[0];
     }
     public virtual Sooda.Schema.SchemaInfo Schema {
