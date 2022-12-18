@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace VMF.UI.Lib.Mvc
 {
+    [Authorize]
     public class BaseController : Controller
     {
     }

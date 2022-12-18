@@ -58,7 +58,6 @@ namespace VMF.Services.Transactions
             };
             var c0 = new CommittableTransaction(to);
             c0.TransactionCompleted += C0_TransactionCompleted;
-            
             Transaction.Current = c0;
         }
 
