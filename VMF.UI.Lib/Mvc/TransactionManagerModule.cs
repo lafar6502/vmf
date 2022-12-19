@@ -44,7 +44,12 @@ namespace VMF.UI.Lib.Mvc
 
         private void Context_PostAuthenticateRequest(object sender, EventArgs e)
         {
-            AuthenticateBasic();
+            var cx = HttpContext.Current;
+            if (cx.User == null || !cx.User.Identity.IsAuthenticated)
+            {
+                AuthenticateBasic();
+            }
+            log.Info("AUTH request {0}, user {1}, authed {2}, type {3}", CurrentRequestId, cx.User == null ? "--no user--" : cx.User.Identity.Name, cx.User == null ? false : cx.User.Identity.IsAuthenticated, cx.User == null ? "-" : cx.User.GetType().FullName);
         }
 
         private void Context_EndRequest(object sender, EventArgs e)
@@ -58,11 +63,12 @@ namespace VMF.UI.Lib.Mvc
             if (Transaction.Current != null)
             {
                 log.Error("Transaction cleanup! {0}", RQContext.Current.Id);
+                throw new Exception("1");
             }
-            if (SessionContext.Current != null)
-            {
-                log.Error("SC cleanup! {0}", RQContext.Current.Id);
-            }
+            var sc = SessionContext.Current;
+
+            CleanVMFTransaction();
+
             RQContext.Current = null;
         }
 
@@ -152,6 +158,39 @@ namespace VMF.UI.Lib.Mvc
             }
         }
 
+        protected void CleanVMFTransaction()
+        {
+            var sc = SessionContext.Current;
+            if (sc == null) return;
+            var t = sc.Transaction;
+            var c = sc.RequestDbConnection;
+            try
+            {
+                
+                if (t != null)
+                {
+                    t.Dispose();
+                }
+            }
+            catch(Exception e)
+            {
+                log.Warn("Error disposing tran {0}", e);
+            }
+            try
+            {
+
+                if (c != null)
+                {
+                    c.Dispose();
+                }
+            }
+            catch (Exception e)
+            {
+                log.Warn("Error disposing conn {0}", e);
+            }
+            SessionContext.Current = null;
+        }
+
         private void Context_PostRequestHandlerExecute(object sender, EventArgs e)
         {
             log.Info("POST request {0}", CurrentRequestId);
@@ -169,13 +208,15 @@ namespace VMF.UI.Lib.Mvc
                 }
                 doCommit = sc.CurrentTransactionMode == TransactionMode.Commit;
             }
+            
             TransUtil.CleanupAmbientTransaction(doCommit);
-            SessionContext.Current = null;
+            CleanVMFTransaction();
         }
 
         private void Context_PreRequestHandlerExecute(object sender, EventArgs e)
         {
-            log.Info("PRE request {0}", CurrentRequestId);
+            var cx = HttpContext.Current;
+            log.Info("PRE request {0}, user {1}, authed {2}, type {3}", CurrentRequestId, cx.User == null ? "--no user--" : cx.User.Identity.Name, cx.User == null ? false : cx.User.Identity.IsAuthenticated, cx.User == null ? "-" : cx.User.GetType().FullName);
             var sc = SessionContext.Current;
             if (sc != null)
             {
@@ -190,6 +231,8 @@ namespace VMF.UI.Lib.Mvc
             sc.Transaction = tran;
 
             SessionContext.Current = sc;
+
+            
             
             //will make transaction here
         }

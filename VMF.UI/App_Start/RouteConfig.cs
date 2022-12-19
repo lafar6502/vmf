@@ -15,7 +15,7 @@ namespace VMF.UI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 
-            routes.Add(new Route("servicecall/{*pathInfo}", VMFGlobal.Container.Resolve<VMF.UI.Lib.Web.ServiceCallRouteHandler>()));
+            
 
             routes.MapRoute(name: "Details",
                 url: "Details/Show/{entity}/{id}",
@@ -26,6 +26,8 @@ namespace VMF.UI
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.Add(new Route("servicecall/{*pathInfo}", VMFGlobal.Container.Resolve<VMF.UI.Lib.Web.ServiceCallRouteHandler>()));
         }
     }
 }

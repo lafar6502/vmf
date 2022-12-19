@@ -9,6 +9,7 @@ using VMF.Core.Transactions;
 
 namespace VMF.UI.Controllers
 {
+    [Authorize]
     public class HomeController : BaseTestController
     {
         private static Logger log = LogManager.GetCurrentClassLogger();

@@ -29,6 +29,7 @@ namespace VMF.UI.App_Start
             wc.Register(Component.For<IVMFTransactionFactory>().ImplementedBy<TransactionFactory>().LifeStyle.Singleton);
 
             wc.Register(Component.For<ServiceCallRouteHandler>().ImplementedBy<ServiceCallRouteHandler>());
+            wc.Register(Component.For<IUserRepository>().ImplementedBy<VMF.BusinessObjects.Services.UserRepository>().LifeStyle.Singleton);
             RegisterControllersFromAssembly(typeof(Controllers.BaseTestController).Assembly, wc);
             SoodaConfig.SetConfigProvider(new VMFSoodaConfigProvider(cfg));
             //Sooda.TransactionStrategyMenager.SetTransactionStrategy(new Sooda.TransactionStrategy.SoodaThreadBoundTransactionStrategy());

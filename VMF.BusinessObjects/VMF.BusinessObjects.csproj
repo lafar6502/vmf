@@ -93,6 +93,7 @@
     <Compile Include="Common\BaseObject.cs" />
     <Compile Include="KeyGen.cs" />
     <Compile Include="ObjectClass.cs" />
+    <Compile Include="Services\UserRepository.cs" />
     <Compile Include="SysUser.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
