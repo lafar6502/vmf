@@ -14,11 +14,14 @@ namespace VMF.UI.Controllers
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
         // GET: Home
+
+        
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult Static1()
         {
             return View();

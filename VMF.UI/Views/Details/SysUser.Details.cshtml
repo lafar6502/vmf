@@ -1,0 +1,11 @@
+@using VMF.Core
+@using VMF.BusinessObjects
+@using VMF.UI.Lib
+
+@model SysUser
+
+@using (var sc = new FormBuilder(Model, Html))
+{
+    <h1>@Model.Name</h1>
+}
+

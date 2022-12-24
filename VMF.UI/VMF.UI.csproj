@@ -200,6 +200,7 @@
     <Content Include="Views\Home\Test1.cshtml" />
     <Content Include="Views\Home\Test2.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Details\SysUser.Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

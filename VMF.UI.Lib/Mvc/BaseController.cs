@@ -10,5 +10,11 @@ namespace VMF.UI.Lib.Mvc
     [Authorize]
     public class BaseController : Controller
     {
+        public ActionResult test()
+        {
+            return View();
+        }
+
+        
     }
 }

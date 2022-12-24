@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISelectView.cs" />
     <Compile Include="IVMFTransactionFactory.cs" />
     <Compile Include="Transactions\RQContext.cs" />
     <Compile Include="VMFGlobal.cs" />

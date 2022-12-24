@@ -84,11 +84,11 @@ namespace VMF.UI.Controllers
 
         public ActionResult LogOff()
         {
-            var cook = Request.Cookies[FormsAuthentication.FormsCookieName];
+            //var cook = Request.Cookies[FormsAuthentication.FormsCookieName];
             FormsAuthentication.SignOut();
-            Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
+            //Response.Cookies.Remove(FormsAuthentication.FormsCookieName);
             Session.Abandon();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
 

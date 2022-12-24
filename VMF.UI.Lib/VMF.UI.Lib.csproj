@@ -105,8 +105,12 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="FieldAccess.cs" />
+    <Compile Include="FormBuilder.cs" />
+    <Compile Include="FormViewModel.cs" />
     <Compile Include="IdLabel.cs" />
     <Compile Include="Mvc\BaseController.cs" />
+    <Compile Include="Mvc\FileGeneratingResult.cs" />
+    <Compile Include="Mvc\MvcUtil.cs" />
     <Compile Include="Mvc\TransactionManagerModule.cs" />
     <Compile Include="Mvc\WindsorControllerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
