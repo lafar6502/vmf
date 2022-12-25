@@ -1,0 +1,24 @@
+﻿@using VMF.UI.Lib
+@using Newtonsoft.Json
+
+@model FormViewModel
+
+@{ 
+
+    var json = JsonConvert.SerializeObject(Model);
+}
+
+
+
+
+</div>
+<script type="text/javascript" id="fsscript_@Model.FormScopeId">
+        var fid = 'fsc_@Model.FormScopeId';
+        var formData = @Html.Raw(json);
+        var el = document.getElementById(fid);
+        console.log('vue el', el, 'data', formData);
+        var vm = new Vue({
+            data: formData,
+            el: el
+        });
+</script>

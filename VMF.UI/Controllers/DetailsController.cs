@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using VMF.UI.Lib.Mvc;
 using System.Web.Mvc;
 using VMF.Core;
+using VMF.UI.Lib;
 
 namespace VMF.UI.Controllers
 {
     public class DetailsController : BaseController
     {
         public IEntityResolver EntityResolver { get; set; }
-        public ActionResult Show(string entity, string id)
+        public ActionResult Show(string entity, string id, string view, RenderMode? mode)
         {
-            bool renderFormModel = false; 
+            if (!mode.HasValue) mode = RenderMode.Page;
             var er = new EntityRef(entity, id);
             var ent = EntityResolver.Get(er);
             var sc = SessionContext.Current;
@@ -33,15 +34,17 @@ namespace VMF.UI.Controllers
             if (viewName == null) throw new Exception("View not found: " + String.Join(",", viewNames));
             ViewBag.FormViewUrl = Url.Action("Show", "Details", new { entity=er.Entity, id=er.Id, partial = true, view = viewName });
 
-            if (renderFormModel)
+            switch(mode.Value)
             {
-                throw new NotImplementedException();
+                case RenderMode.Page:
+                    return View(viewName, ent);
+                case RenderMode.View:
+                    return PartialView(viewName, ent);
+                case RenderMode.Model:
+                    throw new NotImplementedException();
+                default:
+                    throw new Exception();
             }
-            else
-            {
-                return PartialView(viewName, ent);
-            }
-
         }
 
         [HttpPost]

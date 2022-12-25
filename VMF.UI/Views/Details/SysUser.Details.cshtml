@@ -6,6 +6,33 @@
 
 @using (var sc = new FormBuilder(Model, Html))
 {
-    <h1>@Model.Name</h1>
+    sc.AddModelValue("Name", Model.Name);
+    sc.AddModelValue("Email", Model.Email);
+    sc.AddValueWithContext("Active", Model.Active, Model, new WidgetContext
+    {
+        Access = FieldAccess.Editable
+    });
+
+
+
+    <h2>{{Values.Name}}</h2>
+    <h3>Active: {{Values.Active}}</h3>
+    <br />
+    
+
+    <div class="row">
+        <div class="col-md-4">
+            <vmf-field v-bind:context="Context.Name" v-model="Values.Name"></vmf-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <vmf-field-lbl v-bind:context="Context.Active" v-model="Values.Active"></vmf-field-lbl>
+        </div>
+        
+
+    </div>
+
+
 }
 

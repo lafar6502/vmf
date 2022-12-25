@@ -201,6 +201,8 @@
     <Content Include="Views\Home\Test2.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Details\SysUser.Details.cshtml" />
+    <Content Include="Views\Shared\UI\FormScopeStart.cshtml" />
+    <Content Include="Views\Shared\UI\FormScopeEnd.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
