@@ -17,7 +17,8 @@
         var formData = @Html.Raw(json);
         var el = document.getElementById(fid);
         console.log('vue el', el, 'data', formData);
-        var vm = new Vue({
+        
+        var vueInst = VMF.getVueApp({
             data: formData,
             el: el
         });

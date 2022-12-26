@@ -27,6 +27,12 @@ namespace VMF.UI.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult Static0()
+        {
+            return View();
+        }
+
         public ActionResult Static2()
         {
             return View();

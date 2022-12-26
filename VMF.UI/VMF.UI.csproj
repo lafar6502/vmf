@@ -203,6 +203,13 @@
     <Content Include="Views\Details\SysUser.Details.cshtml" />
     <Content Include="Views\Shared\UI\FormScopeStart.cshtml" />
     <Content Include="Views\Shared\UI\FormScopeEnd.cshtml" />
+    <Content Include="Views\Shared\_Layout3.cshtml" />
+    <Content Include="Views\Shared\_LayoutV3.cshtml" />
+    <Content Include="Views\Shared\VUI\VUIAllV3.cshtml" />
+    <Content Include="Views\Shared\VUI\FormV3_1.cshtml" />
+    <Content Include="Views\Shared\VUI\FieldV3_1.cshtml" />
+    <Content Include="Views\Home\Static4.cshtml" />
+    <Content Include="Views\Home\Static0.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

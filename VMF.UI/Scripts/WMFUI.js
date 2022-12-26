@@ -1,5 +1,5 @@
 ﻿
-
+//global vmf
 var VMF = {
     replaceFormScope: function (el, html, callback) {
         var scopeElement = $(el);
@@ -24,5 +24,23 @@ var VMF = {
     isObject: function(val) {
         if (val === null) { return false; }
         return ((typeof val === 'function') || (typeof val === 'object'));
+    },
+
+    getVueApp: function (cfg) {
+        console.log('vue is', Vue);
+        var createApp = Vue.createApp;
+        var va = createApp(cfg || {});
+        for (var i = 0; i < this.componentInits.length; i++) {
+            var f = this.componentInits[i];
+            f(va);
+        }
+        return va;
+    },
+
+    componentInits: [],
+
+    addVueComponents: function (f) {
+        var me = this;
+        me.componentInits.push(f);
     }
 };
