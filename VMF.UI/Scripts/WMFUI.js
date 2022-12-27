@@ -28,8 +28,13 @@ var VMF = {
 
     getVueApp: function (cfg) {
         console.log('vue is', Vue);
+        
+        var vuetify = Vuetify.createVuetify;
+        const vuetify = createVuetify()
         var createApp = Vue.createApp;
+        
         var va = createApp(cfg || {});
+        va.use(vuetify);
         for (var i = 0; i < this.componentInits.length; i++) {
             var f = this.componentInits[i];
             f(va);
