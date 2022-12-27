@@ -14,12 +14,13 @@
 </div>
 <script type="text/javascript" id="fsscript_@Model.FormScopeId">
         var fid = 'fsc_@Model.FormScopeId';
-        var formData = @Html.Raw(json);
+        
         var el = document.getElementById(fid);
-        console.log('vue el', el, 'data', formData);
         
         var vueInst = VMF.getVueApp({
-            data: formData,
-            el: el
+            data: function () {
+                return @Html.Raw(json);
+            }
         });
+        vueInst.mount(el);
 </script>

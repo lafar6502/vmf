@@ -1,0 +1,84 @@
+﻿
+
+
+<script type="text/javascript">
+
+    VMF.addVueComponents(function (vueApp) {
+        var fieldMixin = {
+            computed: {
+                isRequired: function () {
+                    return this.context && this.context.Access == 'Required';
+                },
+                isEditable: function () {
+                    return this.context && (this.context.Access == 'Required' || this.context.Access == 'ReadWrite');
+                }
+            }
+        }
+
+        vueApp.component('vmf-multicheckboxfield', {
+            props: ['context', 'modelValue'],
+            emits: ['update:modelValue'],
+            mixins: [fieldMixin],
+            data: function () {
+                console.log('m data', this.modelValue, ', value:', this.value);
+                return {
+                    val: this.modelValue
+                }
+            },
+            watch: {
+                modelValue: function (mv) {
+                    console.log('ms modelValue change', mv);
+                    this.val = mv;
+                }
+            },
+            methods: {
+
+                
+            },
+            computed: {
+                optionsAdjusted: function () {
+                    var cx = this.context;
+                    console.log('the select context', cx);
+                    if (!cx.Options) return [];
+                    var r = [];
+                    for (var i = 0; i < cx.Options.length; i++) {
+                        var v = cx.Options[i];
+                        if (v == null) {
+                            r.push({ Id: "", Label: "" });
+                        }
+                        else if (Array.isArray(v)) {
+                            r.push({ Id: v[0], Label: v.length <= 1 || !v[1] ? v[0] : v[1] });
+                        }
+                        else if (VMF.isObject(v)) {
+                            r.push(v);
+                        }
+                        else r.push({ Id: v, Label: v });
+                    }
+                    return r;
+                },
+                dummyVal: {
+                    get: function () {
+                        return this.val;
+                    },
+                    set: function (v) {
+                        console.log('msfield set v', v);
+                        this.val = v;
+                        this.$emit('update:modelValue', this.val);
+                    }
+                }
+            },
+            template1: `<select class="form-control" multiple v-model="dummyVal" >
+            <option v-for="(opt, idx) in optionsAdjusted" v-bind:value="opt.Id" v-bind:key="idx" >
+                {{ opt.Label }} 
+            </option>
+        </select>
+        `,
+            template: `<div v-for="(opt,idx) in optionsAdjusted">
+                <label><input type="checkbox" v-bind:value="opt.Id" v-model="dummyVal" />{{opt.Label}}</label>
+            </div>
+        `
+        });
+    });
+
+
+</script>

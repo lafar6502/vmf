@@ -5,20 +5,25 @@
 @model SysUser
 
 @using (var sc = new FormBuilder(Model, Html))
-{
-    sc.AddModelValue("Name", Model.Name);
-    sc.AddModelValue("Email", Model.Email);
-    sc.AddValueWithContext("Active", Model.Active, Model, new WidgetContext
-    {
-        Access = FieldAccess.Editable
-    });
+        {
 
+            sc.AddModelValue("Email", Model.Email);
+            sc.AddValueWithContext("Active", Model.Active, Model, new WidgetContext
+            {
+                Access = FieldAccess.Editable
+            });
+            sc.AddValueWithContext("Name", Model.Name, Model, new WidgetContext
+            {
+                Access = FieldAccess.Required,
+                Label = "User name"
+            });
 
 
     <h2>{{Values.Name}}</h2>
     <h3>Active: {{Values.Active}}</h3>
     <br />
-    
+
+
 
     <div class="row">
         <div class="col-md-4">

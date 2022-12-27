@@ -49,17 +49,22 @@
     </div>
         -->
         
-    <div class="col-md-3">
-        <label>msfield Groups</label><br />
-        <vmf-msfield v-bind:context="Context.Groups" v-model="Values.Groups"></vmf-msfield>
-    </div>
+        <div class="col-md-3">
+            <label>msfield Groups</label><br />
+            <vmf-multicheckboxfield v-bind:context="Context.Groups" v-model="Values.Groups"></vmf-multicheckboxfield>
+        </div>
         
-        <!--
-    <div class="col-md-3">
-        <label>vmfield Groups</label><br />
-        <vmf-field v-bind:context="Context.Groups" v-model="Values.Groups"></vmf-field>
-    </div>
-        -->
+        
+        <div class="col-md-3">
+            <label>vmfield lbl Groups</label><br />
+            <vmf-field-lbl v-bind:context="Context.Groups" v-model="Values.Groups"></vmf-field-lbl>
+        </div>
+        
+        <div class="col-md-3">
+            <label>vmfield Groups</label><br />
+            <vmf-field v-bind:context="Context.Groups" v-model="Values.Groups"></vmf-field>
+        </div>
+
 
         <div class="col-md-3">
             <label>raw Groups</label><br />

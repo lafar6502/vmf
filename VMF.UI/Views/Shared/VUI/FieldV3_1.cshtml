@@ -24,40 +24,62 @@
             props: ['context', 'modelValue'],
             emits: ['update:modelValue'],
             data: function () {
-                console.log('my ctx', this.context);
-                console.log('my attrs', this.$attrs);
-                return {
-                    fieldCtx: this.context
-                };
-            },
-            methods: {
-                handleInput: function (e) {
-                    console.log('Zinput', e);
-                }
-            },
-            template: `
-            <div class="form-group">
-                <label>{{context.Label}}</label>
-                <vmf-field class="form-control" v-bind:context="fieldCtx" v-bind:value="modelValue" v-on:update:modelValue="$emit('update:modelValue', $event)"></vmf-field>
-            </div>`,
-        });
-
-        vueApp.component('vmf-field', {
-            props: ['context', 'modelValue'],
-            emits: ['update:modelValue'],
-            mixins: [fieldMixin],
-            data: function () {
-                console.log('my2 ctx', this.context);
                 return {
                     fieldCtx: this.context,
                     val: this.modelValue
                 };
             },
+            watch: {
+                modelValue: function (mv) {
+                    //console.log('f2 modelvalue change', mv);
+                    this.val = mv;
+                }
+            },
+            computed: {
+                dummyVal: {
+                    get: function () {
+                        return this.val;
+                    },
+                    set: function (v) {
+                        this.val = v;
+                        this.$emit('update:modelValue', v);
+                    }
+                }
+            },
+            template: `
+            <div class="form-group">
+                <label>{{context.Label}}</label>
+                <vmf-field class="form-control" v-bind:context="fieldCtx" v-model="dummyVal"></vmf-field>
+            </div>`,
+        });
+
+        
+        vueApp.component('vmf-field', {
+            props: ['context', 'modelValue'],
+            emits: ['update:modelValue'],
+            data: function () {
+                console.log('f2 ctx', this.context, this.modelValue);
+                var d0 = {
+                    fieldCtx: this.context,
+                    val: this.modelValue
+                };
+                return d0;
+            },
             methods: {
                 publishUpdate: function (e) {
-                    console.log('vmf-field update: ', e, this.fieldComponentName, this.val);
+                    console.log('f2 update: ', e, this.fieldComponentName, this.val);
                     this.val = e;
                     this.$emit('update:modelValue', e);
+                }
+            },
+            watch: {
+                modelValue: function (mv) {
+                    console.log('f2 modelvalue change', mv);
+                    this.val = mv;
+                },
+                val: function (mv) {
+                    console.log('f2 val change', mv);
+                    //this.$emit('update:modelValue', this.val);
                 }
             },
             computed: {
@@ -70,11 +92,22 @@
                         }
                     }
                     return 'vmf-textfield'
+                },
+                
+                dummyVal: {
+                    get: function () {
+                        console.log('f2 get v', this.val);
+                        return this.val;
+                    },
+                    set: function (v) {
+                        console.log('f2 set v', v);
+                        this.val = v;
+                        this.$emit('update:modelValue', v);
+                    }
                 }
             },
             template: `
-            <component  v-bind:is="fieldComponentName" v-bind:value="modelValue" v-bind:context="fieldCtx" v-on:update:modelValue="publishUpdate($event)" />
-        `
+            <component  v-bind:is="fieldComponentName" v-model="dummyVal" v-bind:context="fieldCtx" />`,
 
         });
 
@@ -147,88 +180,31 @@
         `
         });
 
+        
         vueApp.component('vmf-multiselectfield', {
             props: ['context', 'modelValue'],
             emits: ['update:modelValue'],
             mixins: [fieldMixin],
             data: function () {
-                console.log('m data', this.modelValue);
+                console.log('m data', this.modelValue, ', value:', this.value);
                 return {
                     val: this.modelValue
                 }
             },
-            methods: {
-                hasOption: function (v) {
-                    return this.value && this.value.includes(v);
-                },
-                logg: function () {
-                    console.log(arguments);
-                }
-            },
-            computed: {
-                optionsAdjusted: function () {
-                    var cx = this.context;
-                    console.log('the select context', cx);
-                    if (!cx.Options) return [];
-                    var r = [];
-                    for (var i = 0; i < cx.Options.length; i++) {
-                        var v = cx.Options[i];
-                        if (v == null) {
-                            r.push({ Id: "", Label: "" });
-                        }
-                        else if (Array.isArray(v)) {
-                            r.push({ Id: v[0], Label: v.length <= 1 || !v[1] ? v[0] : v[1] });
-                        }
-                        else if (VMF.isObject(v)) {
-                            r.push(v);
-                        }
-                        else r.push({ Id: v, Label: v });
-                    }
-                    return r;
-                },
-                interface: {
-                    get() {
-                        console.log('get interf', this.val);
-                        return this.val
-                    },
-                    set(v) {
-                        console.log('set interf', v);
-                        this.val = v;
-                        this.$emit('update:modelValue', v);
-                    }
-                }
-            },
-            template: `
-        <select class="form-control" multiple v-bind:required="isRequired"  v-model="interface" >
-            <option v-for="(opt, idx) in optionsAdjusted" v-bind:value="opt.Id" >
-                {{ opt.Label }} 
-            </option>
-        </select>
-        `
-        });
-
-        vueApp.component('vmf-msfield', {
-            props: ['context', 'modelValue'],
-            emits: ['update:modelValue'],
-            mixins: [fieldMixin],
-            data: function () {
-                console.log('m data', this.modelValue);
-                return {
-                    val: this.modelValue
+            watch: {
+                modelValue: function (mv) {
+                    console.log('ms modelValue change', mv);
+                    this.val = mv;
                 }
             },
             methods: {
-                hasOption: function (v) {
-                    return this.value && this.value.includes(v);
-                },
-                logg: function () {
-                    console.log(arguments);
-                },
+                
                 notifyChange: function (e) {
                     
                     v = [];
-                    for (var i = 0; i < e.length; i++) {
-                        var opt = e[i];
+                    for (var i = 0; i < e.target.length; i++) {
+                        var opt = e.target[i];
+                        console.log('opt ', i, opt._value, 'sel', opt.selected, 'v:', opt.value);
                         if (opt.selected) {
                             v.push(opt._value);
                         }
@@ -257,10 +233,20 @@
                         else r.push({ Id: v, Label: v });
                     }
                     return r;
+                },
+                dummyVal: {
+                    get: function() {
+                        return this.val;
+                    },
+                    set: function (v) {
+                        console.log('msfield set v', v);
+                        this.val = v;
+                        this.$emit('update:modelValue', this.val);
+                    }
                 }
             },
-            template: `<select class="form-control" multiple v-bind:value="modelValue" v-on:change="notifyChange($event)" >
-            <option v-for="(opt, idx) in optionsAdjusted" v-bind:value="opt.Id" >
+            template: `<select class="form-control" multiple v-model="dummyVal" >
+            <option v-for="(opt, idx) in optionsAdjusted" v-bind:value="opt.Id" v-bind:key="idx" >
                 {{ opt.Label }} 
             </option>
         </select>
