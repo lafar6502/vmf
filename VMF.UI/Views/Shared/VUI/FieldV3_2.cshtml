@@ -1,5 +1,15 @@
 ﻿
+<style>
 
+    ul.vmf-multicheckboxfield {
+        column-count: 3;
+        column-width: 200px;
+        list-style: none;
+    }
+    ul.vmf-multicheckboxfield li {
+        
+    }
+</style>
 
 <script type="text/javascript">
 
@@ -73,9 +83,9 @@
             </option>
         </select>
         `,
-            template: `<div v-for="(opt,idx) in optionsAdjusted">
+            template: `<ul class="vmf-multicheckboxfield"><li v-for="(opt,idx) in optionsAdjusted">
                 <label><input type="checkbox" v-bind:value="opt.Id" v-model="dummyVal" />{{opt.Label}}</label>
-            </div>
+            </li></ul>
         `
         });
     });
