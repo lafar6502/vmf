@@ -1,0 +1,3 @@
+{
+  "default.connectionString": "Data Source=tcp:cogitpc;Initial Catalog=AliplastConfigurator_copy;User Id=AliplastConfigurator;Password=PASS"
+}

@@ -147,6 +147,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\jquery-ui-1.12.1\package.json" />
     <Content Include="config\config.json" />
+    <Content Include="config\COGITPC.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
