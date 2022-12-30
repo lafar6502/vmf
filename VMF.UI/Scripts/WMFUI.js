@@ -29,8 +29,8 @@ var VMF = {
     getVueApp: function (cfg) {
         console.log('vue is', Vue);
         
-        var vuetify = Vuetify.createVuetify;
-        const vuetify = createVuetify()
+        var vuetify = Vuetify.createVuetify();
+        
         var createApp = Vue.createApp;
         
         var va = createApp(cfg || {});

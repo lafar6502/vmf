@@ -15,7 +15,10 @@ namespace VMF.UI.Controllers
         private static Logger log = LogManager.GetCurrentClassLogger();
         // GET: Home
 
-        
+        public ActionResult Main()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             return View();

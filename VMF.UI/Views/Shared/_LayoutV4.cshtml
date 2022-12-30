@@ -4,9 +4,11 @@
     <!-- v4 layout - with vuetify -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-
+    
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3.0.6/dist/vuetify.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@("@")mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
 
     <title>@ViewBag.Title - My ASP.NET Application (vue 4)</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -20,49 +22,7 @@
 
 @Html.Partial("VUI/VUIAllV3")
 <body>
-    <div class="uk-grid">
-        <div class="uk-width-1-1">
-
-            <nav class="uk-navbar">
-
-                <ul class="uk-navbar-nav">
-                    <li class="uk-active"><a href="">Active</a></li>
-                    <li><a href="">Item</a></li>
-                    <li class="uk-parent" data-uk-dropdown="" aria-haspopup="true" aria-expanded="false">
-                        <a href="">Parent</a>
-
-                        <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom" aria-hidden="true" tabindex="" style="top: 40px; left: 0px;">
-                            <ul class="uk-nav uk-nav-navbar">
-                                <li><a href="#">Item</a></li>
-                                <li><a href="#">Another item</a></li>
-                                <li class="uk-nav-header">Header</li>
-                                <li><a href="#">Item</a></li>
-                                <li><a href="#">Another item</a></li>
-                                <li class="uk-nav-divider"></li>
-                                <li><a href="#">Separated item</a></li>
-                            </ul>
-                        </div>
-
-                    </li>
-                </ul>
-
-            </nav>
-
-
-
-
-        </div>
-    </div>
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-
-
+    @RenderBody()
+    
 </body>
 </html>
