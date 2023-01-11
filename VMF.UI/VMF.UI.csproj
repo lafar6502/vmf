@@ -306,6 +306,10 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Shared\MainSidebar.cshtml" />
+    <Content Include="Views\Shared\TopNavBar.cshtml" />
+    <Content Include="Views\Shared\VUI\FieldV3_2.cshtml" />
+    <Content Include="Views\Shared\VUI\DataGridV3_1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

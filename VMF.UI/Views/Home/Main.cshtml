@@ -2,6 +2,42 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutV5.cshtml";
+    var id = Guid.NewGuid().ToString("N");
 }
 
-<h1>MAIN!</h1>
+
+
+<div style="border:solid 2px green;" id="V_@id">
+    <vmf-ajaxgrid style="height:80vh" :list-rows="rows" :list-columns="columns"></vmf-ajaxgrid>
+</div>
+
+
+<script type="text/javascript">
+
+    var vm = VMF.getVueApp(
+    {
+        data: function () {
+            r = [];
+            fns = ['John', 'Bob', 'Frank', 'Alice', 'Betty', 'Theo'];
+            lns = ['Smith', 'Brown', 'Green', 'Redneck', 'Mann', 'Schneider', 'Batata', 'Longman', 'Olafson', 'Butterworth'];
+            for (var i = 0; i < 100; i++) {
+                r.push({ Id: i, FirstName: fns[i % fns.length], LastName: lns[i % lns.length], DateOfBirth: "" + (1960 + 2 * (i % 57)) + "-" + (1 + i % 12) + "-" + (i % 30)});
+            }
+            return {
+                listId: 'Test list',
+                columns: ['Id', 'FirstName', 'DateOfBirth', {
+                    name: 'LastName',
+                    label: 'Last name'
+                }],
+                rows: r
+            }
+        },
+        computed: {
+            
+        },
+        methods: {
+        }
+    });
+    vm.mount(document.getElementById('V_@id'));
+
+</script>

@@ -1,0 +1,195 @@
+﻿
+<style type="text/css">
+    /* Set a fixed scrollable wrapper */
+    .tableWrap {
+        border: 2px solid black;
+        overflow: auto;
+    }
+    /* Set header to stick to the top of the container. */
+    table.ajaxgrid_table thead tr th {
+        position: sticky;
+        top: 0;
+    }
+
+    table.ajaxgrid_table tfoot tr th {
+        position: sticky;
+        bottom:0;
+    }
+
+    /* If we use border,
+we must use table-collapse to avoid
+a slight movement of the header row */
+    table.ajaxgrid_table {
+        border-collapse: collapse;
+    }
+
+    /* Because we must set sticky on th,
+ we have to apply background styles here
+ rather than on thead */
+    table.ajaxgrid_table th {
+        padding: 16px;
+        padding-left: 15px;
+        border-left: 1px dotted rgba(200, 209, 224, 0.6);
+        border-bottom: 1px solid #e8e8e8;
+        background: #ffc491;
+        text-align: left;
+        /* With border-collapse, we must use box-shadow or psuedo elements
+  for the header borders */
+        box-shadow: 0px 0px 0 2px #e8e8e8;
+    }
+
+    /* Basic Demo styling */
+    table.ajaxgrid_table {
+        width: 100%;
+        font-family: sans-serif;
+    }
+
+        table.ajaxgrid_table td {
+            padding: 16px;
+        }
+
+        table.ajaxgrid_table tbody tr {
+            border-bottom: 2px solid #e8e8e8;
+        }
+
+    table.ajaxgrid_table thead {
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.85);
+    }
+
+    table.ajaxgrid_table tbody tr:hover {
+        background: #e6f7ff;
+    }
+
+    .tableWrap div.column-menu {
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+</style>
+
+<script type="text/template" id="vmf-template-ajaxgrid">
+
+    <div class="tableWrap">
+        <table class="ajaxgrid_table">
+            <thead>
+                <tr>
+                    <th v-for="c in columns"><span>{{c.label}}</span></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="r in rows">
+                    <td v-for="c in columns"><span>{{r[c.name]}}</span></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th v-bind:colspan="columns.length">
+
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Cols
+                            </button>
+                            <div class="dropdown-menu">
+                                <a v-for="c in columns">
+                                    <label class="checkbox"><input type="checkbox" /> {{c.label}}</label>
+                                </a>
+                            </div>
+                        </div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous" v-on:click="moveByPages(-1)">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">{{page}}</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next" v-on:click="moveByPages(1)">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+
+                        </nav>
+
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+</script>
+
+<script type="text/javascript">
+
+    //ajaxgrid
+    //we expect the data to come as json array, records as js objects
+    //columns are set up beforehand
+    VMF.addVueComponents(function (vueApp) {
+        vueApp.component('vmf-ajaxgrid', {
+            props: ['listColumns', 'dataUrl', 'keyField', 'labelField', 'rowClassField', 'rowStyleField', 'pageSize', 'listRows'],
+            template: '#vmf-template-ajaxgrid',
+            emits: [],
+            mixins: [],
+            data: function () {
+                var cols = this.listColumns || [];
+                var rowz = this.listRows || [];
+                var cols2 = [];
+                for (var i = 0; i < cols.length; i++) {
+                    var c = cols[i];
+                    if (!c) continue;
+                    if (_.isString(c)) {
+                        cols2.push({
+                            name: c,
+                            label: c,
+                            type: 'string',
+                            visible: true
+                        })
+                    }
+                    else if (_.isObject(c)) {
+                        cols2.push(c);
+                    }
+                }
+                console.log('cols', cols2, 'rows', rowz);
+
+                return {
+                    rows: rowz,
+                    columns: cols2,
+                    pageSize: this.pageSize,
+                    page: 0,
+                    maxPageReached: 0,
+                    hasMoreData: false
+                }
+            },
+            methods: {
+                loadPage: function (n) {
+                    this.page = n;
+                },
+                moveByPages: function (inc) {
+                    var me = this;
+                    var np = me.page + inc;
+                    if (np < 0) np = 0;
+                    this.loadPage(np);
+                }
+
+            },
+            watch: {
+
+            },
+            computed: {
+
+            }
+        });
+
+    });
+
+       
+
+</script>
