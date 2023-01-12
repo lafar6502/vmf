@@ -8,7 +8,7 @@
 
 
 <div style="border:solid 2px green;" id="V_@id">
-    <vmf-ajaxgrid style="height:80vh" :list-rows="rows" :list-columns="columns"></vmf-ajaxgrid>
+    <vmf-ajaxgrid style="height:80vh" :list-rows="rows" :list-columns="columns" key-field="Id" row-class-field="_rowCss"></vmf-ajaxgrid>
 </div>
 
 
@@ -21,7 +21,10 @@
             fns = ['John', 'Bob', 'Frank', 'Alice', 'Betty', 'Theo'];
             lns = ['Smith', 'Brown', 'Green', 'Redneck', 'Mann', 'Schneider', 'Batata', 'Longman', 'Olafson', 'Butterworth'];
             for (var i = 0; i < 100; i++) {
-                r.push({ Id: i, FirstName: fns[i % fns.length], LastName: lns[i % lns.length], DateOfBirth: "" + (1960 + 2 * (i % 57)) + "-" + (1 + i % 12) + "-" + (i % 30)});
+                r.push({
+                    Id: i, FirstName: fns[i % fns.length], LastName: lns[i % lns.length], DateOfBirth: "" + (1960 + 2 * (i % 57)) + "-" + (1 + i % 12) + "-" + (i % 30),
+                    _rowCss: i % 5 == 0 ? 'row_active' : ''
+                });
             }
             return {
                 listId: 'Test list',

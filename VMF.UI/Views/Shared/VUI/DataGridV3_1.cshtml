@@ -80,7 +80,7 @@ a slight movement of the header row */
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="r in rows">
+                <tr v-for="r in rows" v-bind:entityref="r[keyField]" v-bind:class="r[rowClassField]">
                     <td v-for="c in columns"><span>{{r[c.name]}}</span></td>
                 </tr>
             </tbody>
@@ -157,7 +157,7 @@ a slight movement of the header row */
                         cols2.push(c);
                     }
                 }
-                console.log('cols', cols2, 'rows', rowz);
+                console.log('cols', cols2, 'rows', rowz, 'keyField', this.keyField);
 
                 return {
                     rows: rowz,
