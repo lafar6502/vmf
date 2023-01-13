@@ -64,6 +64,12 @@ a slight movement of the header row */
     table.ajaxgrid_table tbody tr.selected {
         background: #96d3f0;
     }
+    
+    table.ajaxgrid_table tbody div.expander-content {
+        border: solid 2px green;
+        padding: 2px 2px 2px 2px;
+    }
+
 
     .tableWrap div.column-menu {
         height: 100px;
@@ -100,9 +106,11 @@ a slight movement of the header row */
                         </td>
                         <td v-for="c in visibleColumns"><span>{{r.data[c.name]}}</span></td>
                     </tr>
-                    <Transition>
+                    <Transition :duration="1000">
                         <tr v-if="r.expanded" class="expander-row">
-                            <td v-bind:colspan="totalVisibleColumns"></td>
+                            <td v-bind:colspan="totalVisibleColumns">
+                                <div v-pre class="expander-content"></div>
+                            </td>
                         </tr>
                     </Transition>
                 </template>
@@ -244,8 +252,23 @@ a slight movement of the header row */
                     //if (!this.selectedKeys.includes(k)) this.selectedKeys.push(k);
                 },
                 expanderClicked: function (r, e) {
-                    console.log('ev', e);
                     r.expanded = !r.expanded;
+                    var me = this;
+                    if (r.expanded) {
+                        Vue.nextTick(function () {
+                            var r1 = $(e.target).closest('tr');
+                            var r2 = r1.next();
+                            console.log('rv', r1, 'r2', r2);
+                            if (!r2.hasClass('expander-row')) return;
+                            var tds = r2.children('td');
+                            
+                                var td = $(tds).children('div.expander-content');
+                                $(td).load(me.rowDetailsUrl, { key: r.key }, function () {
+                                    console.log('rq completed', arguments, 'expandable', me.expandableRows, 'tds', tds);
+                                });
+                            
+                        });
+                    }
                 }
 
             },

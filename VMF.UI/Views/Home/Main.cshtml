@@ -8,7 +8,10 @@
 
 
 <div style="border:solid 2px green;" id="V_@id">
-    <vmf-ajaxgrid style="height:80vh" :list-rows="rows" :list-columns="columns" checkbox-select="true" expandable-rows="true" key-field="Id" row-class-field="_rowCss"></vmf-ajaxgrid>
+    <vmf-ajaxgrid style="height:80vh" :list-rows="rows" :list-columns="columns" checkbox-select="true" 
+                  expandable-rows="true" key-field="Id" row-class-field="_rowCss"
+                  row-details-url="@Url.Action("Static0_Part", "Home")"
+                  ></vmf-ajaxgrid>
 </div>
 
 
@@ -39,7 +42,11 @@
             
         },
         methods: {
-        }
+        },
+            mounted: function () {
+                var me = this;
+                console.log('MAIN MOUNTED!!!', me.$el);
+            }
     });
     vm.mount(document.getElementById('V_@id'));
 

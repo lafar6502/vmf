@@ -3,7 +3,6 @@
     ViewBag.Title = "Index";
     var id = Guid.NewGuid().ToString("N");
 
-    Layout = "~/Views/Shared/_LayoutV4.cshtml";
 }
 
 <h2>Index</h2>
@@ -254,6 +253,10 @@
             changeData: function () {
                 _.assign(this, d1);
             }
+        },
+        mounted: function () {
+            var me = this;
+            console.log('STATIC0 MOUNTED!!!', me.$el);
         }
     });
     vm.mount(document.getElementById('@id'));

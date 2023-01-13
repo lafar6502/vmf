@@ -46,6 +46,20 @@ namespace VMF.UI.Controllers
             return PartialView("Static2");
         }
 
+        public ActionResult Static0_Part()
+        {
+            return PartialView("Static0");
+        }
+
+        public ActionResult Static3_Part()
+        {
+            return PartialView("Static3");
+        }
+
+        public ActionResult Static4_Part()
+        {
+            return PartialView("Static4");
+        }
 
         public ActionResult Static2_Json()
         {
