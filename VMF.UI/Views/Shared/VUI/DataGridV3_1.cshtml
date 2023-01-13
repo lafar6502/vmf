@@ -61,6 +61,10 @@ a slight movement of the header row */
         background: #e6f7ff;
     }
 
+    table.ajaxgrid_table tbody tr.selected {
+        background: #96d3f0;
+    }
+
     .tableWrap div.column-menu {
         height: 100px;
         display: flex;
@@ -75,18 +79,40 @@ a slight movement of the header row */
         <table class="ajaxgrid_table">
             <thead>
                 <tr>
-                    <th v-for="c in columns"><span>{{c.label}}</span></th>
+                    <th v-if="checkboxSelect">
+                        <input type="checkbox" />
+                    </th>
+                    <th v-if="expandableRows">
+                        
+                    </th>
+                    <th v-for="c in visibleColumns"><span>{{c.label}}</span></th>
 
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="r in rows" v-bind:entityref="r[keyField]" v-bind:class="r[rowClassField]">
-                    <td v-for="c in columns"><span>{{r[c.name]}}</span></td>
-                </tr>
+                <template v-for="r in rows">
+                    <tr v-bind:entityref="r.key" v-bind:class="getRowClasses(r)" v-on:click="rowClicked(r, $event)">
+                        <td v-if="checkboxSelect">
+                            <input type="checkbox" v-model="selectedKeys" :value="r.key" v-on:click.stop="">
+                        </td>
+                        <td v-if="expandableRows">
+                            <button v-bind:text="r.expanded ? 'v' : '>'" v-on:click.stop="expanderClicked(r, $event)"></button>
+                        </td>
+                        <td v-for="c in visibleColumns"><span>{{r.data[c.name]}}</span></td>
+                    </tr>
+                    <Transition>
+                        <tr v-if="r.expanded" class="expander-row">
+                            <td v-bind:colspan="totalVisibleColumns"></td>
+                        </tr>
+                    </Transition>
+                </template>
+                
+                
             </tbody>
             <tfoot>
                 <tr>
-                    <th v-bind:colspan="columns.length">
+                    
+                    <th v-bind:colspan="totalVisibleColumns">
 
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -134,13 +160,19 @@ a slight movement of the header row */
     //columns are set up beforehand
     VMF.addVueComponents(function (vueApp) {
         vueApp.component('vmf-ajaxgrid', {
-            props: ['listColumns', 'dataUrl', 'keyField', 'labelField', 'rowClassField', 'rowStyleField', 'pageSize', 'listRows'],
+            props: ['listColumns', 'dataUrl', 'keyField', 'labelField', 'rowClassField', 'rowStyleField', 'pageSize', 'listRows', 'expandableRows', 'checkboxSelect', 'rowDetailsUrl'],
             template: '#vmf-template-ajaxgrid',
             emits: [],
             mixins: [],
             data: function () {
                 var cols = this.listColumns || [];
-                var rowz = this.listRows || [];
+                var rowz = [];
+                if (this.listRows) {
+                    for (var i = 0; i < this.listRows.length; i++) {
+                        rowz.push({ data: this.listRows[i], key: this.keyField ? this.listRows[i][this.keyField] : null });
+                    }
+                }
+                
                 var cols2 = [];
                 for (var i = 0; i < cols.length; i++) {
                     var c = cols[i];
@@ -165,7 +197,9 @@ a slight movement of the header row */
                     pageSize: this.pageSize,
                     page: 0,
                     maxPageReached: 0,
-                    hasMoreData: false
+                    hasMoreData: false,
+                    selectedKeys: [],
+                    selectedKey: null
                 }
             },
             methods: {
@@ -177,6 +211,41 @@ a slight movement of the header row */
                     var np = me.page + inc;
                     if (np < 0) np = 0;
                     this.loadPage(np);
+                },
+                getRowClasses: function (r) {
+                    p = [];
+                    if (this.rowClassField) {
+                        v = r.data[this.rowClassField];
+                        if (v) p.push(v);
+                    }
+                    k = r.key;
+                    if (k == this.selectedKey || this.selectedKeys.includes(k)) {
+                        p.push('selected');
+                    }
+                    return p;
+                },
+                rowClicked: function (r, e) {
+                    console.log('ckk', e, r);
+                    k = r.key;
+                    this.selectedKey = k;
+                    if (e && e.ctrlKey) {
+                        ix = this.selectedKeys.indexOf(k);
+                        if (ix >= 0) {
+                            this.selectedKeys.splice(ix, 1);
+                        }
+                        else {
+                            this.selectedKeys.push(k);
+                        }
+                    }
+                    else {
+                        this.selectedKeys = [k];
+                    }
+                    console.log('k', this.selectedKey, this.selectedKeys);
+                    //if (!this.selectedKeys.includes(k)) this.selectedKeys.push(k);
+                },
+                expanderClicked: function (r, e) {
+                    console.log('ev', e);
+                    r.expanded = !r.expanded;
                 }
 
             },
@@ -184,7 +253,27 @@ a slight movement of the header row */
 
             },
             computed: {
+                visibleColumns: function () {
+                    var me = this;
+                    var c = [];
+                    
+                    for (var i = 0; i < this.columns.length; i++) {
+                        var cc = this.columns[i];
+                        if (false === cc.visible) continue;
+                        c.push(cc);
+                    }
 
+                    return c;
+                },
+                totalVisibleColumns: function () {
+                    var n = (this.expandableRows ? 1 : 0) + (this.checkboxSelect ? 1 : 0);
+                    for (var i = 0; i < this.columns.length; i++) {
+                        var cc = this.columns[i];
+                        if (false === cc.visible) continue;
+                        n++;
+                    }
+                    return n;
+                }
             }
         });
 
