@@ -104,7 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="FieldAccess.cs" />
     <Compile Include="FormBuilder.cs" />
     <Compile Include="FormViewModel.cs" />
     <Compile Include="IdLabel.cs" />

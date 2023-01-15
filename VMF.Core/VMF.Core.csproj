@@ -64,8 +64,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FieldAccess.cs" />
+    <Compile Include="IDynamicEntity.cs" />
+    <Compile Include="IListDataProvider.cs" />
+    <Compile Include="IListProvider.cs" />
     <Compile Include="ISelectView.cs" />
     <Compile Include="IVMFTransactionFactory.cs" />
+    <Compile Include="ListInfo.cs" />
     <Compile Include="Transactions\RQContext.cs" />
     <Compile Include="VMFGlobal.cs" />
     <Compile Include="AppUser.cs" />

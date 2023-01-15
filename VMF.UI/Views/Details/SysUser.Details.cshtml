@@ -10,7 +10,7 @@
             sc.AddModelValue("Email", Model.Email);
             sc.AddValueWithContext("Active", Model.Active, Model, new WidgetContext
             {
-                Access = FieldAccess.Editable
+                Access = FieldAccess.ReadWrite
             });
             sc.AddValueWithContext("Name", Model.Name, Model, new WidgetContext
             {

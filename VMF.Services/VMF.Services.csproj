@@ -89,6 +89,9 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Config\VMFSoodaConfigProvider.cs" />
+    <Compile Include="Entities\EntityUpdateHandler.cs" />
+    <Compile Include="Lists\SoodaListDataProvider.cs" />
+    <Compile Include="Lists\SqlListDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SoodaEntityResolver.cs" />
     <Compile Include="Transactions\TransactionFactory.cs" />
@@ -110,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="NewFolder1\" />
+    <Folder Include="NewFolder2\" />
     <Folder Include="Web\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

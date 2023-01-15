@@ -96,7 +96,7 @@ a slight movement of the header row */
                 </tr>
             </thead>
             <tbody>
-                <template v-for="r in rows">
+                <template v-for="r in rows" :key="r.key">
                     <tr v-bind:entityref="r.key" v-bind:class="getRowClasses(r)" v-on:click="rowClicked(r, $event)">
                         <td v-if="checkboxSelect">
                             <input type="checkbox" v-model="selectedKeys" :value="r.key" v-on:click.stop="">
@@ -106,7 +106,7 @@ a slight movement of the header row */
                         </td>
                         <td v-for="c in visibleColumns"><span>{{r.data[c.name]}}</span></td>
                     </tr>
-                    <Transition :duration="1000">
+                    <Transition>
                         <tr v-if="r.expanded" class="expander-row">
                             <td v-bind:colspan="totalVisibleColumns">
                                 <div v-pre class="expander-content"></div>
@@ -265,8 +265,9 @@ a slight movement of the header row */
                                 var td = $(tds).children('div.expander-content');
                                 $(td).load(me.rowDetailsUrl, { key: r.key }, function () {
                                     console.log('rq completed', arguments, 'expandable', me.expandableRows, 'tds', tds);
+                                    $(td).show(500);
                                 });
-                            
+                            $(td).hide();
                         });
                     }
                 }

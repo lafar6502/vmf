@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VMF.UI.Lib
+namespace VMF.Services.Lists
 {
-    public enum FieldAccess
+    internal class SoodaListDataProvider
     {
-        NoAccess,
-        ReadOnly,
-        Editable,
-        Required
     }
 }
