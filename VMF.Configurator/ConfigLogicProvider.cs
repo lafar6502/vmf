@@ -52,6 +52,14 @@ namespace VMF.Configurator
             return _dsl;
         }
 
+        protected ConfigDSLBase GetConfigLogic(string productId)
+        {
+            var dsl  = GetDSL();
+            var x = dsl.Create(productId);
+            x.Prepare(this);
+            return x;
+        }
+
         public ProductConfigInfo Validate(string productId, IDictionary<string, object> config, ValidationOptions options, object context)
         {
             throw new NotImplementedException();

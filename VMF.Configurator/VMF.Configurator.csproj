@@ -91,6 +91,7 @@
     <Compile Include="ConfigDSLCompiler.cs" />
     <Compile Include="ConfigLogicProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuackDictWrapper.cs" />
     <Compile Include="ScriptStorage.cs" />
   </ItemGroup>
   <ItemGroup>
