@@ -8,8 +8,8 @@ namespace VMF.Core.Configurator
 {
     public interface IProductConfigValidator
     {
-        
-        ProductConfigInfo Validate(string productId, IDictionary<string, object> config, ValidationOptions options, object context);
+        ConfigModelInfo GetConfigModelInfo(string productId);
+        ConfigModelInfo Validate(string productId, IDictionary<string, object> config, ValidationOptions options, object context);
 
     }
 }

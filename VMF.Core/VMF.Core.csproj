@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configurator\IProductConfigValidator.cs" />
-    <Compile Include="Configurator\ProductConfigInfo.cs" />
+    <Compile Include="Configurator\ConfigModelInfo.cs" />
     <Compile Include="Configurator\ParamInfo.cs" />
     <Compile Include="Configurator\ValidationOptions.cs" />
     <Compile Include="FieldAccess.cs" />

@@ -94,12 +94,16 @@
     <Compile Include="MessageBusTests.cs" />
     <Compile Include="EntityTests.cs" />
     <Compile Include="TestContainerConfig.cs" />
+    <Compile Include="ConfiguratorTests.cs" />
     <Compile Include="TransTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Configurators\Test.Logic.1.boo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="config\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -119,6 +123,10 @@
       <Project>{62b74101-9250-4ab4-81e3-f88d695b5bc7}</Project>
       <Name>VMF.BusinessObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VMF.Configurator\VMF.Configurator.csproj">
+      <Project>{5c6fdd12-5d5d-4b9f-84dc-2f3a2ccd5b9b}</Project>
+      <Name>VMF.Configurator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VMF.Core\VMF.Core.csproj">
       <Project>{a8d0ecb6-5065-4f46-ac73-e95616bc3e78}</Project>
       <Name>VMF.Core</Name>
@@ -132,6 +140,7 @@
       <Name>VMF.UI.Lib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

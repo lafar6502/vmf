@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VMF.Core.Configurator
 {
-    public class ProductConfigInfo
+    public class ConfigModelInfo
     {
         public string ProductId { get; set; }
         public string ProductName { get; set; }

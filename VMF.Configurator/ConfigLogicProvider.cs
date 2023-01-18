@@ -56,13 +56,29 @@ namespace VMF.Configurator
         {
             var dsl  = GetDSL();
             var x = dsl.Create(productId);
-            x.Prepare(this);
+            x.Initialize(this);
             return x;
         }
 
-        public ProductConfigInfo Validate(string productId, IDictionary<string, object> config, ValidationOptions options, object context)
+        public IEnumerable<string> GetAllModelNames()
+        {
+            var dsl = GetDSL();
+            var all = dsl.CreateAll();
+            return all.Select(x => x.GetType().Name);
+        }
+        public ConfigModelInfo Validate(string productId, IDictionary<string, object> config, ValidationOptions options, object context)
         {
             throw new NotImplementedException();
+        }
+
+        public ConfigModelInfo GetConfigModelInfo(string productId)
+        {
+            var x = GetConfigLogic(productId);
+            var m = new ConfigModelInfo
+            {
+                ProductId = x.GetType().Name
+            };
+            return m;
         }
     }
 }
