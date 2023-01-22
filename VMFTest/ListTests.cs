@@ -92,25 +92,36 @@ namespace VMFTest
             var ld = VMFGlobal.ResolveService<IListDataProvider>();
             InTransaction(() =>
             {
-                var l1 = lp.GetList("List1");
-                foreach(var c in l1.Columns) Console.WriteLine("col:" + c.Name);
+            var l1 = lp.GetList("List1");
+            foreach (var c in l1.Columns) Console.WriteLine("col:" + c.Name);
 
-                var lq = new ListQuery
+            var lq = new ListQuery
+            {
+                ListId = l1.ListId,
+                Limit = 5,
+                Start = 0,
+                WithCount = l1.CountSupported,
+                SelectColumns = null,
+                Filters = new ListQuery.Filter[] { new ListQuery.Filter
                 {
-                    ListId = l1.ListId,
-                    Limit = 1000,
-                    Start = 0,
-                    WithCount = l1.CountSupported,
-                    SelectColumns = null,
-                    Filters = new ListQuery.Filter[] { new ListQuery.Filter
-                        {
-                            Name = "query",
-                            Args = "Ozo"
-                        } 
-                    }
-                };
+                    Name = "query",
+                    Args = "R"
+                }
+                }
+            };
 
-                var res = ld.Query(lq);
+            var res = ld.Query(lq);
+            Console.WriteLine("Total:" + res.TotalCount);
+            Console.WriteLine(String.Join("\t", res.Columns));
+            for (var i = 0; i < res.Results.Count && i < 10; i++)
+            {
+                foreach (var c in res.Columns)
+                {
+                    Console.Write(res.Results[i][c]); Console.Write("\t");
+                }
+                Console.WriteLine();
+            }
+                
 
 
             });

@@ -141,7 +141,7 @@ namespace VMF.Services.Lists
                 }
                 else
                 {
-                    var countQry = "select count(*) from (" + baseSql + ")";
+                    var countQry = "select count(*) from (" + baseSql + ") _t0";
                     qr.TotalCount = db.QuerySingle<int>(countQry, dp);
                 }
             }

@@ -21,7 +21,13 @@
   "SearchFilters": [
     {
       "Name": "query",
-      "Expr": "su.last_name like ${0%}"
+      "Expr": "su.last_name like ${0%} or su.first_name like ${0%}"
+    },
+    {
+      "Name": "active",
+      "Expr": "active_flag=${0}",
+      "Required": true,
+      "DefaultValue": 1
     }
   ]
 }
