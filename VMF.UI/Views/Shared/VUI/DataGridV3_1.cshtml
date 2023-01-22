@@ -161,6 +161,11 @@ a slight movement of the header row */
 
 </script>
 
+<template id="vmf-template-listgrid">
+    <vmf-ajaxgrid style="height:300px"  :list-columns="columns" checkbox-select="false" :data-callback="provideData"
+                  expandable-rows="false" key-field="_primaryKey" row-class-field="_rowCss"></vmf-ajaxgrid>
+</template>
+
 <script type="text/javascript">
 
     //ajaxgrid
@@ -168,7 +173,7 @@ a slight movement of the header row */
     //columns are set up beforehand
     VMF.addVueComponents(function (vueApp) {
         vueApp.component('vmf-ajaxgrid', {
-            props: ['listColumns', 'dataUrl', 'keyField', 'labelField', 'rowClassField', 'rowStyleField', 'pageSize', 'listRows', 'expandableRows', 'checkboxSelect', 'rowDetailsUrl'],
+            props: ['listColumns', 'dataUrl', 'keyField', 'labelField', 'rowClassField', 'rowStyleField', 'pageSize', 'listRows', 'expandableRows', 'checkboxSelect', 'rowDetailsUrl', 'dataCallback', 'queryContext'],
             template: '#vmf-template-ajaxgrid',
             emits: [],
             mixins: [],
@@ -202,17 +207,47 @@ a slight movement of the header row */
                 return {
                     rows: rowz,
                     columns: cols2,
-                    pageSize: this.pageSize,
+                    pageSize: 25,
                     page: 0,
                     maxPageReached: 0,
                     hasMoreData: false,
                     selectedKeys: [],
-                    selectedKey: null
+                    selectedKey: null,
+                    loading: false,
+                    totalCount: undefined,
+                    queryContext: this.queryContext
                 }
             },
             methods: {
                 loadPage: function (n) {
-                    this.page = n;
+                    if (n <= 0) return;
+                    var me = this;
+                    if (this.dataCallback) {
+                        console.log('calling data callback');
+                        var q = {
+                            start: (n - 1) * this.pageSize,
+                            limit: this.pageSize,
+                            page: n,
+                            context: this.queryContext
+                        };
+                        this.loading = true;
+                        this.dataCallback(q, function (err, data) {
+                            this.loading = false;
+                            if (err) {
+                                me.showError(err);
+                                return;
+                            }
+                            me.rows = data.rows;
+                            me.hasMoreData = true == data.hasMoreData;
+                            me.page = n;
+                        });
+                    }
+                    else {
+                        this.page = n;
+                    }
+                },
+                showError: function (e) {
+
                 },
                 moveByPages: function (inc) {
                     var me = this;
@@ -297,6 +332,48 @@ a slight movement of the header row */
                         n++;
                     }
                     return n;
+                }
+            }
+        });
+
+
+        vueApp.component('vmf-listgrid', {
+            props: ['listId', 'listConfig'],
+            template: '#vmf-template-listgrid',
+            emits: [],
+            mixins: [],
+            data: function () {
+                
+                return {
+                    config: this.listConfig,
+                    pageSize: 20
+                }
+            },
+            methods: {
+                provideData: function (q, callback) {
+                    console.log('provide data', q);
+                    setTimeout(function () {
+                        callback(undefined, {
+                            rows: [],
+                            hasMoreData: true
+                        });
+                    }, 1000);
+                },
+            },
+            watch: {
+
+            },
+            computed: {
+                columns: function () {
+                    c = [];
+                    for (var i = 0; i < this.config.Columns.length; i++) {
+                        var c0 = this.config.Columns[i];
+                        c.push({
+                            name: c0.Name,
+                            label: c0.Name
+                        });
+                    }
+                    return c;
                 }
             }
         });

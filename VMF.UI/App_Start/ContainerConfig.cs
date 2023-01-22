@@ -15,6 +15,9 @@ using VMF.UI.Lib.Web;
 using System.Reflection;
 using Sooda;
 using VMF.Services.Config;
+using NGinnBPM.MessageBus;
+using VMF.Services.Lists;
+using System.IO;
 
 namespace VMF.UI.App_Start
 {
@@ -22,14 +25,23 @@ namespace VMF.UI.App_Start
     {
         public static void Configure(IWindsorContainer wc)
         {
-
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
             var cfg = new JsonConfig();
             wc.Register(Component.For<IConfigProvider>().Instance(cfg));
+            wc.Register(Component.For<IServiceResolver>().Instance(new NGinnBPM.MessageBus.Windsor.WindsorServiceResolver(wc.Kernel)));
             wc.Register(Component.For<IEntityResolver>().ImplementedBy<SoodaEntityResolver>().LifeStyle.Singleton);
             wc.Register(Component.For<IVMFTransactionFactory>().ImplementedBy<TransactionFactory>().LifeStyle.Singleton);
 
             wc.Register(Component.For<ServiceCallRouteHandler>().ImplementedBy<ServiceCallRouteHandler>());
             wc.Register(Component.For<IUserRepository>().ImplementedBy<VMF.BusinessObjects.Services.UserRepository>().LifeStyle.Singleton);
+
+            wc.Register(Component.For<IListDataProvider, IListProvider>().ImplementedBy<MasterListProvider>().LifeStyle.Singleton);
+            wc.Register(Component.For<IListDataProvider, IListProvider>().ImplementedBy<SqlListDataProvider>().Named("Sql").DependsOn(
+                new 
+                {
+                    BaseDir = Path.Combine(baseDir, "appdata\\SqlLists")
+                }).LifeStyle.Singleton);
+
             RegisterControllersFromAssembly(typeof(Controllers.BaseTestController).Assembly, wc);
             SoodaConfig.SetConfigProvider(new VMFSoodaConfigProvider(cfg));
             //Sooda.TransactionStrategyMenager.SetTransactionStrategy(new Sooda.TransactionStrategy.SoodaThreadBoundTransactionStrategy());

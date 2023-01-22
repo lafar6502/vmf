@@ -109,6 +109,7 @@
     <Compile Include="IdLabel.cs" />
     <Compile Include="Mvc\BaseController.cs" />
     <Compile Include="Mvc\FileGeneratingResult.cs" />
+    <Compile Include="Mvc\JsonNetResult.cs" />
     <Compile Include="Mvc\MvcUtil.cs" />
     <Compile Include="Mvc\TransactionManagerModule.cs" />
     <Compile Include="Mvc\WindsorControllerFactory.cs" />
