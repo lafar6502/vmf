@@ -28,6 +28,10 @@
       "Expr": "active_flag=${0}",
       "Required": true,
       "DefaultValue": 1
+    },
+    {
+      "Name": "Id",
+      "Expr": "Id ${FILTER}"
     }
   ]
 }

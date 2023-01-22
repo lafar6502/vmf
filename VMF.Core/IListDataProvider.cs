@@ -19,10 +19,25 @@ namespace VMF.Core
         public bool WithCount { get; set; }
         public string OrderBy { get; set; }
         public bool OrderDesc { get; set; }
+
+        public enum FilterOp
+        {
+            EQ,
+            LK,
+            GT,
+            GTE,
+            LT,
+            LTE,
+            RANGE,
+            IN,
+            NULL,
+            NOT_NULL,
+            NOT_IN
+        }
         public class Filter
         {
             public string Name { get; set; }
-            public string Op { get; set; }
+            public FilterOp Op { get; set; } = FilterOp.EQ;
             public JToken Args { get; set; }
         }
 

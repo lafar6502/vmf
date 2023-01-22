@@ -27,7 +27,7 @@ namespace VMF.Services.Lists
             public string Name { get; set; }
             public string Expr { get; set; }
             public bool Required { get; set; }
-            public object DefaultValue { get; set; }
+            public JToken DefaultValue { get; set; }
 
             public Dictionary<string, string> FilterMap { get; set; }
         }

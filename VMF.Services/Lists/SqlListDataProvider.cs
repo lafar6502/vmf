@@ -12,6 +12,7 @@ using System.Data;
 using Dapper;
 using VMF.Core.Util;
 using VMF.Core.Lists;
+using Newtonsoft.Json.Linq;
 
 namespace VMF.Services.Lists
 {
@@ -251,16 +252,16 @@ namespace VMF.Services.Lists
             var f = ld.SearchFilters.FirstOrDefault(x => x.Name == filterName);
             if (f == null) throw new Exception("Query filter not found:" + filterName);
             var f0 = val;
-            object fval = null;
+            JToken fval = null;
             if (f0 != null)
             {
-                fval = f0.Args.ToObject<object>();
+                fval = f0.Args;
             }
             else
             {
                 fval = f.DefaultValue;
             }
-            if (fval == null) throw new Exception("Filter param missing: " + filterName);
+            if (fval == null || fval.Type == JTokenType.Null || fval.Type == JTokenType.Undefined) throw new Exception("Filter param missing: " + filterName);
             var expr = f.Expr;
             if (f.FilterMap != null)
             {
@@ -269,28 +270,74 @@ namespace VMF.Services.Lists
             }
             if (expr == null) throw new Exception("No filter query for " + filterName + ", " + fval);
             //now we need to supply param values ..
-            var e3 = processedFilters.GetOrAdd(filterName, pn0 => FixParameterRefs(expr, fval, qparams));
+            var e3 = processedFilters.GetOrAdd(filterName, pn0 => FixParameterRefs(expr, fval, f0 == null ? ListQuery.FilterOp.EQ : f0.Op, qparams));
             return e3;
         }
 
-        protected string FixParameterRefs(string filterExpr, object paramVal, List<object> qparams)
+        protected string FixParameterRefs(string filterExpr, JToken paramVal, ListQuery.FilterOp op, List<object> qparams)
         {
             var dic = new Dictionary<string, string>();
             var e2 = StringUtil.SubstValues(filterExpr, ppn =>
             {
-                var pv = paramVal;
+                var pv = paramVal.ToObject<object>();
+                
                 switch(ppn)
                 {
                     case "0":
                         break;
                     case "0%":
-                        var spv = paramVal.ToString();
+                        var spv = paramVal.ToObject<string>();
                         pv = spv.EndsWith("%") ? spv : spv + "%";
                         break;
                     case "%0%":
-                        spv = paramVal.ToString();
+                        spv = paramVal.ToObject<string>();
                         pv =  (spv.StartsWith("%") ? spv : "%" + spv) +  (spv.EndsWith("%") ? "" : "%");
                         break;
+                    case "FILTER":
+                        var oper = "=";
+                        switch (op)
+                        {
+                            case ListQuery.FilterOp.EQ:
+                                oper = "=";
+                                break;
+                            case ListQuery.FilterOp.GT:
+                                oper = ">";
+                                break;
+                            case ListQuery.FilterOp.GTE:
+                                oper = ">=";
+                                break;
+                            case ListQuery.FilterOp.LT:
+                                oper = "<";
+                                break;
+                            case ListQuery.FilterOp.LTE:
+                                oper = "<=";
+                                break;
+                            case ListQuery.FilterOp.LK:
+                                spv = paramVal.ToObject<string>();
+                                pv = (spv.StartsWith("%") ? spv : "%" + spv) + (spv.EndsWith("%") ? "" : "%");
+                                qparams.Add(pv);
+                                return " like @qp" + (qparams.Count - 1);
+                            case ListQuery.FilterOp.RANGE:
+                                var p2 = paramVal.ToObject<object[]>();
+                                if (p2.Length != 2) throw new Exception("RANGE requires two elements");
+                                qparams.Add(p2[0]);
+                                qparams.Add(p2[1]);
+                                return " between @qp" + (qparams.Count - 2) + " and @qp" + (qparams.Count - 1);
+                            case ListQuery.FilterOp.IN:
+                            case ListQuery.FilterOp.NOT_IN:
+                                p2 = paramVal.ToObject<object[]>();
+                                qparams.Add(p2);
+                                return (op == ListQuery.FilterOp.NOT_IN ? " not" : "") + " in @qp" + (qparams.Count - 1);
+                            case ListQuery.FilterOp.NULL:
+                                return " is null";
+                            case ListQuery.FilterOp.NOT_NULL:
+                                return " is not null";
+                            default:
+                                throw new Exception("Invalid op:" + op);
+
+                        }
+                        qparams.Add(pv);
+                        return " " + oper + " @qp" + (qparams.Count - 1);
                     default:
                         return "${" + ppn + "}";
                 }

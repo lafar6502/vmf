@@ -9,6 +9,7 @@ using NLog;
 using VMF.BusinessObjects;
 using System.Data.Common;
 using NGinnBPM.MessageBus;
+using Newtonsoft.Json.Linq;
 
 namespace VMFTest
 {
@@ -92,36 +93,59 @@ namespace VMFTest
             var ld = VMFGlobal.ResolveService<IListDataProvider>();
             InTransaction(() =>
             {
-            var l1 = lp.GetList("List1");
-            foreach (var c in l1.Columns) Console.WriteLine("col:" + c.Name);
+                var l1 = lp.GetList("List1");
+                foreach (var c in l1.Columns) Console.WriteLine("col:" + c.Name);
 
-            var lq = new ListQuery
-            {
-                ListId = l1.ListId,
-                Limit = 5,
-                Start = 0,
-                WithCount = l1.CountSupported,
-                SelectColumns = null,
-                Filters = new ListQuery.Filter[] { new ListQuery.Filter
+                var lq = new ListQuery
                 {
-                    Name = "query",
-                    Args = "R"
-                }
-                }
-            };
+                    ListId = l1.ListId,
+                    Limit = 5,
+                    Start = 0,
+                    WithCount = l1.CountSupported,
+                    SelectColumns = null,
+                    Filters = new ListQuery.Filter[] { new ListQuery.Filter
+                        {
+                            Name = "query",
+                            Args = "R"
+                        }
+                    }
+                };
 
-            var res = ld.Query(lq);
-            Console.WriteLine("Total:" + res.TotalCount);
-            Console.WriteLine(String.Join("\t", res.Columns));
-            for (var i = 0; i < res.Results.Count && i < 10; i++)
-            {
-                foreach (var c in res.Columns)
+                var res = ld.Query(lq);
+                Console.WriteLine("Total:" + res.TotalCount);
+                Console.WriteLine(String.Join("\t", res.Columns));
+                for (var i = 0; i < res.Results.Count && i < 10; i++)
                 {
-                    Console.Write(res.Results[i][c]); Console.Write("\t");
+                    foreach (var c in res.Columns)
+                    {
+                        Console.Write(res.Results[i][c]); Console.Write("\t");
+                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
-            }
-                
+
+
+                lq = new ListQuery
+                {
+                    ListId = l1.ListId,
+                    Limit = 5,
+                    Start = 0,
+                    WithCount = l1.CountSupported,
+                    SelectColumns = null,
+                    Filters = new ListQuery.Filter[] { new ListQuery.Filter
+                        {
+                            Name = "Id",
+                            Op = ListQuery.FilterOp.IN,
+                            Args = JToken.FromObject(new int[] {1, 11, 21, 31 })
+                        },
+                        new ListQuery.Filter
+                        {
+                            Name = "query",
+                            Args = ""
+                        }
+                    }
+                };
+                res = ld.Query(lq);
+                Console.WriteLine("Total 2:" + res.TotalCount);
 
 
             });
