@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,16 @@ namespace VMF.Core
         /// return total count
         /// </summary>
         public bool WithCount { get; set; }
+        public string OrderBy { get; set; }
+        public bool OrderDesc { get; set; }
+        public class Filter
+        {
+            public string Name { get; set; }
+            public string Op { get; set; }
+            public JToken Args { get; set; }
+        }
+
+        public Filter[] Filters { get; set; }
     }
 
     public class ListQueryResults
@@ -27,8 +38,9 @@ namespace VMF.Core
         public List<Dictionary<string, object>> Results { get; set; }
         public bool HasMore { get; set; }
     }
-    public interface IListDataProvider
+    public interface IListDataProvider : IListProvider
     {
-
+        ListQueryResults Query(ListQuery q);
+        int GetRowCount(ListQuery q);
     }
 }

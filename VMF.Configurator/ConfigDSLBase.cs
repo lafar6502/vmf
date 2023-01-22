@@ -41,9 +41,28 @@ namespace VMF.Configurator
 
         }
 
+        public string ProductId => GetType().Name;
+
         public ConfigModelInfo Evaluate(IDictionary<string, object> inputParams)
         {
-            throw new NotImplementedException();
+            var m = new ConfigModelInfo
+            {
+                ProductId = this.ProductId,
+                Fields = new List<ParamInfo>()
+            };
+            foreach(var p in _paramDefs)
+            {
+                m.Fields.Add(new ParamInfo
+                {
+                    Name = p.Name,
+                    ParamType = p.ParamType,
+                    Access = p.Access,
+                    Value = p.DefaultValue,
+                    Label = p.Label,
+                    IsInput = p.IsInput
+                });
+            }
+            return m;
         }
 
         private List<ParamDef> _paramDefs  = new List<ParamDef>();

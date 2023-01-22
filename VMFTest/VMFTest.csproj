@@ -91,6 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListTests.cs" />
     <Compile Include="MessageBusTests.cs" />
     <Compile Include="EntityTests.cs" />
     <Compile Include="TestContainerConfig.cs" />
@@ -101,7 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Configurators\Test.Logic.1.boo">
+    <None Include="Configurators\Test_Logic_1.boo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="config\config.json">
@@ -117,6 +118,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="SqlLists\List1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VMF.BusinessObjects\VMF.BusinessObjects.csproj">

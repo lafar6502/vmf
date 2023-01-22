@@ -8,7 +8,7 @@ using System.IO;
 using NLog;
 using Boo.Lang.Compiler;
 
-namespace Unitech.CutLists.V2
+namespace VMF.Configurator
 {
     /// <summary>
     /// this maintains 2 subdirectories of the base folder:

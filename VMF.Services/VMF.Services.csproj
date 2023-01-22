@@ -129,6 +129,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Config\VMFSoodaConfigProvider.cs" />
     <Compile Include="Entities\EntityUpdateHandler.cs" />
+    <Compile Include="Lists\SqlListDefinition.cs" />
     <Compile Include="Lists\SoodaListDataProvider.cs" />
     <Compile Include="Lists\SqlListDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -319,11 +319,6 @@ namespace VMF.Core
 
 
 
-        public static V GetValueOrDefault<K, V>(this IDictionary<K, V> dic, K key, V defaultValue = default(V))
-        {
-            V v;
-            return dic.TryGetValue(key, out v) ? v : defaultValue;
-        }
 
         public static IEnumerable<Type> MeAndParentTypes(this Type t)
         {

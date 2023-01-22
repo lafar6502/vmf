@@ -75,6 +75,7 @@
     <Compile Include="ISelectView.cs" />
     <Compile Include="IVMFTransactionFactory.cs" />
     <Compile Include="ListInfo.cs" />
+    <Compile Include="Lists\IQueryParamProvider.cs" />
     <Compile Include="Transactions\RQContext.cs" />
     <Compile Include="VMFGlobal.cs" />
     <Compile Include="AppUser.cs" />

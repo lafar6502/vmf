@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Boo.Lang.Compiler;
-using Facile.Core;
 
-namespace Unitech.CutLists.V2
+namespace VMF.Configurator
 {
     public class ScriptStorageWithFolderAndOverride : ScriptStorageWithFolder
     {

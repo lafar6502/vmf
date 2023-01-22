@@ -1,0 +1,27 @@
+{
+  "Columns": [
+    {
+      "Name": "Id"
+    },
+    {
+      "Name": "FirstName",
+      "Expr": "su.first_name"
+    },
+    {
+      "Name": "LastName",
+      "Expr": "su.last_name"
+    }
+  ],
+  "Query": [
+
+    "select su.Id as _primaryKey, 'SysUser' as _entity, ${_columns} from SystemUser su ",
+    "WHERE ${_remainingFilters} and (${query})"
+  ],
+
+  "SearchFilters": [
+    {
+      "Name": "query",
+      "Expr": "su.last_name like ${0%}"
+    }
+  ]
+}

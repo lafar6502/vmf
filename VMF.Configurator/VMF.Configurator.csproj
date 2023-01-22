@@ -93,6 +93,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuackDictWrapper.cs" />
     <Compile Include="ScriptStorage.cs" />
+    <Compile Include="ScriptStorageWithFolder.cs" />
+    <Compile Include="ScriptStorageWithFolderAndOverride.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VMF.Core\VMF.Core.csproj">

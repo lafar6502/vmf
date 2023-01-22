@@ -14,7 +14,10 @@ namespace VMF.Core.Util
             return d.TryGetValue(k, out v) ? v : defVal;
         }
 
+
         
+
+
 
         public static T GetValueOrDefault<T>(this IDictionary<string, object> d, string key, T defVal = default(T))
         {
@@ -44,6 +47,18 @@ namespace VMF.Core.Util
                 throw new Exception("Error getting " + key + ": " + ex.Message);
             }
 
+        }
+
+        public static V GetOrAdd<K, V>(this IDictionary<K, V> d, K k, Func<K,V> getVal)
+        {
+
+            V v;
+            if (!d.TryGetValue(k, out v))
+            {
+                v = getVal(k);
+                d.Add(k, v);
+            }
+            return v;
         }
 
     }

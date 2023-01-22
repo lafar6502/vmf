@@ -14,6 +14,8 @@ using VMF.Services;
 using VMF.Services.Transactions;
 using NGinnBPM.MessageBus;
 using NGinnBPM.MessageBus.Windsor;
+using VMF.Services.Lists;
+using System.IO;
 
 namespace VMFTest
 {
@@ -26,12 +28,16 @@ namespace VMFTest
         public static void SetupContainer()
         {
             var c = new JsonConfigProvider("test");
+            var bd = AppDomain.CurrentDomain.BaseDirectory;
             VMFGlobal.Config = c;
             var wc = new WindsorContainer();
             wc.Register(Component.For<IConfigProvider>().Instance(c));
             wc.Register(Component.For<IEntityResolver>().ImplementedBy<SoodaEntityResolver>().LifeStyle.Singleton);
             wc.Register(Component.For<IVMFTransactionFactory>().ImplementedBy<TransactionFactory>().LifeStyle.Singleton);
             SoodaConfig.SetConfigProvider(new VMFSoodaConfigProvider(c));
+
+            wc.Register(Component.For<IListDataProvider, IListProvider>().ImplementedBy<SqlListDataProvider>().LifeStyle.Singleton
+                .DependsOn(Dependency.OnValue("BaseDir", Path.Combine(bd, "SqlLists"))).Named("SqlLists"));
 
             MessageBusConfigurator.Begin(wc)
                 .SetEndpoint("sql://default/MQ_Test")
@@ -40,6 +46,7 @@ namespace VMFTest
                     {"default", c.Get("default.connectionString", "") }
                 })
                 .AutoCreateDatabase(true)
+                .SetMaxConcurrentMessages(1)
                 .BatchOutgoingMessages(true)
                 .SetExposeReceiveConnectionToApplication(true)
                 .AutoStartMessageBus(true)

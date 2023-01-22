@@ -74,11 +74,7 @@ namespace VMF.Configurator
         public ConfigModelInfo GetConfigModelInfo(string productId)
         {
             var x = GetConfigLogic(productId);
-            var m = new ConfigModelInfo
-            {
-                ProductId = x.GetType().Name
-            };
-            return m;
+            return x.Evaluate(new Dictionary<string, object>());
         }
     }
 }

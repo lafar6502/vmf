@@ -8,6 +8,7 @@ using System.Data;
 using Dapper;
 using VMF.Core;
 using System.IO;
+using VMF.Core.Util;
 
 namespace VMF.Services.Util
 {
