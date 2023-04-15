@@ -26,13 +26,13 @@
   </class>
 
   <class name="SysUser">
-    <table name="SysUser">
+    <table name="SystemUser">
       <field name="Id" type="Integer" nullable="false" primaryKey="true" />
       <field name="Login" type="String" nullable="false" size="50" />
       <field name="Password" type="String" nullable="true" />
-      <field name="Active" type="Boolean" nullable="false" />
+      <field name="Active" dbcolumn="active_flag" type="Boolean" nullable="false" />
       <field name="Name" type="String" size="200" nullable="false" />
-      <field name="Email" type="String" size="100" nullable="true" />
+      <field name="Email" dbcolumn="primary_email" type="String" size="100" nullable="true" />
     </table>
   </class>
 

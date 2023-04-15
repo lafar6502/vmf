@@ -11,6 +11,7 @@ using System.Transactions;
 using System.Runtime.Remoting.Messaging;
 using VMF.Core.Transactions;
 using VMF.Services.Transactions;
+using VMF.Services.Util;
 
 namespace VMF.UI.Lib.Mvc
 {
@@ -95,13 +96,14 @@ namespace VMF.UI.Lib.Mvc
             {
                 log.Error("Request {0}, has context left from {1}", id, cc.Id);
             }
-            TransUtil.SetUpAmbientTransaction();
-
             var ctx = new RQContext
             {
                 Id = id
             };
             RQContext.Current = ctx;
+            TransUtil.SetUpAmbientTransaction();
+
+            
         }
 
 
@@ -222,14 +224,26 @@ namespace VMF.UI.Lib.Mvc
             {
                 log.Error("Session context  in rq {0} - from {1}", CurrentRequestId, sc.RequestId);
             }
+
             sc = new SessionContext();
             sc.RequestId = CurrentRequestId.ToString();
 
+            try
+            {
+                sc.RequestDbConnection = DbUtil.CreateDefaultConnection();
+                var tf = VMFGlobal.ResolveService<IVMFTransactionFactory>();
+                var tran = tf.CreateTransaction(sc.RequestDbConnection);
+                sc.Transaction = tran;
 
-            var tf = VMFGlobal.ResolveService<IVMFTransactionFactory>();
-            var tran = tf.CreateTransaction(null);
-            sc.Transaction = tran;
-
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error creating transaction: {0}", ex.ToString());
+                if (sc.Transaction != null) sc.Transaction.Dispose();
+                if (sc.RequestDbConnection != null) sc.RequestDbConnection.Dispose();
+                throw;
+            }
+            
             SessionContext.Current = sc;
 
             

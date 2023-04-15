@@ -138,6 +138,7 @@
     <Compile Include="Transactions\TransactionFactory.cs" />
     <Compile Include="Transactions\TransUtil.cs" />
     <Compile Include="Transactions\VMFTransaction.cs" />
+    <Compile Include="Util\DbUtil.cs" />
     <Compile Include="Util\SqliteTranslationRepo.cs" />
     <Compile Include="Util\SqliteUtil.cs" />
     <Compile Include="Util\TextFileTranslationRepo.cs" />

@@ -162,7 +162,7 @@ a slight movement of the header row */
 </script>
 
 <template id="vmf-template-listgrid">
-    <vmf-ajaxgrid style="height:300px"  :list-columns="columns" checkbox-select="false" :data-callback="provideData"
+    <vmf-ajaxgrid style="height:300px"  :list-columns="columns" checkbox-select="false" :data-callback="provideData" :query-context="queryContext"
                   expandable-rows="false" key-field="_primaryKey" row-class-field="_rowCss"></vmf-ajaxgrid>
 </template>
 
@@ -237,7 +237,11 @@ a slight movement of the header row */
                                 me.showError(err);
                                 return;
                             }
-                            me.rows = data.rows;
+                            var rowz = [];
+                            for (var i = 0; i < data.rows.length; i++) {
+                                rowz.push({ data: data.rows[i], key: this.keyField ? data.rows[i][this.keyField] : null });
+                            }
+                            me.rows = rowz;
                             me.hasMoreData = true == data.hasMoreData;
                             me.page = n;
                         });
@@ -346,18 +350,44 @@ a slight movement of the header row */
                 
                 return {
                     config: this.listConfig,
-                    pageSize: 20
+                    pageSize: 20,
+                    queryContext: {
+                        Filters: [
+                            {
+                                Name: "query",
+                                Args: ""
+                            }
+                        ]
+                    }
                 }
             },
             methods: {
                 provideData: function (q, callback) {
                     console.log('provide data', q);
-                    setTimeout(function () {
-                        callback(undefined, {
-                            rows: [],
-                            hasMoreData: true
-                        });
-                    }, 1000);
+                    var d = {
+                        ListId: this.listId,
+                        Start: q.start,
+                        Limit: q.limit,
+                        Filters: q.context.Filters
+                    };
+                    $.ajax({
+                        contentType: 'application/json',
+                        data: JSON.stringify(d),
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log("call OK", data);
+                            callback(undefined, {
+                                rows: data.Results,
+                                hasMoreData: data.HasMore
+                            });
+                        },
+                        error: function (err) {
+                            console.log("call error", err);
+                        },
+                        processData: false,
+                        type: 'POST',
+                        url: '@Url.Action("Query", "List")'
+                    });
                 },
             },
             watch: {
