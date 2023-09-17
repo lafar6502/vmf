@@ -85,23 +85,23 @@ a slight movement of the header row */
         <table class="ajaxgrid_table">
             <thead>
                 <tr>
-                    <th v-if="checkboxSelect">
+                    <th v-if="checkboxSelect" class="grid_col_sel">
                         <input type="checkbox" />
                     </th>
-                    <th v-if="expandableRows">
+                    <th v-if="expandableRows" class="grid_col_expand">
                         
                     </th>
-                    <th v-for="c in visibleColumns"><span>{{c.label}}</span></th>
+                    <th v-for="c in visibleColumns"><span class="col_hdr_name" v-bind:data-id="c.name">{{c.label}}</span></th>
 
                 </tr>
             </thead>
             <tbody>
                 <template v-for="r in rows" :key="r.key">
                     <tr v-bind:entityref="r.key" v-bind:class="getRowClasses(r)" v-on:click="rowClicked(r, $event)">
-                        <td v-if="checkboxSelect">
+                        <td v-if="checkboxSelect" class="grid_col_sel">
                             <input type="checkbox" v-model="selectedKeys" :value="r.key" v-on:click.stop="">
                         </td>
-                        <td v-if="expandableRows">
+                        <td v-if="expandableRows" class="grid_col_expand">
                             <button v-bind:text="r.expanded ? 'v' : '>'" v-on:click.stop="expanderClicked(r, $event)"></button>
                         </td>
                         <td v-for="c in visibleColumns"><span>{{r.data[c.name]}}</span></td>
@@ -337,6 +337,10 @@ a slight movement of the header row */
                     }
                     return n;
                 }
+            },
+            mounted: function () {
+                console.log('grid mounted');
+                this.loadPage(1);
             }
         });
 

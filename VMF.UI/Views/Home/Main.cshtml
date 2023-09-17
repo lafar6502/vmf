@@ -32,6 +32,7 @@
     var vm = VMF.getVueApp(
     {
         data: function () {
+            console.log('data args', arguments);
             r = [];
             fns = ['John', 'Bob', 'Frank', 'Alice', 'Betty', 'Theo'];
             lns = ['Smith', 'Brown', 'Green', 'Redneck', 'Mann', 'Schneider', 'Batata', 'Longman', 'Olafson', 'Butterworth'];
