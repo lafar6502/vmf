@@ -91,7 +91,7 @@ a slight movement of the header row */
                     <th v-if="expandableRows" class="grid_col_expand">
                         
                     </th>
-                    <th v-for="c in visibleColumns"><span class="col_hdr_name" v-bind:data-id="c.name">{{c.label}}</span></th>
+                    <th v-for="c in visibleColumns"><span class="col_hdr_name" v-bind:data-id="c.name" v-on:click="columnClick(c)">{{c.label}}</span></th>
 
                 </tr>
             </thead>
@@ -173,7 +173,7 @@ a slight movement of the header row */
     //columns are set up beforehand
     VMF.addVueComponents(function (vueApp) {
         vueApp.component('vmf-ajaxgrid', {
-            props: ['listColumns', 'dataUrl', 'keyField', 'labelField', 'rowClassField', 'rowStyleField', 'pageSize', 'listRows', 'expandableRows', 'checkboxSelect', 'rowDetailsUrl', 'dataCallback', 'queryContext'],
+            props: ['listColumns', 'dataUrl', 'keyField', 'labelField', 'rowClassField', 'rowStyleField', 'pageSize', 'listRows', 'expandableRows', 'checkboxSelect', 'rowDetailsUrl', 'dataCallback', 'queryContext', 'orderBy'],
             template: '#vmf-template-ajaxgrid',
             emits: [],
             mixins: [],
@@ -215,7 +215,8 @@ a slight movement of the header row */
                     selectedKey: null,
                     loading: false,
                     totalCount: undefined,
-                    queryContext: this.queryContext
+                    queryContext: this.queryContext,
+                    sortOrder: this.orderBy ? this.orderBy : ''
                 }
             },
             methods: {
@@ -309,6 +310,17 @@ a slight movement of the header row */
                             $(td).hide();
                         });
                     }
+                },
+                columnClick: function (c) {
+                    var ob = this.sortOrder;
+                    if (ob == c.name) {
+                        this.sortOrder = c.name + ' desc';
+                    }
+                    else {
+                        this.sortOrder = c.name;
+                    }
+                    console.log('col clicked', c, this.sortOrder);
+
                 }
 
             },
