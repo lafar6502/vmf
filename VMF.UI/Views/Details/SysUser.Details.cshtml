@@ -10,7 +10,9 @@
             sc.AddModelValue("Email", Model.Email);
             sc.AddValueWithContext("Active", Model.Active, Model, new WidgetContext
             {
-                Access = FieldAccess.ReadWrite
+                Access = FieldAccess.ReadWrite,
+                FieldType = "bool",
+                Label = "Active"
             });
             sc.AddValueWithContext("Name", Model.Name, Model, new WidgetContext
             {
@@ -27,7 +29,7 @@
 
     <div class="row">
         <div class="col-md-4">
-            <vmf-field v-bind:context="Context.Name" v-model="Values.Name"></vmf-field>
+            <vmf-field-lbl v-bind:context="Context.Name" v-model="Values.Name"></vmf-field-lbl>
         </div>
     </div>
     <div class="row">

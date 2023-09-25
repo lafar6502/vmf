@@ -35,11 +35,24 @@ namespace VMF.Core
         /// </summary>
         public string ValidationProblem { get; set; }
 
+        /// <summary>
+        /// field size, for example string max length
+        /// </summary>
         public int? Size { get; set; }
         /// <summary>
         /// property/field on the entity type, or null if the field is dynamic
         /// </summary>
         public MemberInfo Property { get; set; }
+        //min value for numeric fields
+        public decimal? MinVal { get; set; }
+        /// <summary>
+        /// max value for numeric fields
+        /// </summary>
+        public decimal? MaxVal { get; set; }
+
+        public object Owner { get; set; }
+
+        public Type DeclaringType { get; set; }
     }
     public interface IDynamicEntity
     {

@@ -181,6 +181,7 @@ a slight movement of the header row */
                 var cols = this.listColumns || [];
                 var rowz = [];
                 if (this.listRows) {
+                    console.log('list key', this.keyField);
                     for (var i = 0; i < this.listRows.length; i++) {
                         rowz.push({ data: this.listRows[i], key: this.keyField ? this.listRows[i][this.keyField] : null });
                     }
