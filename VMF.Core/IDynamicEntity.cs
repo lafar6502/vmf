@@ -9,6 +9,11 @@ using SC = System.Collections;
 
 namespace VMF.Core
 {
+    public class FieldValidation
+    {
+        public string Message { get; set; }
+        public bool IsError { get; set; }   
+    }
     public class EntityFieldData
     {
         public string Name { get; set; }
@@ -53,6 +58,8 @@ namespace VMF.Core
         public object Owner { get; set; }
 
         public Type DeclaringType { get; set; }
+
+        public FieldValidation Validation { get; set; }
     }
     public interface IDynamicEntity
     {

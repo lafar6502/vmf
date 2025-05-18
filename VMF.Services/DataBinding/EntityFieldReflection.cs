@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using VMF.Core;
+using SC = System.Collections;
 
 namespace VMF.Services.DataBinding
 {
@@ -127,7 +128,7 @@ namespace VMF.Services.DataBinding
 
             if (!final)
             {
-                FaFieldDescriptor rest = null;
+                EntityFieldData rest = null;
                 if (ret.Value == null) //we found null, now do the static walk
                 {
                     rest = WalkTheStaticPath(ret.ValueType, remaining);
@@ -139,20 +140,20 @@ namespace VMF.Services.DataBinding
                 return rest;
             }
 
-            if (root is SoodaObject)
+            if (root is Sooda.SoodaObject)
             {
-                var so = (SoodaObject)root;
+                var so = (Sooda.SoodaObject)root;
                 var fi = so.GetClassInfo().FindFieldByName(cp);
                 if (fi != null)
                 {
                     if (fi.Size > 0) ret.Size = fi.Size;
                 }
             }
-            if (ret.ActualMember != null)
+            if (ret.Property != null)
             {
                 if (ret.Access == FieldAccess.Undefined)
                 {
-                    var accp = GetTypeProperty(tp, "FieldAccess_" + ret.ActualMember.Name);
+                    var accp = GetTypeProperty(tp, "FieldAccess_" + ret.Property.Name);
                     if (accp != null && accp.PropertyType == typeof(FieldAccess))
                     {
                         ret.Access = (FieldAccess)accp.GetValue(root);
@@ -161,16 +162,16 @@ namespace VMF.Services.DataBinding
 
                 if (ret.Options == null)
                 {
-                    var optsp = GetTypeProperty(tp, ret.ActualMember.Name + "Options");
+                    var optsp = GetTypeProperty(tp, ret.Property.Name + "Options");
                     if (optsp != null)
                     {
-                        ret.Options = () => optsp.GetValue(root) as SC.IEnumerable;
+                        ret.Options = () => optsp.GetValue(root) as System.Collections.IEnumerable;
                     }
                 }
 
                 if (ret.Validation == null)
                 {
-                    var valp = GetTypeProperty(tp, "Validation_" + ret.ActualMember.Name);
+                    var valp = GetTypeProperty(tp, "Validation_" + ret.Property.Name);
                     if (valp != null)
                     {
                         if (valp.PropertyType == typeof(FieldValidation))
@@ -198,26 +199,26 @@ namespace VMF.Services.DataBinding
             return ret;
         }
 
-        private FaFieldDescriptor WalkTheStaticPath(Type rootType, string bindingPath)
+        private EntityFieldData WalkTheStaticPath(Type rootType, string bindingPath)
         {
             var idx = bindingPath.IndexOf('.');
             var cp = idx > 0 ? bindingPath.Substring(0, idx) : bindingPath;
             var remaining = idx > 0 ? bindingPath.Substring(idx + 1) : "";
             var final = string.IsNullOrEmpty(remaining);
 
-            var ret = new FaFieldDescriptor
+            var ret = new EntityFieldData
             {
                 Owner = null,
-                Access = FieldAccess.Undefined,
+                Access = FieldAccess.ReadOnly,
                 DeclaringType = rootType,
                 Name = cp,
-                ActualMember = null
+                Property = null
             };
 
             var pi = GetTypeProperty(rootType, cp);
             if (pi != null)
             {
-                ret.ActualMember = pi;
+                ret.Property = pi;
                 ret.Value = pi.GetGetMethod().IsStatic ? pi.GetValue(null) : null;
                 ret.ValueType = pi.PropertyType;
             }
@@ -226,12 +227,12 @@ namespace VMF.Services.DataBinding
                 var fi = GetTypeField(rootType, cp);
                 if (fi != null)
                 {
-                    ret.ActualMember = fi;
+                    ret.Property = fi;
                     ret.ValueType = fi.FieldType;
                     ret.Value = fi.IsStatic ? fi.GetValue(null) : null;
                 }
             }
-            if (ret.ActualMember == null)
+            if (ret.Property == null)
             {
                 return null;
             }
@@ -245,17 +246,17 @@ namespace VMF.Services.DataBinding
             }
             else //discover remaining info via reflection
             {
-                var accp = GetTypeProperty(rootType, "FieldAccess_" + ret.ActualMember.Name);
+                var accp = GetTypeProperty(rootType, "FieldAccess_" + ret.Property.Name);
                 if (accp != null && accp.PropertyType == typeof(FieldAccess) && accp.GetGetMethod().IsStatic)
                 {
                     ret.Access = (FieldAccess)accp.GetValue(null);
                 }
-                var optsp = GetTypeProperty(rootType, ret.ActualMember.Name + "Options");
+                var optsp = GetTypeProperty(rootType, ret.Property.Name + "Options");
                 if (optsp != null && optsp.GetGetMethod().IsStatic)
                 {
                     ret.Options = () => optsp.GetValue(null) as SC.IEnumerable;
                 }
-                var valp = GetTypeProperty(rootType, "Validation_" + ret.ActualMember.Name);
+                var valp = GetTypeProperty(rootType, "Validation_" + ret.Property.Name);
                 if (valp != null && valp.GetGetMethod().IsStatic)
                 {
                     if (valp.PropertyType == typeof(FieldValidation))

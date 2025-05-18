@@ -8,6 +8,7 @@ namespace VMF.Core
 {
     public enum FieldAccess
     {
+        Undefined,
         NoAccess,
         ReadOnly,
         ReadWrite,

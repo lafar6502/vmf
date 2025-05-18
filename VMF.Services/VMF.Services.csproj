@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Config\VMFSoodaConfigProvider.cs" />
+    <Compile Include="DataBinding\EntityFieldReflection.cs" />
     <Compile Include="Entities\EntityUpdateHandler.cs" />
     <Compile Include="Lists\MasterListProvider.cs" />
     <Compile Include="Lists\SqlListDefinition.cs" />
